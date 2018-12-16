@@ -17,5 +17,9 @@
    -3 => 16 unsigned error*/
 int check_types_size(void);
 
+/* read an elf header in specified file and fill the given struct with
+   f must be opened and hdr a correct pointer.
+   return 0 if everything okay, -1 else*/
+int read_elf_header(FILE *f, Elf32_Ehdr* hdr);
 
 #endif
