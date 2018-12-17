@@ -9,10 +9,10 @@ int main(int argc,char **argv){
 		printf("Erreur : arguments \n");
 	}
 	else{
-		FILE* f=fopen(argv[1],"w");
+		FILE* f=fopen(argv[1],"r");
 		if(f != NULL){
-			int tes = read_elf_header(f,&Elf);
-			if(tes != 0){
+			Err_ELF_Header tes = read_elf_header(f,&Elf);
+			if(tes != ERR_EH_NONE){
 				printf("Erreur : read elf :%d \n",tes);
 			}
 			else{

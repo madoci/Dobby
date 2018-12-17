@@ -9,6 +9,7 @@ Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
      hdr->e_ident[EI_MAG1] != ELFMAG1 ||
      hdr->e_ident[EI_MAG2] != ELFMAG2 ||
      hdr->e_ident[EI_MAG3] != ELFMAG3){
+    printf("%d\n, 0x%02x\n",hdr->e_ident[EI_MAG0],hdr->e_ident[EI_MAG0]);
     return ERR_EH_IMAG;
   }
   if(hdr->e_ident[EI_CLASS] != ELFCLASSNONE &&
@@ -142,7 +143,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
   fread(&(hdr->e_flags), 4, 1, f);
   hdr->e_flags = reverse_4(hdr->e_flags);
-  
+
   erreur = check_flags(hdr);
   if(erreur != ERR_EH_NONE){
     return erreur;
