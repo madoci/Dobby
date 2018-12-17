@@ -80,11 +80,13 @@ ERR_ELF_HEADER check_flags(Elf32_Ehdr* hdr){
 
 ERR_ELF_HEADER read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
+  ERR_ELF_HEADER erreur;
+
   /* ELF IDENTIFICATION */
 
   fread(hdr->e_ident, 1, 16, f);
 
-  ERR_ELF_HEADER erreur = check_ident(hdr);
+  erreur = check_ident(hdr);
   if(erreur != ERR_EH_NONE){
     return erreur;
   }
@@ -110,6 +112,7 @@ ERR_ELF_HEADER read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF VERSION */
   
   fread(&(hdr->e_version), 4, 1, f);
+
   erreur = check_version(hdr);
   if(erreur != ERR_EH_NONE){
     return erreur;
@@ -130,6 +133,7 @@ ERR_ELF_HEADER read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF FLAGS */
 
   fread(&(hdr->e_flags), 4, 1, f);
+
   erreur = check_flags(hdr);
   if(erreur != ERR_EH_NONE){
     return erreur;
