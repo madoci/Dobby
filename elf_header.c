@@ -1,6 +1,8 @@
 #include "elf_types_header.h"
 #include "elf_header.h"
 
+#include "../elf_linker-1.0/util.h"
+
 
 Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
   if(hdr->e_ident[EI_MAG0] != ELFMAG0 ||
@@ -94,6 +96,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF TYPE */
 
   fread(&(hdr->e_type), 2, 1, f);
+  hdr->e_type = reverse_2(hdr->e_type);
 
   erreur = check_type(hdr);
   if(erreur != ERR_EH_NONE){
@@ -103,6 +106,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF MACHINE */
 
   fread(&(hdr->e_machine), 2, 1, f);
+  hdr->e_machine = reverse_2(hdr->e_machine);
 
   erreur = check_machine(hdr);
   if(erreur != ERR_EH_NONE){
@@ -112,6 +116,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF VERSION */
   
   fread(&(hdr->e_version), 4, 1, f);
+  hdr->e_version = reverse_4(hdr->e_version);
 
   erreur = check_version(hdr);
   if(erreur != ERR_EH_NONE){
@@ -121,19 +126,23 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF ENTRY */
 
   fread(&(hdr->e_entry), 4, 1, f);
+  hdr->e_entry = reverse_4(hdr->e_entry);
 
   /* ELF PHOFF */
 
   fread(&(hdr->e_phoff), 4, 1, f);
+  hdr->e_phoff = reverse_4(hdr->e_phoff);
   
   /* ELF SHOFF */
 
   fread(&(hdr->e_shoff), 4, 1, f);
+  hdr->e_shoff = reverse_4(hdr->e_shoff);
 
   /* ELF FLAGS */
 
   fread(&(hdr->e_flags), 4, 1, f);
-
+  hdr->e_flags = reverse_4(hdr->e_flags);
+  
   erreur = check_flags(hdr);
   if(erreur != ERR_EH_NONE){
     return erreur;
@@ -165,3 +174,17 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
   return ERR_EH_NONE;
 }
+
+/*int main(int argc, char *argv[]){
+  FILE *f = fopen(argv[1], "r");
+
+  Err_ELF_Header test;
+  Elf32_Ehdr hdr;
+
+  test = read_elf_header(f, &hdr);
+    if (test ==ERR_EH_NONE){
+      printf ("ok\n");
+    }
+
+    printf("%d\n", test);
+}*/
