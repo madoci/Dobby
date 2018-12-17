@@ -73,7 +73,7 @@ enum Elf_IData {
   ELFDATA2MSB =2 // Big Endian
 };
 
-#define EI_VERSION (Elf_Version.EV_CURRENT)
+#define EI_VALVERSION (Elf_Version.EV_CURRENT)
 #define EI_VALPAD  (0)
 
 /*Potential contents of header attributes */
@@ -114,7 +114,7 @@ enum Elf_Flags {
 /* Sections data types */
 
 //Undefined section
-enum Elf_SsIndex{
+enum Elf_SIndex{
   SHN_UNDEF     = 0,
   SHN_LORESERVE = 0xff00,
   SHN_LOPROC    = 0xff00,
@@ -171,7 +171,7 @@ enum Elf_ShFlags {
   SHF_MASKPROC =0xf0000000
 };
 
-const Elf32_Shdr entry0 = {
+const Elf32_Shdr sh_entry0 = {
   .sh_name = 0,
   .sh_type = Elf_ShType.SHT_NULL,
   .sh_flags= 0,
@@ -209,11 +209,21 @@ enum Elf_StType{
   STT_FUNC   = 2,
   STT_SECTION= 3,
   STT_FILE   = 4,
-  STT
-}
+  STT_LOPROC = 13,
+  STT_HIPROC = 15
+};
 
 #define ELF32_ST_BIND(i) ((i) >>4)
 #define ELF32_ST_TYPE(i) ((i) &0xf)
 #define ELF32_ST_INFO(b,t) ((b)<<4+((t)&0xf))
+
+const Elf32_Sym st_entry0 = {
+  .st_name  = 0,
+  .st_value = 0,
+  .st_size  = 0,
+  .st_info  = 0,
+  .st_other = 0,
+  .st_shndx = Elf32_SIndex.SHN_UNDEF
+};
 
 #endif
