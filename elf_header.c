@@ -163,5 +163,5 @@ ERR_ELF_HEADER read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
   fread(&(hdr->e_shstrndx), 2, 1, f);
 
-  return 1;
+  return ERR_EH_NONE;
 }
