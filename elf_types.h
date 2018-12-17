@@ -114,7 +114,15 @@ enum Elf_Flags {
 /* Sections data types */
 
 //Undefined section
-#define SHN_UNDEF (0)
+enum Elf_SsIndex{
+  SHN_UNDEF     = 0,
+  SHN_LORESERVE = 0xff00,
+  SHN_LOPROC    = 0xff00,
+  SHN_HIPROC    = 0xff1f,
+  SHN_ABS       = 0xfff1,
+  SHN_COMMON    = 0xfff2,
+  SHN_HIRESERVE = 0xffff
+};
 
 typedef struct {
   Elf32_Word sh_name; //Index into section header string table
