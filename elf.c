@@ -71,6 +71,8 @@ ERR_ELF_READER read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   return 1;
 }
 
+
+
 int main(int argc, char *argv[]){
   Elf32_Ehdr hdr;
   FILE *f;
