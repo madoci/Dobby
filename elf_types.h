@@ -64,7 +64,7 @@ enum Elf_IClass{
   ELFCLASS64   =2   //64 bits arch
 };
 
-#define ARM_ELFICLASS (Elf_IClass.ELFCLASS32)
+#define ARM_ELFICLASS (ELFCLASS32)
 #define ELFOSABI_ARM_AEABI (64)
 
 enum Elf_IData {
@@ -73,7 +73,7 @@ enum Elf_IData {
   ELFDATA2MSB =2 // Big Endian
 };
 
-#define EI_VALVERSION (Elf_Version.EV_CURRENT)
+#define EI_VALVERSION (EV_CURRENT)
 #define EI_VALPAD  (0)
 
 /*Potential contents of header attributes */
@@ -173,7 +173,7 @@ enum Elf_ShFlags {
 
 const Elf32_Shdr sh_entry0 = {
   .sh_name = 0,
-  .sh_type = Elf_ShType.SHT_NULL,
+  .sh_type = SHT_NULL,
   .sh_flags= 0,
   .sh_addr = 0,
   .sh_offset=0,
@@ -223,7 +223,22 @@ const Elf32_Sym st_entry0 = {
   .st_size  = 0,
   .st_info  = 0,
   .st_other = 0,
-  .st_shndx = Elf32_SIndex.SHN_UNDEF
+  .st_shndx = SHN_UNDEF
 };
+
+/* Relocations */
+
+
+
+
+/* Specific to arm */
+
+#define R_ARM_ABS32                2        /* Direct 32 bit  */
+#define R_ARM_ABS16                5        /* Direct 16 bit */
+#define R_ARM_ABS12                6        /* Direct 12 bit */
+#define R_ARM_ABS8                8        /* Direct 8 bit */
+#define R_ARM_ABS32_NOI                55        /* Direct 32-bit.  */
+#define R_ARM_JUMP24                29        /* PC relative 24 bit */
+#define R_ARM_CALL                28        /* PC relative 24 bit (BL, BLX).  */
 
 #endif
