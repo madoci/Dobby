@@ -65,7 +65,11 @@ enum Elf_IClass{
 };
 
 #define ARM_ELFICLASS (ELFCLASS32)
-#define ELFOSABI_ARM_AEABI (64)
+
+enum Elf_IOsabi {
+  ELFOSABI_NONE      = 0,
+  ELFOSABI_ARM_AEABI = 64
+};
 
 enum Elf_IData {
   ELFDATANONE =0, // Invalid data encoding
@@ -228,17 +232,31 @@ const Elf32_Sym st_entry0 = {
 
 /* Relocations */
 
+typedef struct {
+	Elf32_Addr		r_offset;
+	Elf32_Word		r_info;
+} Elf32_Rel;
+ 
+typedef struct {
+	Elf32_Addr		r_offset;
+	Elf32_Word		r_info;
+	Elf32_Sword		r_addend;
+} Elf32_Rela;
 
+#define ELF32_R_SYM(i)	 ((i) >> 8)
+#define ELF32_R_TYPE(i) ((uint8_t)(i))
+#define ELF32_R_INFO(s,t) (((s) << 8) + (uint8_t) 
 
-
-/* Specific to arm */
-
-#define R_ARM_ABS32                2        /* Direct 32 bit  */
-#define R_ARM_ABS16                5        /* Direct 16 bit */
-#define R_ARM_ABS12                6        /* Direct 12 bit */
-#define R_ARM_ABS8                8        /* Direct 8 bit */
-#define R_ARM_ABS32_NOI                55        /* Direct 32-bit.  */
-#define R_ARM_JUMP24                29        /* PC relative 24 bit */
-#define R_ARM_CALL                28        /* PC relative 24 bit (BL, BLX).  */
-
+/* Relocations types, fig 1-22, page 29 */
+enum Elf_RelT { 
+  R_386_NONE		= 0,  /* No relocation */
+  R_386_32		= 1,  /* Symbol + Offset */
+  R_ARM_ABS32           = 2,  /* Direct 32 bit  */
+  R_ARM_ABS16           = 5,  /* Direct 16 bit */
+  R_ARM_ABS12           = 6,  /* Direct 12 bit */
+  R_ARM_ABS8            = 8,  /* Direct 8 bit */
+  R_ARM_ABS32_NOI       = 55, /* Direct 32-bit.  */
+  R_ARM_JUMP24          = 29, /* PC relative 24 bit */
+  R_ARM_CALL            = 28  /* PC relative 24 bit (BL, BLX).  */
+};
 #endif
