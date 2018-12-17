@@ -5,9 +5,6 @@
 
 #include <stdio.h>
 
-#define xstr(s) str(s)
-#define str(s) #s
-
 typedef enum ERR_ELF_READER{
 	ERR_NONE,
 	ERR_MAG,
