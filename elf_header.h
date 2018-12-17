@@ -1,7 +1,7 @@
 #ifndef ELF_HEADER_H
 #define ELF_HEADER_H
 
-#include "elf_types.h"
+#include "elf_types_header.h"
 
 #include <stdio.h>
 
