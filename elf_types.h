@@ -45,7 +45,8 @@ enum Elf_Ident {
   EI_CLASS	= 4, // Architecture (32/64)
   EI_DATA	= 5, // Byte Order
   EI_VERSION	= 6, // ELF Version
-  EI_PAD	= 7  // Padding
+  EI_OSABI      = 7,
+  EI_PAD	= 8  // Padding
 };
 
 /* Potential contents of Ident attributes */
@@ -64,6 +65,7 @@ enum Elf_IClass{
 };
 
 #define ARM_ELFICLASS (Elf_IClass.ELFCLASS32)
+#define ELFOSABI_ARM_AEABI (64)
 
 enum Elf_IData {
   ELFDATANONE =0, // Invalid data encoding
@@ -72,7 +74,7 @@ enum Elf_IData {
 };
 
 #define EI_VERSION (Elf_Version.EV_CURRENT)
-#define EI_PAD  (0)
+#define EI_VALPAD  (0)
 
 /*Potential contents of header attributes */
 
@@ -174,5 +176,36 @@ const Elf32_Shdr entry0 = {
   .sh_entsize = 0
 };
 
+/* Symbol table page 23 fig 1-16 */
+
+typedef struct {
+  Elf32_Word st_name;
+  Elf32_Addr st_value;
+  Elf32_Word st_size;
+  unsigned char st_info;
+  unsigned char st_other;
+  Elf32_Half st_shndx;
+} Elf32_Sym;
+
+enum Elf_StBind {
+  STB_LOCAL  = 0,
+  STB_GLOBAL = 1,
+  STB_WEAK   = 2,
+  STB_LOPROC = 13,
+  STB_HIPROC = 15
+};
+
+enum Elf_StType{
+  STT_NOTYPE = 0,
+  STT_OBJECT = 1,
+  STT_FUNC   = 2,
+  STT_SECTION= 3,
+  STT_FILE   = 4,
+  STT
+}
+
+#define ELF32_ST_BIND(i) ((i) >>4)
+#define ELF32_ST_TYPE(i) ((i) &0xf)
+#define ELF32_ST_INFO(b,t) ((b)<<4+((t)&0xf))
 
 #endif
