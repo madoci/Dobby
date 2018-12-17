@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-typedef enum ERR_ELF_HEADER{
+typedef enum Err_ELF_Header{
 	ERR_EH_NONE,
 	ERR_EH_IMAG,
 	ERR_EH_ICLASS,
@@ -17,24 +17,24 @@ typedef enum ERR_ELF_HEADER{
 	ERR_EH_MACHINE,
 	ERR_EH_VERSION,
 	ERR_EH_FLAGS
-}ERR_ELF_HEADER;
+} Err_ELF_Header;
 
 /* check if the identification is in correct ELF format :
 	1 if true
 	0 if false */
-ERR_ELF_HEADER check_ident(Elf32_Ehdr* hdr);
+Err_ELF_Header check_ident(Elf32_Ehdr* hdr);
 
-ERR_ELF_HEADER check_type(Elf32_Ehdr* hdr);
+Err_ELF_Header check_type(Elf32_Ehdr* hdr);
 
-ERR_ELF_HEADER check_machine(Elf32_Ehdr* hdr);
+Err_ELF_Header check_machine(Elf32_Ehdr* hdr);
 
-ERR_ELF_HEADER check_version(Elf32_Ehdr* hdr);
+Err_ELF_Header check_version(Elf32_Ehdr* hdr);
 
-ERR_ELF_HEADER check_flags(Elf32_Ehdr* hdr);
+Err_ELF_Header check_flags(Elf32_Ehdr* hdr);
 
 /* read an elf header in specified file and fill the given struct with
    f must be opened and hdr a correct pointer.
-   return 0 if everything okay, -1 else*/
-ERR_ELF_HEADER read_elf_header(FILE *f, Elf32_Ehdr* hdr);
+   return ERR_EH_NONE if everything okay */
+Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr);
 
 #endif

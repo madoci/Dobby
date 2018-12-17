@@ -2,7 +2,7 @@
 #include "elf_header.h"
 
 
-ERR_ELF_HEADER check_ident(Elf32_Ehdr* hdr){
+Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
   if(hdr->e_ident[EI_MAG0] != ELFMAG0 ||
      hdr->e_ident[EI_MAG1] != ELFMAG1 ||
      hdr->e_ident[EI_MAG2] != ELFMAG2 ||
@@ -33,7 +33,7 @@ ERR_ELF_HEADER check_ident(Elf32_Ehdr* hdr){
 }
 
 
-ERR_ELF_HEADER check_type(Elf32_Ehdr* hdr){
+Err_ELF_Header check_type(Elf32_Ehdr* hdr){
   if(hdr->e_type != ET_NONE   &&
      hdr->e_type != ET_REL    &&
      hdr->e_type != ET_EXEC   &&
@@ -47,7 +47,7 @@ ERR_ELF_HEADER check_type(Elf32_Ehdr* hdr){
 }
 
 
-ERR_ELF_HEADER check_machine(Elf32_Ehdr* hdr){
+Err_ELF_Header check_machine(Elf32_Ehdr* hdr){
   if(hdr->e_machine != EM_NONE &&
      hdr->e_machine != EM_ARM){
     return ERR_EH_MACHINE;
@@ -56,7 +56,7 @@ ERR_ELF_HEADER check_machine(Elf32_Ehdr* hdr){
 }
 
 
-ERR_ELF_HEADER check_version(Elf32_Ehdr* hdr){
+Err_ELF_Header check_version(Elf32_Ehdr* hdr){
   if(hdr->e_version != EV_NONE &&
      hdr->e_version != EV_CURRENT){
     return ERR_EH_VERSION;
@@ -65,7 +65,7 @@ ERR_ELF_HEADER check_version(Elf32_Ehdr* hdr){
 }
 
 
-ERR_ELF_HEADER check_flags(Elf32_Ehdr* hdr){
+Err_ELF_Header check_flags(Elf32_Ehdr* hdr){
   if(hdr->e_flags != EF_ARM_ABIMASK        &&
      hdr->e_flags != EF_ARM_ABIVER         &&
      hdr->e_flags != EF_ARM_BE8            &&
@@ -78,9 +78,9 @@ ERR_ELF_HEADER check_flags(Elf32_Ehdr* hdr){
 }
 
 
-ERR_ELF_HEADER read_elf_header(FILE *f, Elf32_Ehdr* hdr){
+Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
-  ERR_ELF_HEADER erreur;
+  Err_ELF_Header erreur;
 
   /* ELF IDENTIFICATION */
 
