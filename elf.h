@@ -3,6 +3,21 @@
 
 #include "elf_types.h"
 
+#include <stdio.h>
+
+#define xstr(s) str(s)
+#define str(s) #s
+
+typedef enum ERR_ELF_READER{
+	ERR_NONE,
+	ERR_MAG,
+	ERR_CLASS,
+	ERR_DATA,
+	ERR_VERSION,
+	ERR_OSABI,
+	ERR_PAD
+}ERR_ELF_READER;
+
 /* Convenient macros to check atomic types size, according to Format_ELF.pdf*/
 
 #define chk_word_size(word) (sizeof(word)==4)
@@ -17,9 +32,14 @@
    -3 => 16 unsigned error*/
 int check_types_size(void);
 
+/* check if the identification is in correct ELF format :
+	1 if true
+	0 if false */
+ERR_ELF_READER check_ident(Elf32_Ehdr* hdr);
+
 /* read an elf header in specified file and fill the given struct with
    f must be opened and hdr a correct pointer.
    return 0 if everything okay, -1 else*/
-int read_elf_header(FILE *f, Elf32_Ehdr* hdr);
+ERR_ELF_READER read_elf_header(FILE *f, Elf32_Ehdr* hdr);
 
 #endif
