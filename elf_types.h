@@ -177,7 +177,7 @@ enum Elf_ShFlags {
 
 const Elf32_Shdr sh_entry0 = {
   .sh_name = 0,
-  .sh_type = SHT_NULL,
+  .sh_type = SHT_NULL,
   .sh_flags= 0,
   .sh_addr = 0,
   .sh_offset=0,
