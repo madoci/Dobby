@@ -44,16 +44,16 @@ enum Elf_ShType {
   SHT_SHLIB     = 10,//Not conforming to abi
   SHT_DYNSYM    = 11,//Symbol table
   //Specific to ARM
-  SHT_ARM_EXIDX          = 0x7000001, //Exception
-  SHT_ARM_PREEMPTMAP     = 0x7000002, //Dynamic linking bpapi dll
-  SHT_ARM_ATTRIBUTES     = 0x7000003, //Compatibility attributes
-  SHT_ARM_DEBUGOVERLAY   = 0x7000004,
-  SHT_ARM_OVERLAYSECTION = 0x7000005,
+  SHT_ARM_EXIDX          = 0x70000001, //Exception
+  SHT_ARM_PREEMPTMAP     = 0x70000002, //Dynamic linking bpapi dll
+  SHT_ARM_ATTRIBUTES     = 0x70000003, //Compatibility attributes
+  SHT_ARM_DEBUGOVERLAY   = 0x70000004,
+  SHT_ARM_OVERLAYSECTION = 0x70000005,
   //Reserved
-  SHT_LOPROC    = 0x7000000,
-  SHT_HIPROC    = 0x7ffffff,
-  SHT_LOUSER    = 0x8000000,
-  SHT_HIUSER    = 0xfffffff
+  SHT_LOPROC    = 0x70000000,
+  SHT_HIPROC    = 0x7fffffff,
+  SHT_LOUSER    = 0x80000000,
+  SHT_HIUSER    = 0xffffffff
 };
 
 enum Elf_ShFlags {
