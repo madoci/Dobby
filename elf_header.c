@@ -92,6 +92,13 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
     return erreur;
   }
 
+  if(hdr->e_ident[EI_DATA]==ELFDATA2MSB){
+    set_big_endian();
+  }
+  else{
+    set_little_endian();
+  }
+
   /* ELF TYPE */
 
   fread_16bits(&(hdr->e_type), 1, f);
