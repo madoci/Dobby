@@ -58,4 +58,3 @@ fread.o: $(INC_DIR)/util.h
 #Convenient to headers
 
 $(INC_DIR)/elf_types.h: $(INC_DIR)/elf_types_*.h
-
