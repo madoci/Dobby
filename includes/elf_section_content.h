@@ -1,6 +1,7 @@
 #ifndef ELF_SECTION_CONTENT_H
 #define ELF_SECTION_CONTENT_H
 
+#include <stdio.h>
 #include "elf_types_header.h"
 #include "elf_types_section.h"
 

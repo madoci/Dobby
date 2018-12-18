@@ -85,7 +85,14 @@ const char * section_flags(Elf32_Shdr hdr){
   return "CC";
 }
 
-void display_section_header(FILE*){
+char * extract_string_table(FILE *f, Elf32_Shdr str){
+    char* str_table = malloc(sizeof(char)*str.sh_size);
+    fseek(f,str.sh_offset,SEEK_SET);
+    fread(str_table,1,str.sh_size,f);
+    return str_table;
+}
+
+void display_section_header(FILE* f){
   Elf32_Ehdr header;
   Elf32_Half i;
   read_elf_header(f, &header);
