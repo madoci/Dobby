@@ -77,7 +77,7 @@ const char * section_type(Elf32_Shdr *hdr){
   return "erreurType";
 }
 
-const char * section_name(FILE* f, char * str_table, Elf32_Word sh_name){
+const char * section_name(char * str_table, Elf32_Word sh_name){
   return "BB";
 }
 
