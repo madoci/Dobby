@@ -2,7 +2,6 @@
 
 #include "elf_types_header.h"
 #include "fread.h"
-#include "../elf_linker-1.0/util.h"
 
 Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
   if(hdr->e_ident[EI_MAG0] != ELFMAG0 ||
