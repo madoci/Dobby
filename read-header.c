@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc,char **argv){
+int main(int argc, char **argv){
 	
 	Elf32_Ehdr Elf;
 	
 	if(argc != 2){
-		printf("Erreur : arguments \n");
+		printf("Erreur : arguments\n");
 		exit(1);
 	}
 	else{
