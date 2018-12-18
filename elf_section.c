@@ -117,13 +117,9 @@ void display_section_header(FILE* f){
   Elf32_Half nbr_section = header.e_shnum;
   Elf32_Shdr tab_section_hdr[nbr_section];
   read_elf_section_table(f, &header, tab_section_hdr);
-<<<<<<< HEAD
-  char * symbole_table = extract_string_table(f,tab_section_hdr[header.e_shstrndx]);
-=======
 
   char * symbole_table = NULL;
   symbole_table = extract_string_table(f, tab_section_hdr[header.e_shstrndx]);
->>>>>>> 60253b1a5cb3a80a3d380f75820371d68d199a41
 
   printf("\nIl y a %d en-têtes de section,\
   débutant à l'adresse de décalage 0x%08x:\n\n",nbr_section,header.e_shoff);
