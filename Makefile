@@ -34,12 +34,12 @@ clean_obj:
 #Final executables
 
 $(BIN_DIR)/dobby-read-header: read-header
-	mv $< $@; make clean_obj
+	mv $< $@
 
 $(BIN_DIR)/dobby-read-section-table: read-section-table
-	mv $< $@; make clean_obj
+	mv $< $@
 $(BIN_DIR)/dobby-read-section-content: read-section-content
-	mv $< $@; make clean_obj
+	mv $< $@
 
 #Tmp executables
 read-header: read-header.o elf_header.o fread.o util.o
