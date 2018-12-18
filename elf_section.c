@@ -77,12 +77,19 @@ const char * section_type(Elf32_Shdr *hdr){
   return "erreurType";
 }
 
-const char * section_name(FILE* f, Elf32_Shdr str_table, Elf32_Word sh_name){
+const char * section_name(FILE* f, char * str_table, Elf32_Word sh_name){
   return "BB";
 }
 
 const char * section_flags(Elf32_Shdr hdr){
   return "CC";
+}
+
+char * extract_string_table(FILE *f, Elf32_Shdr str){
+    char* str_table = malloc(sizeof(char)*str.sh_size);
+    fseek(f,str.sh_offset,SEEK_SET);
+    fread(str_table,1,str.sh_size,f);
+    return str_table;
 }
 
 void display_section_header(FILE* f){
