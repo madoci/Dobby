@@ -85,15 +85,15 @@ const char * section_flags(Elf32_Shdr hdr){
   Elf32_Word flag = hdr.sh_flags;
   char * tab = malloc(4); //3 flags maximum plus le \0 final
   unsigned int indice = 0;
-  if(flag & SHF_WRITE != 0){
+  if((flag & SHF_WRITE) != 0){
     tab[indice] = 'W';
     indice++;
   }
-  if(flag & SHF_ALLOC){
+  if((flag & SHF_ALLOC) != 0){
     tab[indice] = 'A';
     indice ++;
   }
-  if(flag & SHF_EXECINSTR){
+  if((flag & SHF_EXECINSTR) !=0){
     tab[indice] = 'X';
     indice ++;
   }

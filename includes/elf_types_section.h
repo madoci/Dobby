@@ -21,7 +21,7 @@ typedef struct {
   Elf32_Word sh_type; //Section type
   Elf32_Word sh_flags;
   Elf32_Addr sh_addr;//If != 0, Adress where section must be placed in memory
-  Elf32_Word sh_offset;//Location of the section in bytes from beginning of file
+  Elf32_Off  sh_offset;//Location of the section in bytes from beginning of file
   Elf32_Word sh_size;//Section size in bytes
   Elf32_Word sh_link;//See page 19, figure 1-13 Format_elf.pdf
   Elf32_Word sh_info;//idem
@@ -59,7 +59,7 @@ enum Elf_ShType {
 enum Elf_ShFlags {
   SHF_WRITE     = 0x1,
   SHF_ALLOC     = 0x2,
-  SHF_EXECINSTR = 0x3,
+  SHF_EXECINSTR = 0x4,
   SHF_MASKPROC  = 0xf0000000
 };
 
