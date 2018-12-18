@@ -171,18 +171,3 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
   return ERR_EH_NONE;
 }
-
-/*int main(int argc, char *argv[]){
-  FILE *f = fopen(argv[1], "r");
-  Err_ELF_Header test;
-  Elf32_Ehdr hdr;
-  test = read_elf_header(f, &hdr);
-    if (test ==ERR_EH_NONE){
-      printf ("ok\n");
-    }
-    printf("%d\n", test);
-
-    if(is_big_endian()){
-      printf("big endian\n");
-    }
-} */
