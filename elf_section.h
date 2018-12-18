@@ -2,7 +2,7 @@
 #define ELF_SECTIONS_H
 #include <stdio.h>
 #include "elf_types.h"
-
+//test
 void read_elf_section(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]);
 
 Elf32_Shdr read_section_header(FILE *f);
