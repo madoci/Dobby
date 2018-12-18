@@ -47,7 +47,7 @@ int main(int argc,char **argv){
 						printf("Données: Big Endian\n");
 						break;
 					default:
-						printf("Données: Erreur\n");*
+						printf("Données: Erreur\n");
 						exit(1);
 				}
 				
