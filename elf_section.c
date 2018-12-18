@@ -28,20 +28,68 @@ Elf32_Shdr read_section_header(FILE *f){
   return line;
 }
 
-#define xstr(x) str(x)
-#define str(x) #x
+const char * section_type(Elf32_Shdr *hdr){
 
-const char * section_type(Elf32_Shdr hdr){
-  return "AA";
-  //return xstr(hdr.sh_type);
+  switch (hdr->sh_type) {
+    case SHT_NULL:
+      return "NULL";
+    case SHT_PROGBITS:
+      return "PROGBITS";
+    case SHT_SYMTAB :
+        return "SYMTAB ";
+    case SHT_STRTAB:
+        return "STRTAB";
+    case SHT_RELA:
+        return "RELA";
+    case SHT_HASH :
+        return "HASH";
+    case SHT_DYNAMIC:
+        return "DYNAMIC";
+    case SHT_NOTE:
+        return "NOTE";
+    case SHT_NOBITS:
+      return "NOBITS";
+    case SHT_REL:
+      return "REL";
+    case SHT_SHLIB:
+        return "SHLIB";
+    case SHT_DYNSYM:
+        return "DYNSYM";
+    case SHT_ARM_EXIDX:
+        return "ARM_EXIDX";
+    case SHT_ARM_PREEMPTMAP:
+        return "ARM_PREEMPTMAP";
+    case SHT_ARM_ATTRIBUTES:
+        return "ARM_ATTRIBUTES";
+    case SHT_ARM_DEBUGOVERLAY:
+        return "ARM_DEBUGOVERLAY";
+    case SHT_ARM_OVERLAYSECTION:
+      return "ARM_OVERLAYSECTION";
+    case SHT_LOPROC:
+      return "LOPROC";
+    case SHT_HIPROC:
+        return "HIPROC";
+    case SHT_LOUSER:
+        return "LOUSER";
+    case SHT_HIUSER:
+        return "HIUSER";
+  }
+  return "erreurType";
 }
 
-const char * section_name(FILE* f, Elf32_Shdr str_table, Elf32_Word sh_name){
+const char * section_name(FILE* f, char * str_table, Elf32_Word sh_name){
   return "BB";
 }
 
 const char * section_flags(Elf32_Shdr hdr){
   return "CC";
+}
+
+char * extract_string_table(FILE *f, Elf32_Shdr str){
+    char* str_table = malloc(sizeof(char)*str.sh_size);
+    fseek(f,str.sh_offset,SEEK_SET);
+    fread(str_table,1,str.sh_size,f);
+    return str_table;
 }
 
 void display_section_header(FILE* f){
@@ -53,14 +101,14 @@ void display_section_header(FILE* f){
   Elf32_Shdr tab_section_hdr[nbr_section];
   read_elf_section_table(f, &header, tab_section_hdr);
 
-  printf("Il y a %d en-têtes de section,\
-  débutant à l'adresse de décalage 0x%08x:\n",nbr_section,header.e_shoff);
-  puts("[Nr]\tNom\tType\tAdr\tDécala.\tTaille\tES\tFan\tLN\tInf\tAl\n");
+  printf("\nIl y a %d en-têtes de section,\
+  débutant à l'adresse de décalage 0x%08x:\n\n",nbr_section,header.e_shoff);
+  printf("[%2s] %-16s %-16s %-8s %-6s %-6s %-2s %-3s %-2s %-3s %-2s\n","Nr","Nom","Type","Adr","Décala.","Taille","ES","Fan","LN","Inf","Al");
   for(i=0; i<nbr_section; i++){
     const char *nom = section_name(f,tab_section_hdr[header.e_shstrndx],tab_section_hdr[i].sh_name);
-    const char *type = section_type(tab_section_hdr[i]);
+    const char *type = section_type(&tab_section_hdr[i]);
     const char *flags = section_flags(tab_section_hdr[i]);
-    printf("[%2d]\t%s\t%s\t%16x\t%6x\t%6x\t%2d\t%s\t%2d\t%2d\t%2d\n",
+    printf("[%2d] %-16s %-16s %08x %06x %06x %2d %3s %2d %3d %2d\n",
             i, nom,type,tab_section_hdr[i].sh_addr,tab_section_hdr[i].sh_offset,tab_section_hdr[i].sh_size,
             tab_section_hdr[i].sh_entsize,flags,tab_section_hdr[i].sh_link,tab_section_hdr[i].sh_info,
             tab_section_hdr[i].sh_addralign);

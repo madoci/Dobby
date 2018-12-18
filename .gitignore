@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 bin/
+
 main
 
 
@@ -57,3 +58,4 @@ dkms.conf
 #Temporary files
 *~
 *#*
+elf_linker-1.O/
