@@ -82,7 +82,24 @@ inline const char * section_name(char* str_table, Elf32_Word sh_name){
 }
 
 const char * section_flags(Elf32_Shdr hdr){
-  return "CC";
+  Elf32_Word flag = hdr.sh_flags;
+  char * tab = malloc(4); //3 flags maximum plus le \0 final
+  unsigned int indice = 0;
+  if(flag & SHF_WRITE != 0){
+    tab[indice] = 'W';
+    indice++;
+  }
+  if(flag & SHF_ALLOC){
+    tab[indice] = 'A';
+    indice ++;
+  }
+  if(flag & SHF_EXECINSTR){
+    tab[indice] = 'X';
+    indice ++;
+  }
+  tab[indice] = '\0';
+
+  return tab;
 }
 
 char * extract_string_table(FILE *f, Elf32_Shdr str){
@@ -99,7 +116,7 @@ void display_section_header(FILE* f){
   Elf32_Half nbr_section = header.e_shnum;
   Elf32_Shdr tab_section_hdr[nbr_section];
   read_elf_section_table(f, &header, tab_section_hdr);
-  char * symbole_table = extract_string_table(f, tab_section_hdr[header.e_shstrndx]);
+  char * symbole_table = extract_string_table(f,tab_section_hdr[header.e_shstrndx]);
 
   printf("\nIl y a %d en-têtes de section,\
   débutant à l'adresse de décalage 0x%08x:\n\n",nbr_section,header.e_shoff);
