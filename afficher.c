@@ -1,5 +1,6 @@
 #include "elf_header.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc,char **argv){
 	
@@ -7,16 +8,17 @@ int main(int argc,char **argv){
 	
 	if(argc!=2){
 		printf("Erreur : arguments \n");
+		exit(1);
 	}
 	else{
 		FILE* f=fopen(argv[1],"r");
 		if(f != NULL){
-			Err_ELF_Header tes = read_elf_header(f,&Elf);
-			if(tes != ERR_EH_NONE){
-				printf("Erreur : read elf :%d \n",tes);
+			Err_ELF_Header eeh = read_elf_header(f,&Elf);
+			if(eeh != ERR_EH_NONE){
+				printf("Erreur : read elf :%d \n",eeh);
+				exit(1);
 			}
 			else{
-		
 				//Affichage de la classe soit 32 soit 64
 				switch(Elf.e_ident[4]){
 					case 0: 
@@ -29,8 +31,8 @@ int main(int argc,char **argv){
 						printf("Classe: ELF64\n");
 						break;
 					default:
-						printf("Erreur : ELF_Classe\n");
-						break;
+						printf("Classe: Erreur\n");
+						exit(1);
 				}
 				
 				//Encodement des données
@@ -39,26 +41,27 @@ int main(int argc,char **argv){
 						printf("Données: Invalid data\n");
 						break;
 					case 1:
-						printf("Données: little Endian\n");
+						printf("Données: Little Endian\n");
 						break;
 					case 2:
 						printf("Données: Big Endian\n");
 						break;
 					default:
-						printf("Erreur : erreur données\n");
+						printf("Données: Erreur\n");*
+						exit(1);
 				}
 				
 				//Version ELF
 				switch(Elf.e_ident[6]){
 					case 0:
-						printf("Version ELF: 0(None)\n");
+						printf("Version ELF: 0 (None)\n");
 						break;
 					case 1:
-						printf("Version ELF: 1(Current)\n");
+						printf("Version ELF: 1 (Current)\n");
 						break;
 					default:
-						printf("Erreur : erreur version ELF\n");
-						break;
+						printf("Version ELF: Erreur\n");
+						exit(1);
 				}
 				
 				//Valeur OS/ABI
@@ -70,7 +73,8 @@ int main(int argc,char **argv){
 						printf("OS/ABI: ARM_AEABI\n");
 						break;
 					default:
-						printf("Erreur : Erreur Os/ABI");
+						printf("OS/ABI: Erreur");
+						exit(1);
 				}
 				
 				//file type
@@ -95,8 +99,8 @@ int main(int argc,char **argv){
 						printf("Type: Processor-specific\n");
 						break;
 					default:
-						printf("Erreur type inconnu\n");
-						break;
+						printf("Type: Erreur\n");
+						exit(1);
 				}
 			
 				//Required  architecture for an individual file
@@ -108,8 +112,8 @@ int main(int argc,char **argv){
 						printf("Machine: ARM\n");
 						break;
 					default:
-						printf("Erreur: \n");
-						break; 
+						printf("Machine: Erreur\n");
+						exit(1);
 				}
 				
 				//file version
@@ -121,7 +125,8 @@ int main(int argc,char **argv){
 						printf("Version: Current version\n");
 						break;
 					default:
-						 printf("Erreur : Erreur version\n");
+						printf("Version: Erreur\n");
+						exit(1);
 				}
 				
 				printf("Adresse du point d'entrée: 0x%08x\n",Elf.e_entry);
@@ -133,6 +138,7 @@ int main(int argc,char **argv){
 		}
 		else{
 			printf("Erreur : lecture de fichier\n");
+			exit(1);
 		}
 	}
 }
