@@ -28,54 +28,51 @@ Elf32_Shdr read_section_header(FILE *f){
   return line;
 }
 
-#define xstr(x) str(x)
-#define str(x) #x
-
 const char * section_type(Elf32_Shdr *hdr){
 
   switch (hdr->sh_type) {
     case SHT_NULL:
-      return "SHT_NULL";
+      return "NULL";
     case SHT_PROGBITS:
-      return "SHT_PROGBITS";
+      return "PROGBITS";
     case SHT_SYMTAB :
-        return "SHT_SYMTAB ";
+        return "SYMTAB ";
     case SHT_STRTAB:
-        return "SHT_STRTAB";
+        return "STRTAB";
     case SHT_RELA:
-        return "SHT_RELA";
+        return "RELA";
     case SHT_HASH :
-        return "SHT_HASH";
+        return "HASH";
     case SHT_DYNAMIC:
-        return "SHT_DYNAMIC";
+        return "DYNAMIC";
     case SHT_NOTE:
-        return "SHT_NOTE";
+        return "NOTE";
     case SHT_NOBITS:
-      return "SHT_NOBITS";
+      return "NOBITS";
     case SHT_REL:
-      return "SHT_REL";
+      return "REL";
     case SHT_SHLIB:
-        return "SHT_SHLIB";
+        return "SHLIB";
     case SHT_DYNSYM:
-        return "SHT_DYNSYM";
+        return "DYNSYM";
     case SHT_ARM_EXIDX:
-        return "SHT_ARM_EXIDX";
+        return "ARM_EXIDX";
     case SHT_ARM_PREEMPTMAP:
-        return "SHT_ARM_PREEMPTMAP";
+        return "ARM_PREEMPTMAP";
     case SHT_ARM_ATTRIBUTES:
-        return "SHT_ARM_ATTRIBUTES";
+        return "ARM_ATTRIBUTES";
     case SHT_ARM_DEBUGOVERLAY:
-        return "SHT_ARM_DEBUGOVERLAY";
+        return "ARM_DEBUGOVERLAY";
     case SHT_ARM_OVERLAYSECTION:
-      return "SHT_ARM_OVERLAYSECTION";
+      return "ARM_OVERLAYSECTION";
     case SHT_LOPROC:
-      return "SHT_LOPROC";
+      return "LOPROC";
     case SHT_HIPROC:
-        return "SHT_HIPROC";
+        return "HIPROC";
     case SHT_LOUSER:
-        return "SHT_LOUSER";
+        return "LOUSER";
     case SHT_HIUSER:
-        return "SHT_HIUSER";
+        return "HIUSER";
   }
   return "erreurType";
 }
