@@ -10,7 +10,7 @@ usage:
 	@echo "make config : afficher les variables actuelles"
 	@echo "make init : créer les répertoires (sans test d'existence) et y envoyer les fichiers"
 	@echo "make clean: supprimer les objets redondants et exécutables"
-	@echo "make bin/dobby-<Tabulation> : éxécutables disponibles"
+	@echo "make bin/dobby-<Tabulation> : exécutables disponibles"
 
 config:
 	@echo "Includes files : $(INC_DIR) Exec files : $(BIN_DIR)"
