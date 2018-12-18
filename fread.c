@@ -1,7 +1,7 @@
-#include "fread.h"
-
-#include "elf_linker_lib.h"
 #include <stdint.h>
+
+#include "fread.h"
+#include "util.h"
 
 static char isBigEndian;
 

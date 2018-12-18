@@ -1,5 +1,4 @@
 #include "elf_header.h"
-
 #include "elf_types_header.h"
 #include "fread.h"
 
@@ -106,7 +105,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   if(erreur != ERR_EH_NONE){
     return erreur;
   }
-  
+
   /* ELF MACHINE */
 
   fread_16bits(&(hdr->e_machine), 1, f);
@@ -117,7 +116,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   }
 
   /* ELF VERSION */
-  
+
   fread_32bits(&(hdr->e_version), 1, f);
 
   erreur = check_version(hdr);
@@ -132,7 +131,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   /* ELF PHOFF */
 
   fread_32bits(&(hdr->e_phoff), 1, f);
-  
+
   /* ELF SHOFF */
 
   fread_32bits(&(hdr->e_shoff), 1, f);

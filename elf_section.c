@@ -66,12 +66,3 @@ void display_section_header(FILE* f){
             tab_section_hdr[i].sh_addralign);
   }
 }
-int main(int argc, char const *argv[]) {
-
-  FILE * f;
-  f = fopen(argv[1], "r");
-  display_section_header(f);
-  fclose(f);
-
-  return 0;
-}
