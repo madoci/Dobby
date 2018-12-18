@@ -19,19 +19,6 @@ typedef enum Err_ELF_Header{
 	ERR_EH_FLAGS
 } Err_ELF_Header;
 
-/* check if the identification is in correct ELF format :
-	1 if true
-	0 if false */
-Err_ELF_Header check_ident(Elf32_Ehdr* hdr);
-
-Err_ELF_Header check_type(Elf32_Ehdr* hdr);
-
-Err_ELF_Header check_machine(Elf32_Ehdr* hdr);
-
-Err_ELF_Header check_version(Elf32_Ehdr* hdr);
-
-Err_ELF_Header check_flags(Elf32_Ehdr* hdr);
-
 /* read an elf header in specified file and fill the given struct with
    f must be opened and hdr a correct pointer.
    return ERR_EH_NONE if everything okay */
