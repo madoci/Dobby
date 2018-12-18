@@ -2,6 +2,7 @@
 
 #include "elf_types_header.h"
 #include "fread.h"
+#include "../elf_linker-1.0/util.h"
 
 Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
   if(hdr->e_ident[EI_MAG0] != ELFMAG0 ||
@@ -42,7 +43,6 @@ Err_ELF_Header check_type(Elf32_Ehdr* hdr){
      hdr->e_type != ET_CORE   &&
      hdr->e_type != ET_LOPROC &&
      hdr->e_type != ET_HIPROC){
-    return ERR_EH_TYPE;
   }
   return ERR_EH_NONE;
 }
@@ -67,12 +67,12 @@ Err_ELF_Header check_version(Elf32_Ehdr* hdr){
 
 
 Err_ELF_Header check_flags(Elf32_Ehdr* hdr){
-  if(hdr->e_flags != EF_ARM_ABIMASK        &&
-     hdr->e_flags != EF_ARM_ABIVER         &&
-     hdr->e_flags != EF_ARM_BE8            &&
-     hdr->e_flags != EF_ARM_GCCMASK        &&
-     hdr->e_flags != EF_ARM_ABI_FLOAT_HARD &&
-     hdr->e_flags != EF_ARM_ABI_FLOAT_SOFT){
+  if((hdr->e_flags & ~EF_ARM_ABIMASK)        &
+     (hdr->e_flags & ~EF_ARM_ABIVER)         &
+     (hdr->e_flags & ~EF_ARM_BE8)            &
+     (hdr->e_flags & ~EF_ARM_GCCMASK)        &
+     (hdr->e_flags & ~EF_ARM_ABI_FLOAT_HARD) &
+     (hdr->e_flags & ~EF_ARM_ABI_FLOAT_SOFT)){
     return ERR_EH_FLAGS;
   }
   return ERR_EH_NONE;
@@ -176,4 +176,8 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
       printf ("ok\n");
     }
     printf("%d\n", test);
-}*/
+
+    if(is_big_endian()){
+      printf("big endian\n");
+    }
+} */
