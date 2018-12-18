@@ -6,16 +6,27 @@ CSTD=c99
 CFLAGS=-Wall -Werror --std=$(CSTD) -I$(INC_DIR)
 
 
-
-init:
-	mkdir bin; mkdir includes
-
 usage:
-	@echo "Includes files : $(INC_DIR)\nExec files : $(BIN_DIR)"
+	@echo "make config : afficher les variables actuelles"
+	@echo "make init : créer les répertoires (sans test d'existence) et y envoyer les fichiers"
+	@echo "make clean: supprimer les objets redondants et exécutables"
+	@echo "make bin/dobby-<Tabulation> : éxécutables disponibles"
+
+config:
+	@echo "Includes files : $(INC_DIR) Exec files : $(BIN_DIR)"
 	@echo "Current compilation : $(CC) $(CFLAGS)"
 	@echo "Objectif : Dobby"
-clean:
-	rm -rf $(BIN_DIR)/* *.o ; mv *.h $(INC_DIR)/
+
+init:
+	mkdir bin; mkdir includes; mv *. $(INC_DIR)/
+
+clean: clean_bin clean_obj
+
+clean_bin:
+	rm -rf $(BIN_DIR)/* read-header read-section-table
+
+clean_obj:
+	rm -rf *.o
 
 %.o: %.c $(INC_DIR)/%.h
 	$(CC) $(CFLAGS) $(IFLAGS) $< -c
@@ -23,17 +34,19 @@ clean:
 #Final executables
 
 $(BIN_DIR)/dobby-read-header: read-header
-	mv $< $@
+	mv $< $@; make clean_obj
 
 $(BIN_DIR)/dobby-read-section-table: read-section-table
-	mv $< $@
+	mv $< $@; make clean_obj
+$(BIN_DIR)/dobby-read-section-content: read-section-content
+	mv $< $@; make clean_obj
 
 #Tmp executables
 read-header: read-header.o elf_header.o fread.o util.o
 read-section-table: read-section-table.o elf_header.o elf_section.o fread.o util.o
+read-section-content: read-section-content.o elf_header.o elf_section.o elf_section_content.o fread.o util.o
 
 #Objects
-read-header.o: $(INC_DIR)/elf_types.h
 
 elf_header.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 
