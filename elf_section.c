@@ -138,7 +138,7 @@ void display_section_header(FILE* f){
     const Elf32_Word ln = tab_section_hdr[i].sh_link;
     const Elf32_Word inf = tab_section_hdr[i].sh_info;
     const Elf32_Word al = tab_section_hdr[i].sh_addralign;
-    printf("[%2d] %-20s %-16s %08x %06x  %06x %02d %3s %2x %3d %2d\n",
+    printf("[%2d] %-20s %-16s %08x %06x  %06x %02x %3s %2d %3d %2d\n",
             i, nom,type,addr,offset,size,es,flags,ln,inf,al);
   }
 }
