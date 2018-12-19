@@ -50,11 +50,12 @@
 *Factorisation et poursuite du développement*
 
   * __Marius et Clément :__
-    * Affichage des tables de réimplantation.
-    * Factorisation de read-header.c.
+    * Affichage des tables de réimplantation (prototypes).
+    * Factorisation et correction de read-header.c (fonctions mises dans elf_header.c).
 
   * __Stephen et Laura :__
     * Affichage des tables de réimplantation.
+    * Modification du Makefile.
 
   * __Aurélien et Joris :__
     * Poursuite du développement de l'affichage de la table des symboles.
