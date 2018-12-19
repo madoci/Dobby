@@ -9,7 +9,7 @@ typedef struct {
 	Elf32_Addr		r_offset;
 	Elf32_Word		r_info;
 } Elf32_Rel;
- 
+
 typedef struct {
 	Elf32_Addr		r_offset;
 	Elf32_Word		r_info;
@@ -18,10 +18,10 @@ typedef struct {
 
 #define ELF32_R_SYM(i)	 ((i) >> 8)
 #define ELF32_R_TYPE(i) ((uint8_t)(i))
-#define ELF32_R_INFO(s,t) (((s) << 8) + (uint8_t) 
+#define ELF32_R_INFO(s,t) (((s) << 8) + (uint8_t)
 
 /* Relocations types, fig 1-22, page 29 */
-enum Elf_RelT { 
+enum Elf_RelT {
   R_386_NONE		        = 0,  /* No relocation */
   R_386_32		          = 1,  /* Symbol + Offset */
   R_ARM_ABS32           = 2,  /* Direct 32 bit  */
