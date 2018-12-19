@@ -118,7 +118,7 @@ void display_fileVersion(Elf32_Word  version){
 			printf_s("Version", "Invalid version");
 			break;
 		case EV_CURRENT:
-			printf(" Version","Current version");
+			printf_s(" Version","Current version");
 			break;
 	}
 }
