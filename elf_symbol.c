@@ -1,22 +1,26 @@
-#include "elf_symbols.h"
-#include "elf_type_symbol"
+#include "elf_symbol.h"
+#include "elf_types_symbol.h"
 #include "elf_header.h"
 
 #include <stdio.h>
 
-void read_elf_symbole_table(FILE *f, Elf32_Ehdr *hdr, Elf32_sym s_table){
+void read_elf_symbole_table(FILE *f, Elf32_Shdr *Shdr, Elf32_sym s_table){
 	unsigned int i;
-	for(i = 0; i<hdr.e_shnum; i++){
+	for(i = 0; i<Shdr.e_shnum; i++){
 		
 	}
 }
 
 void display_section_header(FILE* f){
-	Elf32_sym ElfS;
-	Elf32_Ehdr hrd;
-	read_elf_header(f, &header);
-
-	read_elf_symbole_table(f, &hdr);
+	Elf32_Ehdr header;
+	Elf32_Half i;
+ 	read_elf_header(f, &header);
+	Elf32_Half nbr_section = header.e_shnum;
+	Elf32_Shdr tab_section_hdr[nbr_section];
+	read_elf_section_table(f, &header, tab_section_hdr);
+	
+	read_elf_symbolr_table(f, tab_section_hdr[nbr_section], 
+	
 	Elf32_Half nbr_sym = header.e_shnum; //Verif
 
 	printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
