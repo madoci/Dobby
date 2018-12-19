@@ -4,24 +4,15 @@
 
 #include <stdio.h>
 
-void read_elf_symbole_table(FILE *f, Elf32_Shdr *Shdr, Elf32_sym s_table){
-	unsigned int i;
-	for(i = 0; i<Shdr.e_shnum; i++){
-		
+void read_elf_symbole_table(FILE *f, Elf32_Shdr Shdr, Elf32_sym s_table){
+	if(Shdr.sh_type == 2){
+		unsigned i=0;
+		fseek(
 	}
+	
 }
 
-void display_section_header(FILE* f){
-	Elf32_Ehdr header;
-	Elf32_Half i;
- 	read_elf_header(f, &header);
-	Elf32_Half nbr_section = header.e_shnum;
-	Elf32_Shdr tab_section_hdr[nbr_section];
-	read_elf_section_table(f, &header, tab_section_hdr);
-	
-	read_elf_symbolr_table(f, tab_section_hdr[nbr_section], 
-	
-	Elf32_Half nbr_sym = header.e_shnum; //Verif
+void display_section_header(FILE* f, Elf32_Shdr tab){
 
 	printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
 	printf(" Num:    Valeur Tail  Type   Lien   Vis      Ndx Nom");
