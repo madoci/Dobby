@@ -1,18 +1,34 @@
 #include "elf_symbol.h"
 #include "elf_types_symbol.h"
-#include "elf_header.h"
+#include "elf_section.h"
+#include "fread.h"
 
 #include <stdio.h>
 
 void read_elf_symbole_table(FILE *f, Elf32_Shdr Shdr, Elf32_sym s_table){
 	if(Shdr.sh_type == 2){
 		unsigned i=0;
-		fseek(
+		fseek(f, Shdr.sh_offset, SEEK_SET);
+    s_table = red_sym(f);
+    display_table_symbole(f, s_table);
 	}
-	
 }
 
-void display_section_header(FILE* f, Elf32_Shdr tab){
+Elf32_sym read_sym(FILE *f){
+  
+  Elf32_sym line;
+  fread_32bits(&(line.st_name),1, f);
+  fread_32bits(&(line.st_value), 1, f);
+  fread_32bits(&(line.st_size), 1, f);
+  fread_32bits(&(line.st_info), 1, f);
+  fread_32bits(&(line.st_other), 1, f);
+  fread_32bits(&(line.st_shndx), 1, f);
+  
+  return line;
+}
+
+
+void display_table_sym(FILE* f, Elf32_Shdr tab){
 
 	printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
 	printf(" Num:    Valeur Tail  Type   Lien   Vis      Ndx Nom");
