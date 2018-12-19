@@ -45,6 +45,7 @@ $(BIN_DIR)/dobby-read-section-content: read-section-content
 read-header: read-header.o elf_header.o fread.o util.o
 read-section-table: read-section-table.o elf_header.o elf_section.o fread.o util.o
 read-section-content: read-section-content.o elf_header.o elf_section.o elf_section_content.o fread.o util.o
+elf_symbol: elf_symbol.o
 
 #Objects
 
@@ -54,6 +55,8 @@ elf.o: $(INC_DIR)/elf_types.h
 elf_section.o: $(INC_DIR)/elf_types.h $(INC_DIR)/elf_header.h $(INC_DIR)/fread.h
 
 fread.o: $(INC_DIR)/util.h
+
+elf_symbol.o: $(INC_DIR)/elf_symbol.h $(INC_DIR)/elf_types_symbol.h $(INC_DIR)/elf_section.h $(INC_DIR)/fread.h
 
 #Convenient to headers
 

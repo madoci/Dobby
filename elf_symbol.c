@@ -3,20 +3,18 @@
 #include "elf_section.h"
 #include "fread.h"
 
-#include <stdio.h>
-
-void read_elf_symbole_table(FILE *f, Elf32_Shdr Shdr, Elf32_sym s_table){
+void read_elf_symbole_table(FILE *f, *Elf32_Shdr Shdr, *Elf32_Sym s_table){
 	if(Shdr.sh_type == 2){
 		unsigned i=0;
 		fseek(f, Shdr.sh_offset, SEEK_SET);
-    s_table = red_sym(f);
-    display_table_symbole(f, s_table);
+		s_table = read_sym(f);
+		display_table_symbole(f, s_table);
 	}
 }
 
-Elf32_sym read_sym(FILE *f){
+Elf32_Sym read_sym(FILE *f){
   
-  Elf32_sym line;
+  Elf32_Sym line;
   fread_32bits(&(line.st_name),1, f);
   fread_32bits(&(line.st_value), 1, f);
   fread_32bits(&(line.st_size), 1, f);
@@ -28,15 +26,15 @@ Elf32_sym read_sym(FILE *f){
 }
 
 
-void display_table_sym(FILE* f, Elf32_Shdr tab){
+void display_table_sym(FILE* f, *Elf32_Shdr tab){
 
-	printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
-	printf(" Num:    Valeur Tail  Type   Lien   Vis      Ndx Nom");
-//Refe place    0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 	
-	for(ELF32_Half i = 0 ; i < nbr_sym ; i++){
-		Elf_Addr val = ElfS.st_value;
+	// TODO printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
+	printf(" Num:\tValeur\tTail\tType\tLien\tVis\tNdx\tNom");
+	
+	for(Elf32_Half i = 0 ; i < nbr_sym ; i++){
+		Elf32_Addr val = ElfS.st_value;
 		Elf32_Word taille = ElfS.st_size;
-		unsigned char lien="NONE";
+		char *lien="NONE";
 		
 		unsigned char info = ElfS.st_info;
 		int b = ELF32_ST_BIND(info);
@@ -60,7 +58,7 @@ void display_table_sym(FILE* f, Elf32_Shdr tab){
 			printf("Erreur: Lien Symbole");
 			break;
 		}
-		unsigned char type="NONE";
+		char* type="NONE";
 		int t = ELF32_ST_TYPE(info);
 		switch(t){
 		case 0:
@@ -87,8 +85,17 @@ void display_table_sym(FILE* f, Elf32_Shdr tab){
 			printf("Erreur: Type symbole");
 			break;
 		}
-		Elf32_word nom = ElfS.st_name;
+		Elf32_Word nom = ElfS.st_name;
 		Elf32_Half ndx = ElfS.st_shndx;
-		printf(" %2d:    %08x %d  %s   %s  %s %s %s", i, val, taille, type, lien, ndx, nom);
+		printf(" %2d:\t%08x\t%d\t %s\t%s\t%s\t%s\t%s", i, val, taille, type, lien, ndx, nom);
 	}
+}
+
+int main(int argc, char **argv){
+	FILE* f = fopen(argv[1], "r");
+	Elf32_Shdr Shdr;
+	Elf32_Sym s_table;
+	read_elf_symbol_table(f, &Shdr, &s_table);
+	display_table_sym(f, &Shdr);
+	fclose(f);
 }
