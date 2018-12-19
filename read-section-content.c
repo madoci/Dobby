@@ -54,6 +54,7 @@ int main(int argc, char* argv[]){
   Err_ELF_Header err_hdr = read_elf_header(f, &hdr);
   if (err_hdr != ERR_EH_NONE){
     printf("Erreur de lecture du header : %d\n.", err_hdr);
+    fclose(f);
     return -1;
   }
 
@@ -63,14 +64,16 @@ int main(int argc, char* argv[]){
   int num;
   switch (opt){
     case SELSECTION_OPT_NAME:
-      display_elf_section_content_by_name(f, sh_tab, hdr, argv[sel_i]);
-      break;
+    display_elf_section_content_by_name(f, sh_tab, hdr, argv[sel_i]);
+    break;
     case SELSECTION_OPT_NUM:
-      num = atoi(argv[sel_i]);
-      display_elf_section_content_by_num(f, sh_tab, hdr, num);
-      break;
+    num = atoi(argv[sel_i]);
+    display_elf_section_content_by_num(f, sh_tab, hdr, num);
+    break;
     default:;
   }
+
+  fclose(f);
 
   return 0;
 }
