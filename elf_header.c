@@ -3,30 +3,30 @@
 #include "fread.h"
 
 Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
-  if(hdr->e_ident[EI_MAG0] != ELFMAG0 ||
-     hdr->e_ident[EI_MAG1] != ELFMAG1 ||
-     hdr->e_ident[EI_MAG2] != ELFMAG2 ||
-     hdr->e_ident[EI_MAG3] != ELFMAG3){
+  if (hdr->e_ident[EI_MAG0] != ELFMAG0 ||
+      hdr->e_ident[EI_MAG1] != ELFMAG1 ||
+      hdr->e_ident[EI_MAG2] != ELFMAG2 ||
+      hdr->e_ident[EI_MAG3] != ELFMAG3){
     return ERR_EH_IMAG;
   }
-  if(hdr->e_ident[EI_CLASS] != ELFCLASSNONE &&
-     hdr->e_ident[EI_CLASS] != ELFCLASS32  &&
-     hdr->e_ident[EI_CLASS] != ELFCLASS64){
+  if (hdr->e_ident[EI_CLASS] != ELFCLASSNONE &&
+      hdr->e_ident[EI_CLASS] != ELFCLASS32  &&
+      hdr->e_ident[EI_CLASS] != ELFCLASS64){
     return ERR_EH_ICLASS;
   }
-  if(hdr->e_ident[EI_DATA] != ELFDATANONE &&
-     hdr->e_ident[EI_DATA] != ELFDATA2LSB &&
-     hdr->e_ident[EI_DATA] != ELFDATA2MSB){
+  if (hdr->e_ident[EI_DATA] != ELFDATANONE &&
+      hdr->e_ident[EI_DATA] != ELFDATA2LSB &&
+      hdr->e_ident[EI_DATA] != ELFDATA2MSB){
     return ERR_EH_IDATA;
   }
-  if(hdr->e_ident[EI_VERSION] != EI_VALVERSION){
+  if (hdr->e_ident[EI_VERSION] != EI_VALVERSION){
     return ERR_EH_IVERSION;
   }
-  if(hdr->e_ident[EI_OSABI] != ELFOSABI_ARM_AEABI &&
-     hdr->e_ident[EI_OSABI] != ELFOSABI_NONE){
+  if (hdr->e_ident[EI_OSABI] != ELFOSABI_ARM_AEABI &&
+      hdr->e_ident[EI_OSABI] != ELFOSABI_NONE){
     return ERR_EH_IOSABI;
   }
-  if(hdr->e_ident[EI_PAD] != EI_VALPAD){
+  if (hdr->e_ident[EI_PAD] != EI_VALPAD){
     return ERR_EH_IPAD;
   }
   return ERR_EH_NONE;
@@ -34,21 +34,21 @@ Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
 
 
 Err_ELF_Header check_type(Elf32_Ehdr* hdr){
-  if(hdr->e_type != ET_NONE   &&
-     hdr->e_type != ET_REL    &&
-     hdr->e_type != ET_EXEC   &&
-     hdr->e_type != ET_DYN    &&
-     hdr->e_type != ET_CORE   &&
-     hdr->e_type != ET_LOPROC &&
-     hdr->e_type != ET_HIPROC){
+  if (hdr->e_type != ET_NONE   &&
+      hdr->e_type != ET_REL    &&
+      hdr->e_type != ET_EXEC   &&
+      hdr->e_type != ET_DYN    &&
+      hdr->e_type != ET_CORE   &&
+      hdr->e_type != ET_LOPROC &&
+      hdr->e_type != ET_HIPROC){
   }
   return ERR_EH_NONE;
 }
 
 
 Err_ELF_Header check_machine(Elf32_Ehdr* hdr){
-  if(hdr->e_machine != EM_NONE &&
-     hdr->e_machine != EM_ARM){
+  if (hdr->e_machine != EM_NONE &&
+      hdr->e_machine != EM_ARM){
     return ERR_EH_MACHINE;
   }
   return ERR_EH_NONE;
@@ -56,8 +56,8 @@ Err_ELF_Header check_machine(Elf32_Ehdr* hdr){
 
 
 Err_ELF_Header check_version(Elf32_Ehdr* hdr){
-  if(hdr->e_version != EV_NONE &&
-     hdr->e_version != EV_CURRENT){
+  if (hdr->e_version != EV_NONE &&
+      hdr->e_version != EV_CURRENT){
     return ERR_EH_VERSION;
   }
   return ERR_EH_NONE;
@@ -65,12 +65,12 @@ Err_ELF_Header check_version(Elf32_Ehdr* hdr){
 
 
 Err_ELF_Header check_flags(Elf32_Ehdr* hdr){
-  if((hdr->e_flags & ~EF_ARM_ABIMASK)        &
-     (hdr->e_flags & ~EF_ARM_ABIVER)         &
-     (hdr->e_flags & ~EF_ARM_BE8)            &
-     (hdr->e_flags & ~EF_ARM_GCCMASK)        &
-     (hdr->e_flags & ~EF_ARM_ABI_FLOAT_HARD) &
-     (hdr->e_flags & ~EF_ARM_ABI_FLOAT_SOFT)){
+  if ((hdr->e_flags & ~EF_ARM_ABIMASK)        &
+      (hdr->e_flags & ~EF_ARM_ABIVER)         &
+      (hdr->e_flags & ~EF_ARM_BE8)            &
+      (hdr->e_flags & ~EF_ARM_GCCMASK)        &
+      (hdr->e_flags & ~EF_ARM_ABI_FLOAT_HARD) &
+      (hdr->e_flags & ~EF_ARM_ABI_FLOAT_SOFT)){
     return ERR_EH_FLAGS;
   }
   return ERR_EH_NONE;
@@ -86,14 +86,13 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   fread_8bits(hdr->e_ident, 16, f);
 
   erreur = check_ident(hdr);
-  if(erreur != ERR_EH_NONE){
+  if (erreur != ERR_EH_NONE){
     return erreur;
   }
 
-  if(hdr->e_ident[EI_DATA]==ELFDATA2MSB){
+  if (hdr->e_ident[EI_DATA]==ELFDATA2MSB){
     set_big_endian();
-  }
-  else{
+  } else {
     set_little_endian();
   }
 
@@ -102,7 +101,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   fread_16bits(&(hdr->e_type), 1, f);
 
   erreur = check_type(hdr);
-  if(erreur != ERR_EH_NONE){
+  if (erreur != ERR_EH_NONE){
     return erreur;
   }
 
@@ -111,7 +110,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   fread_16bits(&(hdr->e_machine), 1, f);
 
   erreur = check_machine(hdr);
-  if(erreur != ERR_EH_NONE){
+  if (erreur != ERR_EH_NONE){
     return erreur;
   }
 
@@ -120,7 +119,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   fread_32bits(&(hdr->e_version), 1, f);
 
   erreur = check_version(hdr);
-  if(erreur != ERR_EH_NONE){
+  if (erreur != ERR_EH_NONE){
     return erreur;
   }
 
@@ -141,7 +140,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   fread_32bits(&(hdr->e_flags), 1, f);
 
   erreur = check_flags(hdr);
-  if(erreur != ERR_EH_NONE){
+  if (erreur != ERR_EH_NONE){
     return erreur;
   }
 
