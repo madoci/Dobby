@@ -14,7 +14,7 @@ int compare_name(FILE *f, char *str){
 }
 
 
-void read_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
+void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
   Elf32_Half num = 0;
   long int str_offset = tab[hdr.e_shstrndx].sh_offset;
 
@@ -37,7 +37,7 @@ void read_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr,
 }
 
 
-void read_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, Elf32_Half num){
+void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, Elf32_Half num){
   if (num < 0 || hdr.e_shnum <= num){
     printf("Le numéro de section n'existe pas.\n");
     return;
