@@ -1,22 +1,22 @@
-# Journal de bord du capitaine Dobby
+# Journal de bord du Capitaine Dobby
 
 
 * ## Vendredi 14 décembre 2018
-*Prise en connaissance de la doc*
-> Premier jour du capitaine dobby, le wati-vaisseau s'est échoué sur l'ile Euh-aile-aife,
-> après l'attaque du corsaire Mc ah airaime.
-> Tout ceci promet d'être long moussaillons !
+*Prise de connaissance de la doc*
+> Après l'attaque du corsaire Alexander Lawrence Mccormack, le Wati Water a subit de lourds dégâts. 
+> Mon précieux navire s'est échoué sur une île inconnue (que je vais nommée... euh... Aile-Ef) et nous voilà coincés ici.
+> Tout ceci promet d'être long, moussaillons !
 
 * ## Lundi 17 décembre 2018
 *Répartition des taches et organisation en binomes*
-> Moi capitaine dobby ait affecté les premières taches vitales, ces bons à rien
-> n'y comprendront surement rien, je les jetterais aux pingouins !
+> En tant que capitaine, j'ai affecté les premières tâches vitales pour notre survie. Ces bons à rien
+> n'y comprendront sûrement rien, je les jetterais aux manchots !
 
   * __Marius et Clément :__
     * Rédaction du fichier .h contenant les structures et les types nécessaires ( elf_types.h ).
     * Affichage de la table des sections (elf_section.c, elf_section.h).
 
-> Les mousses Clément et Marius sont affectés à comprendre la géographie de cette ile étrange
+> Les mousses Clément et Marius sont affectés à comprendre la géographie de cette île étrange.
 
   * __Stephen et Laura :__
     * Lecture du header (elf_header.c, elf_header.h).
@@ -28,10 +28,9 @@
 
 * ## Mardi 18 décembre 2018
 *Correction des erreurs et poursuite du développement*
-> L'abri a bien avancé il faut maintenant le ranger. Certains matelots finissent de monter leur tente de fortune.
-
-> Moi, Capitaine Dobby, je m'enrichis de ce que mes matelots me rapportent. J'ai divisé l'ile en sections et je commence
-> à connaitre les symboles cabalistiques que l'on trouve ici et là !
+> L'abri a bien avancé, mais il faut maintenant le ranger. Certains matelots finissent de monter leur tente de fortune.
+> Moi, Capitaine Dobby, je m'enrichis de ce que mes matelots me rapportent. J'ai divisé l'île en sections, et en explorant
+> les lieux, j'ai découvert des symboles cabalistiques disséminés un peu partout !
 
   * __Marius :__
     * Organisation des dossiers et renommage des fichiers pour respecter une standardisation.
@@ -50,10 +49,11 @@
     * Terminaison et correction de read-header.c.
     * Affichage de la table des symboles (elf_symbol.c, elf_symbol.h).
 
-* ## Mercredi 19 décembre 2018... __[à compléter]__
+* ## Mercredi 19 décembre 2018
 *Factorisation et poursuite du développement*
-> Mes matelots n'ont pas bien travaillé, ils passent une bonne partie de la journée à réparer les murs de l'abri qui
-> s'écroulent ! Nous avons été attaqué par diverses créatures, telles que les saigfolteux. Ce séjour promet d'être compliqué...
+> Mes matelots n'ont pas bien travaillé ! Ils passent une bonne partie de la journée à réparer les murs de l'abri qui
+> s'écroulent ! Et pour couronner le tout, nous avons été attaqués par diverses créatures ! Satanés saigfolteux !
+> Ce séjour forcé s'annonce compliqué...
 
   * __Marius et Clément :__
     * Affichage des tables de réimplantation (prototypes).
