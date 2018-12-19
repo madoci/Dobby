@@ -49,7 +49,7 @@ enum Elf_IMagic{
 
 enum Elf_IClass{
   ELFCLASSNONE  = 0,  //invalid arch
-  ELFCLASS32    = 1,  //32 bits arch 
+  ELFCLASS32    = 1,  //32 bits arch
   ELFCLASS64    = 2   //64 bits arch
 };
 
@@ -97,7 +97,6 @@ enum Elf_Version {
 //Values of e_flags SPECIFIC TO ARM
 enum Elf_Flags {
   EF_ARM_ABIMASK        = 0xFF000000,
-  EF_ARM_ABIVER         = 0x05000000,
   EF_ARM_BE8            = 0x00800000,
   EF_ARM_GCCMASK        = 0x00400FFF,
   EF_ARM_ABI_FLOAT_HARD = 0x00000400,
