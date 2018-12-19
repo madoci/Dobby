@@ -40,7 +40,7 @@
     * Affichage de la table des symboles (elf_symbol.c, elf_symbol.h).
     
 * ## Mercredi 19 décembre 2018... __[à compléter]__
-*Factorisation et poursuite du dévelopmment*
+*Factorisation et poursuite du développement*
 
   * __Marius :__
     * Affichage des tables de réimplantation.
