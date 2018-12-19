@@ -36,71 +36,65 @@ void display_ident(unsigned char e_ident[]){
 void display_class(unsigned char class){
 	switch(class){
 		case ELFCLASSNONE:
-			printf(" Classe: ELF invalid arch\n");
+			printf_s("Classe","ELF invalid arch");
 			break;
 		case ELFCLASS32:
-			printf(" Classe: ELF32\n");
+			printf_s("Classe","ELF32");
 			break;
 		case ELFCLASS64:
-			printf(" Classe: ELF64\n");
+			printf_s("Classe","ELF64");
 			break;
 	}
 }
 void display_data(unsigned char data){
 	switch(data){
 		case ELFDATANONE:
-			printf(" Données: Invalid data\n");
+			printf_s("Données","Invalid data");
 			break;
 		case ELFDATA2LSB:
-			printf(" Données: Little Endian\n");
+			printf_s("Données","Little Endian");
 			break;
 		case ELFDATA2MSB:
-			printf(" Données: Big Endian\n");
-			break;
-		default:
-			printf(" Données: Erreur\n");
+			printf_s("Données","Big Endian");
 			break;
 	}
 }
 void display_eiVersion(unsigned char version){
-	printf(" Version courante : %d\n", version);
+	printf_d("Version courante",version);
 }
 void display_osabi(unsigned char osabi){
 
 	switch(osabi){
 		case ELFOSABI_NONE:
-			printf(" OS/ABI: None\n");
+			printf_s("OS/ABI","None");
 			break;
 		case ELFOSABI_ARM_AEABI:
-			printf(" OS/ABI: ARM_AEABI\n");
+			printf_s("OS/ABI","ARM_AEABI");
 			break;
-		default:
-			printf(" OS/ABI: Erreur");
-			break;
-	}
+}
 }
 void display_type(Elf32_Half type){
 
 	switch (type){
 		case ET_NONE:
-			printf(" Type: No file type\n");
+			printf_s("Type","No file type");
 			break;
 		case ET_REL:
-			printf(" Type: Relocatable file\n");
+			printf_s("Type","Relocatable file");
 			break;
 		case ET_EXEC:
-			printf(" Type: Executable file\n");
+			printf_s("Type","Executable file");
 			break;
 		case ET_DYN:
-			printf(" Type: Shared object file\n");
+			printf_s("Type","Shared object file");
 			break;
 		case ET_CORE:
-			printf(" Type: Core file\n");
+			printf_s("Type","Core file");
 			break;
 		case ET_LOPROC:
 			// Fall through
 		case ET_HIPROC:
-			printf(" Type: Processor-specific\n");
+			printf_s("Type","Processor-specific");
 			break;
 	}
 }
@@ -117,10 +111,10 @@ void display_machine(Elf32_Half machine){
 void display_fileVersion(Elf32_Word  version){
 	switch(version){
 		case EV_NONE:
-			printf(" Version: Invalid version\n");
+			printf_s("Version", "Invalid version");
 			break;
 		case EV_CURRENT:
-			printf(" Version: Current version\n");
+			printf(" Version","Current version");
 			break;
 	}
 }
@@ -140,7 +134,7 @@ void display_flags(Elf32_Word flag){
 	printf("\n");
 }
 void display_verAbi(Elf32_Word flag){
-	printf("Version ABI: %d\n", (flag & EF_ARM_ABIMASK) >>24);
+	printf_d("Version ABI:", (flag & EF_ARM_ABIMASK) >>24);
 }
 
 int main(int argc, char **argv){
