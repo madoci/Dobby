@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define printf_8x(s,x) printf("%-50s : 0x%08x\n",s,x)
-#define printf_d(s,d) printf("%-50s : %d\n",s,d)
-#define printf_s(s,s2) printf("%-50s : %s\n",s,s2)
+#define printf_8x(s,x) printf("\t%-50s\t0x%08x\n",s,x)
+#define printf_d(s,d) printf("\t%-50s\t%d\n",s,d)
+#define printf_s(s,s2) printf("\t%-50s\t%s\n",s,s2)
+#define printf_se(s) printf("\t%-50s\t",s)
 
 void display_header(Elf32_Ehdr * Elf){
 	printf("En-tête ELF:\n");
-	printf("Magique: ");
+	printf("\tMagique: ");
 	for(int i = 0;i < EI_NIDENT;i++){
 		printf("%02x ", Elf->e_ident[i]);
 	}
@@ -20,16 +21,16 @@ void display_header(Elf32_Ehdr * Elf){
 	display_type(Elf->e_type);
 	display_machine(Elf->e_machine);
 	display_fileVersion(Elf->e_version);
-	printf_8x("Adresse du point d'entrée", Elf->e_entry);
-	printf_d("Début des en-têtes du programme", Elf->e_phoff);
-	printf_d("Début des en-têtes de section", Elf->e_shoff);
+	printf_8x("Adresse du point d'entrée:", Elf->e_entry);
+	printf_d("Début des en-têtes du programme:", Elf->e_phoff);
+	printf_d("Début des en-têtes de section:", Elf->e_shoff);
 	display_flags(Elf->e_flags);
-	printf_d("Taille de cet en-tête du programme", Elf->e_ehsize);
-	printf_d("Taille de l'en-tête du programme", Elf->e_phentsize);
-	printf_d("Nombre d'en-tête du programme", Elf->e_phnum);
-	printf_d("Taille des en-têtes de section", Elf->e_shentsize);
-	printf_d("Nombre d'en-tête de section", Elf->e_shnum);
-	printf_d("Table d'indexe des chaines d'en-tête de section", Elf->e_shstrndx);
+	printf_d("Taille de cet en-tête du programme:", Elf->e_ehsize);
+	printf_d("Taille de l'en-tête du programme:", Elf->e_phentsize);
+	printf_d("Nombre d'en-tête du programme:", Elf->e_phnum);
+	printf_d("Taille des en-têtes de section:", Elf->e_shentsize);
+	printf_d("Nombre d'en-tête de section:", Elf->e_shnum);
+	printf_d("Table d'indexe des chaines d'en-tête de section:", Elf->e_shstrndx);
 }
 void display_ident(unsigned char e_ident[]){
 	display_class(e_ident[EI_CLASS]);
@@ -40,40 +41,40 @@ void display_ident(unsigned char e_ident[]){
 void display_class(unsigned char class){
 	switch(class){
 		case ELFCLASSNONE:
-			printf_s("Classe","ELF invalid arch");
+			printf_s("Classe:","ELF invalid arch");
 			break;
 		case ELFCLASS32:
-			printf_s("Classe","ELF32");
+			printf_s("Classe:","ELF32");
 			break;
 		case ELFCLASS64:
-			printf_s("Classe","ELF64");
+			printf_s("Classe:","ELF64");
 			break;
 	}
 }
 void display_data(unsigned char data){
 	switch(data){
 		case ELFDATANONE:
-			printf_s("Données","Invalid data");
+			printf_s("Données:","Invalid data");
 			break;
 		case ELFDATA2LSB:
-			printf_s("Données","Little Endian");
+			printf_s("Données:","Little Endian");
 			break;
 		case ELFDATA2MSB:
-			printf_s("Données","Big Endian");
+			printf_s("Données:","Big Endian");
 			break;
 	}
 }
 void display_eiVersion(unsigned char version){
-	printf_d("Version courante",version);
+	printf_d("Version courante:",version);
 }
 void display_osabi(unsigned char osabi){
 
 	switch(osabi){
 		case ELFOSABI_NONE:
-			printf_s("OS/ABI","None");
+			printf_s("OS/ABI:","None");
 			break;
 		case ELFOSABI_ARM_AEABI:
-			printf_s("OS/ABI","ARM_AEABI");
+			printf_s("OS/ABI:","ARM_AEABI");
 			break;
 }
 }
@@ -81,50 +82,50 @@ void display_type(Elf32_Half type){
 
 	switch (type){
 		case ET_NONE:
-			printf_s("Type","No file type");
+			printf_s("Type:","No file type");
 			break;
 		case ET_REL:
-			printf_s("Type","Relocatable file");
+			printf_s("Type:","Relocatable file");
 			break;
 		case ET_EXEC:
-			printf_s("Type","Executable file");
+			printf_s("Type:","Executable file");
 			break;
 		case ET_DYN:
-			printf_s("Type","Shared object file");
+			printf_s("Type:","Shared object file");
 			break;
 		case ET_CORE:
-			printf_s("Type","Core file");
+			printf_s("Type:","Core file");
 			break;
 		case ET_LOPROC:
 		// Fall through
 		case ET_HIPROC:
-			printf_s("Type","Processor-specific");
+			printf_s("Type:","Processor-specific");
 			break;
 	}
 }
 void display_machine(Elf32_Half machine){
 	switch(machine){
 		case EM_NONE:
-		printf_s("Machine","No machine");
+		printf_s("Machine:","No machine");
 		break;
 		case EM_ARM:
-		printf_s("Machine","ARM");
+		printf_s("Machine:","ARM");
 		break;
 	}
 }
 void display_fileVersion(Elf32_Word  version){
 	switch(version){
 		case EV_NONE:
-			printf_s("Version", "Invalid version");
+			printf_s("Version:", "Invalid version");
 			break;
 		case EV_CURRENT:
-			printf_s("Version","Current version");
+			printf_s("Version:","Current version");
 			break;
 	}
 }
 void display_flags(Elf32_Word flag){
 
-	printf("Fanions:\t");
+	printf_se("Fanions:");
 
 	if(flag & EF_ARM_BE8)
 	printf("EF_ARM_BE8 ");
