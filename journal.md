@@ -3,8 +3,8 @@
 
 * ## Vendredi 14 décembre 2018
 *Prise en connaissance de la doc*
-> Premier jour du capitaine dobby, le wati-vaisseau s'est échoué sur l'ile Euh-aile-aife
-> Après l'attaque du corsaire Mc ah airaime.
+> Premier jour du capitaine dobby, le wati-vaisseau s'est échoué sur l'ile Euh-aile-aife,
+> après l'attaque du corsaire Mc ah airaime.
 > Tout ceci promet d'être long moussaillons !
 
 * ## Lundi 17 décembre 2018
