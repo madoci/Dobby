@@ -42,13 +42,12 @@
 * ## Mercredi 19 décembre 2018... __[à compléter]__
 *Factorisation et poursuite du développement*
 
-  * __Marius :__
+  * __Marius et Clément :__
     * Affichage des tables de réimplantation.
-    
-  * __Clément :__
     * Factorisation de read-header.c.
     
   * __Stephen et Laura :__
+    * Affichage des tables de réimplantation.
   
   * __Aurélien et Joris :__
     * Poursuite du développement de l'affichage de la table des symboles.
