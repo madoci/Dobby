@@ -66,7 +66,6 @@ Err_ELF_Header check_version(Elf32_Ehdr* hdr){
 
 Err_ELF_Header check_flags(Elf32_Ehdr* hdr){
   if ((hdr->e_flags & ~EF_ARM_ABIMASK)        &
-      (hdr->e_flags & ~EF_ARM_ABIVER)         &
       (hdr->e_flags & ~EF_ARM_BE8)            &
       (hdr->e_flags & ~EF_ARM_GCCMASK)        &
       (hdr->e_flags & ~EF_ARM_ABI_FLOAT_HARD) &
