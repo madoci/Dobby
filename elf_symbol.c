@@ -3,10 +3,10 @@
 #include "elf_section.h"
 #include "fread.h"
 
-void read_elf_symbole_table(FILE *f, *Elf32_Shdr Shdr, *Elf32_Sym s_table){
-	if(Shdr.sh_type == 2){
+void read_elf_symbol_table(FILE *f, Elf32_Shdr* Shdr, Elf32_Sym* s_table){
+	if(Shdr->sh_type == 2){
 		unsigned i=0;
-		fseek(f, Shdr.sh_offset, SEEK_SET);
+		fseek(f, Shdr->sh_offset, SEEK_SET);
 		s_table = read_sym(f);
 		display_table_symbole(f, s_table);
 	}
@@ -26,9 +26,11 @@ Elf32_Sym read_sym(FILE *f){
 }
 
 
-void display_table_sym(FILE* f, *Elf32_Shdr tab){
+void display_table_sym(FILE* f, Elf32_Shdr* tab){
 
 	// TODO printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
+	Elf32_Half nbr_sym = header.e_shnum;
+	Elf32_Sym ElfS;
 	printf(" Num:\tValeur\tTail\tType\tLien\tVis\tNdx\tNom");
 	
 	for(Elf32_Half i = 0 ; i < nbr_sym ; i++){
@@ -87,7 +89,7 @@ void display_table_sym(FILE* f, *Elf32_Shdr tab){
 		}
 		Elf32_Word nom = ElfS.st_name;
 		Elf32_Half ndx = ElfS.st_shndx;
-		printf(" %2d:\t%08x\t%d\t %s\t%s\t%s\t%s\t%s", i, val, taille, type, lien, ndx, nom);
+		printf(" %2d:\t%08x\t%d\t %s\t%s\t%d\t%d\t%s", i, val, taille, type, lien, ndx, nom);
 	}
 }
 
