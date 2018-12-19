@@ -8,9 +8,9 @@
 
 
 typedef enum {
-  SELSECTION_OPT_NONE,
-  SELSECTION_OPT_NAME,
-  SELSECTION_OPT_NUM
+    SELSECTION_OPT_NONE,
+    SELSECTION_OPT_NAME,
+    SELSECTION_OPT_NUM
 } SelSection_Option;
 
 
@@ -64,12 +64,12 @@ int main(int argc, char* argv[]){
   int num;
   switch (opt){
     case SELSECTION_OPT_NAME:
-    display_elf_section_content_by_name(f, sh_tab, hdr, argv[sel_i]);
-    break;
+      display_elf_section_content_by_name(f, sh_tab, hdr, argv[sel_i]);
+      break;
     case SELSECTION_OPT_NUM:
-    num = atoi(argv[sel_i]);
-    display_elf_section_content_by_num(f, sh_tab, hdr, num);
-    break;
+      num = atoi(argv[sel_i]);
+      display_elf_section_content_by_num(f, sh_tab, hdr, num);
+      break;
     default:;
   }
 
