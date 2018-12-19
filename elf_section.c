@@ -1,7 +1,7 @@
 #include "elf_section.h"
 #include "elf_header.h"
 #include "fread.h"
-#include "extract_string_table"
+#include "elf_string_table.h"
 #include <stdio.h>
 
 void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){

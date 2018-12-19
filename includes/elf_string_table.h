@@ -6,6 +6,6 @@
 
 /* Return the string table
   F must be positionned at beginning of string table */
-char * extract_string_table(FILE *f, Elf32_Shdr str)
+char * extract_string_table(FILE *f, Elf32_Shdr str);
 
 #endif

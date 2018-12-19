@@ -21,7 +21,7 @@ typedef struct {
 #define ELF32_R_INFO(s,t) (((s) << 8) + (uint8_t) t)
 
 /* Relocations types, fig 1-22, page 29 */
-enum Elf_RelT {
+typedef enum {
   R_386_NONE		        = 0,  /* No relocation */
   R_386_32		          = 1,  /* Symbol + Offset */
   R_ARM_ABS32           = 2,  /* Direct 32 bit  */
@@ -31,6 +31,6 @@ enum Elf_RelT {
   R_ARM_ABS32_NOI       = 55, /* Direct 32-bit.  */
   R_ARM_JUMP24          = 29, /* PC relative 24 bit */
   R_ARM_CALL            = 28  /* PC relative 24 bit (BL, BLX).  */
-};
+} Elf_RelT;
 
 #endif

@@ -1,8 +1,9 @@
 BIN_DIR=bin
 INC_DIR=includes
+OBJ_DIR=obj
 
 CC=clang
-CSTD=c99
+CSTD=c11
 CFLAGS=-Wall -Werror --std=$(CSTD) -I$(INC_DIR)
 
 
@@ -23,37 +24,37 @@ init:
 clean: clean_bin clean_obj
 
 clean_bin:
-	rm -rf $(BIN_DIR)/* read-header read-section-table
+	rm -rf $(BIN_DIR)/*
 
 clean_obj:
-	rm -rf *.o
+	rm -rf $(OBJ_DIR)/*.o
 
-%.o: %.c $(INC_DIR)/%.h
-	$(CC) $(CFLAGS) $(IFLAGS) $< -c
+$(OBJ_DIR)/%.o: %.c $(INC_DIR)/%.h
+	$(CC) $(CFLAGS) $(IFLAGS) $< -c -o $@
 
 #Final executables
 
-$(BIN_DIR)/dobby-read-header: read-header
-	mv $< $@
+$(BIN_DIR)/dobby-%: %.c
+	$(CC) $(CFLAGS) $(IFLAGS) $^ -o $@
 
-$(BIN_DIR)/dobby-read-section-table: read-section-table
-	mv $< $@
-$(BIN_DIR)/dobby-read-section-content: read-section-content
-	mv $< $@
-
-#Tmp executables
-read-header: read-header.o elf_header.o fread.o util.o
-read-section-table: read-section-table.o elf_header.o elf_section.o fread.o util.o
-read-section-content: read-section-content.o elf_header.o elf_section.o elf_section_content.o fread.o util.o
+$(BIN_DIR)/dobby-read-header:           $(OBJ_DIR)/elf_header.o                                                            $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o
+$(BIN_DIR)/dobby-read-section-table:    $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section.o                                   $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
+$(BIN_DIR)/dobby-read-section-content:  $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section.o $(OBJ_DIR)/elf_section_content.o  $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
+$(BIN_DIR)/dobby-read-relocation-table: $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section.o $(OBJ_DIR)/elf_relocation.o       $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
 
 #Objects
 
-elf_header.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_header.o:          $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 
-elf.o: $(INC_DIR)/elf_types.h
-elf_section.o: $(INC_DIR)/elf_types.h $(INC_DIR)/elf_header.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_section.o:         $(INC_DIR)/elf_types.h $(INC_DIR)/elf_header.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h
 
-fread.o: $(INC_DIR)/util.h
+$(OBJ_DIR)/elf_section_content.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h
+
+$(OBJ_DIR)/elf_relocation.o:      $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h
+
+$(OBJ_DIR)/elf_string_table.o:    $(INC_DIR)/elf_types.h
+
+$(OBJ_DIR)/fread.o:               $(INC_DIR)/util.h
 
 #Convenient to headers
 

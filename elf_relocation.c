@@ -1,4 +1,4 @@
-#include "elf_relocations.h"
+#include "elf_relocation.h"
 #include "fread.h"
 
 
@@ -63,7 +63,7 @@ void display_rel_table(FILE* f, Elf32_Shdr *shdr){
 	Elf32_Rel entries[shdr->sh_size/sizeof(Elf32_Rel)];
 	read_rel_section(f, shdr, entries);
 
-  printf("%-8s %-8s %-15s %-8s\n",
+  printf(" %-8s  %-8s  %-15s  %-8s\n",
          "Decalage", "Info", "Type", "Ind.-sym");
 
 	unsigned int i;
@@ -72,7 +72,7 @@ void display_rel_table(FILE* f, Elf32_Shdr *shdr){
     const Elf32_Word inf = entries[i].r_info;
     const char *type = relocation_type(ELF32_R_TYPE(entries[i].r_info));
     const Elf32_Word ind = ELF32_R_SYM(entries[i].r_info);
-    printf("%08x %08x %-15s %-8d\n",
+    printf(" %08x  %08x  %-15s  %-8d\n",
            decal, inf, type, ind);
 	}
 }
@@ -81,7 +81,7 @@ void display_rela_table(FILE* f, Elf32_Shdr *shdr){
 	Elf32_Rela entries[shdr->sh_size/sizeof(Elf32_Rela)];
 	read_rela_section(f, shdr, entries);
 
-  printf("%-8s %-8s %-15s %-8s %-8s\n",
+  printf(" %-8s  %-8s  %-15s  %-8s  %-8s\n",
          "Decalage", "Info", "Type", "Ind.-sym", "Addend");
 
 	unsigned int i;
@@ -91,20 +91,21 @@ void display_rela_table(FILE* f, Elf32_Shdr *shdr){
     const char *type = relocation_type(ELF32_R_TYPE(entries[i].r_info));
     const Elf32_Word ind = ELF32_R_SYM(entries[i].r_info);
     const Elf32_Sword	addend = entries[i].r_addend;
-    printf("%08x %08x %-15s %-8d %-8d\n",
+    printf(" %08x  %08x  %-15s  %-8d  %-8d\n",
            decal, inf, type, ind, addend);
 	}
 }
 
-void display_all_relocation_table(FILE* f, Elf32_Hdr *hdr, Elf32_Shdr shdr[]){
-
-	  unsigned int i;
+void display_all_relocation_table(FILE* f, Elf32_Ehdr *hdr, Elf32_Shdr shdr[]){
+  unsigned int i;
   for(i=0; i<hdr->e_shnum; i++){
     if(shdr[i].sh_type == SHT_REL){
-    	diplay_rel_table(f, &shdr[i]);
+    	display_rel_table(f, &shdr[i]);
+      printf("\n");
     }
     else if(shdr[i].sh_type == SHT_RELA){
-    	diplay_rela_table(f, &shdr[i]);
+    	display_rela_table(f, &shdr[i]);
+      printf("\n");
     }
   }
 }

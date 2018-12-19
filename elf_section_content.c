@@ -33,7 +33,7 @@ void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr h
     return;
   }
 
-  read_elf_section_content_by_num(f, tab, hdr, num);
+  display_elf_section_content_by_num(f, tab, hdr, num);
 }
 
 
