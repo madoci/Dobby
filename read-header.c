@@ -10,7 +10,7 @@
 
 void display_header(Elf32_Ehdr * Elf){
 	printf("En-tête ELF:\n");
-	printf(" Magique: ");
+	printf("Magique: ");
 	for(int i = 0;i < EI_NIDENT;i++){
 		printf("%02x ", Elf->e_ident[i]);
 	}
