@@ -41,6 +41,7 @@ $(BIN_DIR)/dobby-read-header:           $(OBJ_DIR)/elf_header.o                 
 $(BIN_DIR)/dobby-read-section-table:    $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section.o                                   $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
 $(BIN_DIR)/dobby-read-section-content:  $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section.o $(OBJ_DIR)/elf_section_content.o  $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
 $(BIN_DIR)/dobby-read-relocation-table: $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section.o $(OBJ_DIR)/elf_relocation.o       $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
+elf_symbol: elf_symbol.o
 
 #Objects
 
@@ -55,6 +56,8 @@ $(OBJ_DIR)/elf_relocation.o:      $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(IN
 $(OBJ_DIR)/elf_string_table.o:    $(INC_DIR)/elf_types.h
 
 $(OBJ_DIR)/fread.o:               $(INC_DIR)/util.h
+
+elf_symbol.o: $(INC_DIR)/elf_symbol.h $(INC_DIR)/elf_types_symbol.h $(INC_DIR)/elf_section.h $(INC_DIR)/fread.h
 
 #Convenient to headers
 
