@@ -9,6 +9,6 @@ void read_elf_symbole_table(FILE *f, Elf32_Shdr* Shdr, Elf32_Sym* s_table);
 
 Elf32_Sym read_sym(FILE *f);
 
-void display_table_sym(FILE* f, Elf32_Shdr* tab);
+void display_symbol_table(FILE* f, Elf32_Shdr* tab);
 
 #endif

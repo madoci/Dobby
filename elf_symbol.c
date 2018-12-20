@@ -5,10 +5,9 @@
 
 void read_elf_symbol_table(FILE *f, Elf32_Shdr* Shdr, Elf32_Sym* s_table){
 	if(Shdr->sh_type == 2){
-		unsigned i=0;
 		fseek(f, Shdr->sh_offset, SEEK_SET);
 		s_table = read_sym(f);
-		display_table_symbole(f, s_table);
+		display_symbol_table(f, s_table);
 	}
 }
 
@@ -26,7 +25,7 @@ Elf32_Sym read_sym(FILE *f){
 }
 
 
-void display_table_sym(FILE* f, Elf32_Shdr* tab){
+void display_symbol_table(FILE* f, Elf32_Shdr* tab, Elf32_Ehdr header){
 
 	// TODO printf("Table de symboles « .symtab » contient %d entrées:", nbr_sym);
 	Elf32_Half nbr_sym = header.e_shnum;
@@ -83,13 +82,14 @@ void display_table_sym(FILE* f, Elf32_Shdr* tab){
 			break;
 		case 15:
 			type = "HIPROC";
+			break;
 		default:
 			printf("Erreur: Type symbole");
 			break;
 		}
 		Elf32_Word nom = ElfS.st_name;
 		Elf32_Half ndx = ElfS.st_shndx;
-		printf(" %2d:\t%08x\t%d\t %s\t%s\t%d\t%d\t%s", i, val, taille, type, lien, ndx, nom);
+		printf(" %2d:\t%08x\t%d\t %s\t%s\t%d\t%d", i, val, taille, type, lien, ndx, nom);
 	}
 }
 
@@ -98,6 +98,6 @@ int main(int argc, char **argv){
 	Elf32_Shdr Shdr;
 	Elf32_Sym s_table;
 	read_elf_symbol_table(f, &Shdr, &s_table);
-	display_table_sym(f, &Shdr);
+	display_symbol_table(f, &Shdr);
 	fclose(f);
 }
