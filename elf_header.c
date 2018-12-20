@@ -1,5 +1,5 @@
 #include "elf_header.h"
-#include "elf_types_header.h"
+
 #include "fread.h"
 
 #define printf_8x(s,x) printf("\t%-50s\t0x%08x\n",s,x)
