@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include "elf_types.h"
 
-/* Lis la table des entêtes de sections et remplis le tableau e_table */
+/* Read the section header table of an ELF file and fill the e_table argument */
 void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]);
 
-/* Lis la liste des entêtes de sections */
-void display_section_header(FILE* f);
+/* Display all section headers */
+void display_section_header(Elf32_Ehdr *header, Elf32_Shdr e_table[]);
 
 #endif
