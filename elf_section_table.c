@@ -1,9 +1,10 @@
 #include "elf_section_table.h"
 
 #include "elf_section_content.h"
-#include "elf_header.h"
 #include "fread.h"
 
+
+/* READ SECTION HEADER */
 
 Elf32_Shdr read_section_header(FILE *f){
   
@@ -26,15 +27,16 @@ Elf32_Shdr read_section_header(FILE *f){
 void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
   unsigned int i;
   for (i = 0; i<header->e_shnum; i++){
-    fseek(f, header->e_shoff+i*header->e_shentsize, SEEK_SET);
+    fseek(f, header->e_shoff + i * header->e_shentsize, SEEK_SET);
     e_table[i] = read_section_header(f);
   }
 }
 
 
-const char * section_type(Elf32_Shdr *hdr){
+/* DISPLAY SECTION HEADER */
 
-  switch (hdr->sh_type) {
+const char * section_type(Elf32_Shdr hdr){
+  switch (hdr.sh_type) {
     case SHT_NULL:
       return "NULL";
     case SHT_PROGBITS:
@@ -89,61 +91,61 @@ inline const char * section_name(char* str_table, Elf32_Word sh_name){
 
 char * section_flags(Elf32_Shdr hdr){
   Elf32_Word flag = hdr.sh_flags;
-  char * tab = malloc(15); //14 flags maximum plus le \0 final
+  char * tab = malloc(15);   //14 flags maximum plus le \0 final
   unsigned int indice = 0;
-  if((flag & SHF_WRITE) != 0){
+  if ((flag & SHF_WRITE) != 0){
     tab[indice] = 'W';
     indice++;
   }
-  if((flag & SHF_ALLOC) != 0){
+  if ((flag & SHF_ALLOC) != 0){
     tab[indice] = 'A';
     indice ++;
   }
-  if((flag & SHF_EXECINSTR) !=0){
+  if ((flag & SHF_EXECINSTR) !=0){
     tab[indice] = 'X';
     indice ++;
   }
-  if((flag & SHF_MERGE) !=0){
+  if ((flag & SHF_MERGE) !=0){
     tab[indice] = 'M';
     indice ++;
   }
-  if((flag & SHF_STRINGS) !=0){
+  if ((flag & SHF_STRINGS) !=0){
     tab[indice] = 'S';
     indice ++;
   }
-  if((flag & SHF_INFO_LINK) !=0){
+  if ((flag & SHF_INFO_LINK) !=0){
     tab[indice] = 'I';
     indice ++;
   }
-  if((flag & SHF_LINK_ORDER) !=0){
+  if ((flag & SHF_LINK_ORDER) !=0){
     tab[indice] = 'L';
     indice ++;
   }
-  if((flag & SHF_OS_NONCONFORMING) !=0){
+  if ((flag & SHF_OS_NONCONFORMING) !=0){
     tab[indice] = 'N';
     indice ++;
   }
-  if((flag & SHF_GROUP) !=0){
+  if ((flag & SHF_GROUP) !=0){
     tab[indice] = 'G';
     indice ++;
   }
-  if((flag & SHF_TLS) !=0){
+  if ((flag & SHF_TLS) !=0){
     tab[indice] = 'T';
     indice ++;
   }
-  if((flag & SHF_MASKOS) !=0){
+  if ((flag & SHF_MASKOS) !=0){
     tab[indice] = 'o';
     indice ++;
   }
-  if((flag & SHF_MASKPROC) !=0){
+  if ((flag & SHF_MASKPROC) !=0){
     tab[indice] = 'p';
     indice ++;
   }
-  if((flag & SHF_ORDERED) !=0){
+  if ((flag & SHF_ORDERED) !=0){
     tab[indice] = 'O';
     indice ++;
   }
-  if((flag & SHF_EXCLUDE) !=0){
+  if ((flag & SHF_EXCLUDE) !=0){
     tab[indice] = 'E';
     indice ++;
   }
@@ -153,27 +155,21 @@ char * section_flags(Elf32_Shdr hdr){
 }
 
 
-void display_section_header(FILE* f){
-  Elf32_Ehdr header;
-  Elf32_Half i;
-  read_elf_header(f, &header);
-
-  Elf32_Half nbr_section = header.e_shnum;
-  Elf32_Shdr tab_section_hdr[nbr_section];
-  read_elf_section_table(f, &header, tab_section_hdr);
+void display_section_header(Elf32_Ehdr *header, Elf32_Shdr e_table[]){
 
   unsigned char * str_table = NULL;
   str_table = read_elf_section_content(f, tab_section_hdr[header.e_shstrndx]);
 
   printf("\nIl y a %d en-têtes de section,\
-  débutant à l'adresse de décalage 0x%08x:\n\n",nbr_section,header.e_shoff);
+  débutant à l'adresse de décalage 0x%08x:\n\n", header->e_shnum, header->e_shoff);
 
   printf("[%2s] %-20s %-16s %-8s %-6s %-6s %-2s %5s %-2s %-3s %-2s\n",
          "Nr","Nom","Type","Adr","Décala.","Taille","ES","Fan","LN","Inf","Al");
 
-  for(i=0; i<nbr_section; i++){
+  Elf32_Half i;
+  for (i=0; i<header->e_shnum; i++){
     const unsigned char *nom   = str_table + tab_section_hdr[i].sh_name;
-    const char *type  = section_type(&tab_section_hdr[i]);
+    const char *type  = section_type(tab_section_hdr[i]);
     const Elf32_Addr addr = tab_section_hdr[i].sh_addr;
     const Elf32_Word offset = tab_section_hdr[i].sh_offset;
     const Elf32_Word size = tab_section_hdr[i].sh_size;
