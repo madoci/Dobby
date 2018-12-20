@@ -158,8 +158,8 @@ void display_section_header(FILE* f){
   Elf32_Shdr tab_section_hdr[nbr_section];
   read_elf_section_table(f, &header, tab_section_hdr);
 
-  char * symbole_table = NULL;
-  symbole_table = extract_string_table(f, tab_section_hdr[header.e_shstrndx]);
+  char * str_table = NULL;
+  str_table = extract_string_table(f, tab_section_hdr[header.e_shstrndx]);
 
   printf("\nIl y a %d en-têtes de section,\
   débutant à l'adresse de décalage 0x%08x:\n\n",nbr_section,header.e_shoff);
@@ -168,7 +168,7 @@ void display_section_header(FILE* f){
          "Nr","Nom","Type","Adr","Décala.","Taille","ES","Fan","LN","Inf","Al");
 
   for(i=0; i<nbr_section; i++){
-    const char *nom   = symbole_table+tab_section_hdr[i].sh_name;
+    const char *nom   = str_table+tab_section_hdr[i].sh_name;
     const char *type  = section_type(&tab_section_hdr[i]);
     const Elf32_Addr addr = tab_section_hdr[i].sh_addr;
     const Elf32_Word offset = tab_section_hdr[i].sh_offset;
@@ -182,4 +182,6 @@ void display_section_header(FILE* f){
             i, nom,type,addr,offset,size,es,flags,ln,inf,al);
     free(flags);
   }
+  
+  free(str_table);
 }

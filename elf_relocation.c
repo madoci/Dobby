@@ -111,4 +111,5 @@ void display_all_relocation_table(FILE* f, Elf32_Ehdr *hdr, Elf32_Shdr shdr[]){
     	display_rela_table(f, &shdr[i]);
     }
   }
+  free(str_table);
 }
