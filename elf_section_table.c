@@ -1,16 +1,8 @@
-#include "elf_section.h"
+#include "elf_section_table.h"
 #include "elf_header.h"
 #include "fread.h"
 #include "elf_string_table.h"
 #include <stdio.h>
-
-void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
-  unsigned int i;
-  for (i = 0; i<header->e_shnum; i++){
-    fseek(f, header->e_shoff+i*header->e_shentsize, SEEK_SET);
-    e_table[i] = read_section_header(f);
-  }
-}
 
 Elf32_Shdr read_section_header(FILE *f){
 
@@ -28,6 +20,16 @@ Elf32_Shdr read_section_header(FILE *f){
 
   return line;
 }
+
+
+void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
+  unsigned int i;
+  for (i = 0; i<header->e_shnum; i++){
+    fseek(f, header->e_shoff+i*header->e_shentsize, SEEK_SET);
+    e_table[i] = read_section_header(f);
+  }
+}
+
 
 const char * section_type(Elf32_Shdr *hdr){
 
@@ -178,5 +180,6 @@ void display_section_header(FILE* f){
     const Elf32_Word al = tab_section_hdr[i].sh_addralign;
     printf("[%2d] %-20s %-16s %08x %06x  %06x %02x %5s %2d %3d %2d\n",
             i, nom,type,addr,offset,size,es,flags,ln,inf,al);
+    free(flags);
   }
 }

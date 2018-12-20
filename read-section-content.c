@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "elf_header.h"
-#include "elf_section.h"
+#include "elf_section_table.h"
 #include "elf_section_content.h"
 
 

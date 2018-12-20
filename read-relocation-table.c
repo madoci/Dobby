@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "elf_relocation.h"
 #include "elf_header.h"
-#include "elf_section.h"
+#include "elf_section_table.h"
 
 int main(int argc, char *argv[]){
 
