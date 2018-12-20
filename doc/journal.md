@@ -77,16 +77,15 @@
 
 *En attente*
 
-  * __Marius :__
+  * __Marius et Clément :__
     * Automatisation des tests.
-    
-  * __Clément :__
     * Correction de la table des symboles.
     
   * __Stephen et Laura :__
     * Correction de diverses erreurs et création d'un schéma pour mieux comprendre.
+    * Modification de elf_section_content.* (séparation entre lecture et affichage du contenu).
 
   * __Aurélien et Joris :__
-    *   
+    * 
 
     
