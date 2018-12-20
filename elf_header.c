@@ -2,6 +2,14 @@
 #include "elf_types_header.h"
 #include "fread.h"
 
+#define printf_8x(s,x) printf("\t%-50s\t0x%08x\n",s,x)
+#define printf_d(s,d) printf("\t%-50s\t%d\n",s,d)
+#define printf_s(s,s2) printf("\t%-50s\t%s\n",s,s2)
+#define printf_se(s) printf("\t%-50s\t",s)
+
+
+/* READ HEADER */
+
 Err_ELF_Header check_ident(Elf32_Ehdr* hdr){
   if (hdr->e_ident[EI_MAG0] != ELFMAG0 ||
       hdr->e_ident[EI_MAG1] != ELFMAG1 ||
@@ -166,6 +174,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
   return ERR_EH_NONE;
 
 }
+
 
 /* DISPLAY HEADER */
 
