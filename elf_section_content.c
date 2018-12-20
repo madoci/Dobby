@@ -14,6 +14,32 @@ int compare_name(FILE *f, char *str){
 }
 
 
+Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
+  Elf32_Half num = 0;
+  long int str_offset = tab[hdr.e_shstrndx].sh_offset;
+
+  int i;
+  for (i=0; i<hdr.e_shnum; i++){
+    fseek(f, str_offset + tab[i].sh_name, SEEK_SET);
+
+    if (compare_name(f, name)){
+      num = i;
+      break;
+    }
+  }
+  return num;
+}
+
+char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
+  char* shdr_table = malloc(sizeof(char)*shdr.sh_size);
+
+  fseek(f, shdr.sh_offset, SEEK_SET);
+  fread_8bits(shdr_table, str.sh_size, f);
+
+  return shdr_table;
+}
+
+
 void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
   Elf32_Half num = 0;
   long int str_offset = tab[hdr.e_shstrndx].sh_offset;
