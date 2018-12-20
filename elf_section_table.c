@@ -1,11 +1,12 @@
 #include "elf_section_table.h"
+
+#include "elf_section_content.h"
 #include "elf_header.h"
 #include "fread.h"
-#include "elf_string_table.h"
-#include <stdio.h>
+
 
 Elf32_Shdr read_section_header(FILE *f){
-
+  
   Elf32_Shdr line;
   fread_32bits(&(line.sh_name), 1, f);
   fread_32bits(&(line.sh_type), 1, f);
@@ -80,9 +81,11 @@ const char * section_type(Elf32_Shdr *hdr){
   return "erreurType";
 }
 
+
 inline const char * section_name(char* str_table, Elf32_Word sh_name){
-    return str_table+sh_name;
+    return str_table + sh_name;
 }
+
 
 char * section_flags(Elf32_Shdr hdr){
   Elf32_Word flag = hdr.sh_flags;
@@ -149,6 +152,7 @@ char * section_flags(Elf32_Shdr hdr){
   return tab;
 }
 
+
 void display_section_header(FILE* f){
   Elf32_Ehdr header;
   Elf32_Half i;
@@ -158,8 +162,8 @@ void display_section_header(FILE* f){
   Elf32_Shdr tab_section_hdr[nbr_section];
   read_elf_section_table(f, &header, tab_section_hdr);
 
-  char * str_table = NULL;
-  str_table = extract_string_table(f, tab_section_hdr[header.e_shstrndx]);
+  unsigned char * str_table = NULL;
+  str_table = read_elf_section_content(f, tab_section_hdr[header.e_shstrndx]);
 
   printf("\nIl y a %d en-têtes de section,\
   débutant à l'adresse de décalage 0x%08x:\n\n",nbr_section,header.e_shoff);
@@ -168,7 +172,7 @@ void display_section_header(FILE* f){
          "Nr","Nom","Type","Adr","Décala.","Taille","ES","Fan","LN","Inf","Al");
 
   for(i=0; i<nbr_section; i++){
-    const char *nom   = str_table+tab_section_hdr[i].sh_name;
+    const unsigned char *nom   = str_table + tab_section_hdr[i].sh_name;
     const char *type  = section_type(&tab_section_hdr[i]);
     const Elf32_Addr addr = tab_section_hdr[i].sh_addr;
     const Elf32_Word offset = tab_section_hdr[i].sh_offset;
@@ -179,7 +183,7 @@ void display_section_header(FILE* f){
     const Elf32_Word inf = tab_section_hdr[i].sh_info;
     const Elf32_Word al = tab_section_hdr[i].sh_addralign;
     printf("[%2d] %-20s %-16s %08x %06x  %06x %02x %5s %2d %3d %2d\n",
-            i, nom,type,addr,offset,size,es,flags,ln,inf,al);
+            i, nom, type, addr, offset, size, es, flags, ln, inf, al);
     free(flags);
   }
   
