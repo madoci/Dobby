@@ -7,6 +7,6 @@
 
 void read_elf_symbol_table(FILE *f, Elf32_Shdr* symbole_header, Elf32_Sym sym_table[]);
 
-void display_symbol_table(FILE* f,Elf32_Shdr* symbole_header, Elf32_Sym sym_table[], Elf32_Shdr * string_table);
+void display_symbol_table(FILE* f, Elf32_Shdr* symbole_header, Elf32_Sym sym_table[], Elf32_Shdr * string_table);
 
 #endif
