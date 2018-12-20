@@ -1,8 +1,9 @@
 #ifndef ELF_HEADER_H
 #define ELF_HEADER_H
+
+#include <stdio.h>
 #include "elf_types_header.h"
 #include "elf_types_atomic.h"
-#include <stdio.h>
 
 typedef enum Err_ELF_Header{
 	ERR_EH_NONE     =  0,
@@ -39,4 +40,5 @@ void display_fileVersion(Elf32_Word version);
 void display_verAbi(Elf32_Word flag);
 
 void display_flags(Elf32_Word flag);
+
 #endif
