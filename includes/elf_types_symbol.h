@@ -31,9 +31,16 @@ enum Elf_StType{
   STT_LOPROC  = 13,
   STT_HIPROC  = 15
 };
+enum Elf_StVis{
+  STV_DEFAULT  = 0,
+  STV_INTERNAL  = 1,
+  STV_HIDDEN    = 2,
+  STV_PROTECTED = 3,
+};
 
 #define ELF32_ST_BIND(i) ((i) >>4)
 #define ELF32_ST_TYPE(i) ((i) &0xf)
+#define ELF32_ST_VIS(o) ((o)&0x3)
 #define ELF32_ST_INFO(b,t) ((b)<<4+((t)&0xf))
 
 #endif

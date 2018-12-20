@@ -179,4 +179,5 @@ void display_section_header(FILE* f){
     printf("[%2d] %-20s %-16s %08x %06x  %06x %02x %5s %2d %3d %2d\n",
             i, nom,type,addr,offset,size,es,flags,ln,inf,al);
   }
+  free(symbole_table);
 }

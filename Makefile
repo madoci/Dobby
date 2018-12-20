@@ -41,7 +41,7 @@ $(BIN_DIR)/dobby-read-header:           $(OBJ_DIR)/elf_header.o                 
 $(BIN_DIR)/dobby-read-section-table:    $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section_table.o                                   $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
 $(BIN_DIR)/dobby-read-section-content:  $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section_table.o $(OBJ_DIR)/elf_section_content.o  $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
 $(BIN_DIR)/dobby-read-relocation-table: $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section_table.o $(OBJ_DIR)/elf_relocation.o       $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
-$(BIN_DIR)/dobby-read-symbol-table: 		$(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section_table.o $(OBJ_DIR)/elf_symbol.o           $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
+$(BIN_DIR)/dobby-read-symbol-table: 		$(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section_table.o $(OBJ_DIR)/elf_section_content.o  $(OBJ_DIR)/elf_symbol.o           $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
 
 #Objects
 
@@ -57,7 +57,7 @@ $(OBJ_DIR)/elf_relocation.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR
 
 $(OBJ_DIR)/elf_string_table.o: $(INC_DIR)/elf_types.h
 
-$(OBJ_DIR)/elf_symbol.o: $(INC_DIR)/elf_types.h $(INC_DIR)/elf_section_table.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h
+$(OBJ_DIR)/elf_symbol.o: $(INC_DIR)/elf_types.h $(INC_DIR)/elf_section_table.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h $(INC_DIR)/elf_section_content.h
 
 $(OBJ_DIR)/fread.o: $(INC_DIR)/util.h
 

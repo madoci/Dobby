@@ -1,5 +1,6 @@
 #include "elf_symbol.h"
 #include "elf_string_table.h"
+#include "elf_section_content.h"
 
 void read_elf_symbol_table(FILE *f, Elf32_Shdr* symbole_header, Elf32_Sym sym_table[]){
 	const int nb_tableSymbole = symbole_header->sh_size/sizeof(Elf32_Sym);
@@ -26,32 +27,45 @@ Elf32_Sym read_sym(FILE *f){
 }
 
 
-void display_symbol_table(FILE* f,Elf32_Shdr* symbole_header, Elf32_Sym sym_table[], Elf32_Shdr * string_table_hdr){
+void display_symbol_table(FILE* f,Elf32_Shdr* symbole_header, Elf32_Sym sym_table[], Elf32_Shdr *string_table_hdr){
 
 	int i=0;
 	const int nb_tableSymbole = (symbole_header->sh_size)/sizeof(Elf32_Sym);
-	char * string_table= NULL;
-	string_table = extract_string_table(f, *string_table_hdr);
-	printf("%s\n",string_table+1);
+	unsigned char * string_table = read_elf_section_content(f, *string_table_hdr);
 
-	printf("%-2s\t %8s\t %-1s\t %-7s\t %-6s\t %-7s\t %-3s\t %-12s\n",
+
+	printf("\nLa table des symboles \" .symtab \" contient %d entrées \n\n", nb_tableSymbole);
+	printf("%2s\t %8s\t %-1s\t %-7s\t %-6s\t %-9s\t %-3s\t %-12s\n",
 				 "Num:","Valeur","Tail","Type","Lien","Vis","Ndx","Nom");
 
 	for(i = 0 ; i < nb_tableSymbole; i++){
-			//const char *nom = string_table+sym_table[i].st_name;
+			const unsigned char *nom = string_table+sym_table[i].st_name;
 			const Elf32_Addr valeur = sym_table[i].st_value;
 			const Elf32_Word size = sym_table[i].st_size;
 			char * type = symbol_type(sym_table[i].st_info);
 			char * lien = symbol_link(sym_table[i].st_info);
+			char * vis = symbol_vis(sym_table[i].st_other);
 			Elf32_Half ndx = sym_table[i].st_shndx;
-			char * vis = "inconu";
 
-			printf("%-2d:\t %08x\t %-1d\t %-7s\t %-6s\t %-7s\t %-3d\t %-12d\n",
-						 i,valeur,size,type,lien,vis,ndx,sym_table[i].st_name);
+			printf("%2d:\t %08x\t %-1d\t %-7s\t %-6s\t %-9s\t %-3d\t %-12s\n",
+						 i,valeur,size,type,lien,vis,ndx,nom);
 	}
 	free(string_table);
 }
+char * symbol_vis(unsigned char other){
+	switch (ELF32_ST_VIS(other)){
+		case STV_DEFAULT:
+			return "DEFAULT";
+		case STV_INTERNAL:
+			return "INTERNAL";
+		case STV_HIDDEN:
+			return "HIDDEN";
+		case STV_PROTECTED:
+			return "PROTECTED";
 
+	}
+	return "Error";
+}
 char * symbol_link(unsigned char info){
 	switch (ELF32_ST_BIND(info)){
 		case STB_LOCAL:
