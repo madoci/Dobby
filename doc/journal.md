@@ -75,11 +75,11 @@
     
 * ## Jeudi 20 décembre 2018 [... A FINIR]
 
-*En attente*
+*Poursuite du développement de la phase 1. On n'avait pas compris la différence entre sh_strtab et strtab nous faisant alors perdre beaucoup de temps.*
 
   * __Marius et Clément :__
     * Automatisation des tests.
-    * Correction de la table des symboles.
+    * Correction et terminaison de la table des symboles.
     
   * __Stephen et Laura :__
     * Correction de diverses erreurs et création d'un schéma pour mieux comprendre.
