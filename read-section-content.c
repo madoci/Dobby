@@ -16,7 +16,7 @@ typedef enum {
 
 int main(int argc, char* argv[]){
   if (argc != 4){
-    printf("Arguments invalides : %s <nom du fichier> -<s|i> <section>\n", argv[0]);
+    printf("Format : %s <nom du fichier> -<s|i> <section>\n", argv[0]);
     return -1;
   }
 

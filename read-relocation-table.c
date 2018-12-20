@@ -6,12 +6,17 @@
 int main(int argc, char *argv[]){
 
 	if(argc != 2){
-		printf("%s fichier", argv[0]);
-		return -1;
+		printf("Format : %s <fichier>\n", argv[0]);
+		return 1;
 	}
 
 	FILE *f;
 	f = fopen(argv[1], "r");
+
+	if(f == NULL){
+		printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
+		return 1;
+	}
 
 	Elf32_Ehdr hdr;
 	read_elf_header(f, &hdr);
