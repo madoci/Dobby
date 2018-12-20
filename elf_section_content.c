@@ -3,12 +3,14 @@
 #include "fread.h"
 
 
+/* READ SECTION CONTENT */
+
 int compare_name(FILE *f, char *str){
   char *c_str = str;
   char c_f = fgetc(f);
   while (*c_str != '\0' && c_f != '\0' && *c_str == c_f){
-  	c_f = fgetc(f);
-  	++c_str;
+    c_f = fgetc(f);
+    ++c_str;
   }
   return (*c_str == c_f);
 }
@@ -30,6 +32,7 @@ Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, cha
   return num;
 }
 
+
 unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
   unsigned char* shdr_table = malloc(sizeof(unsigned char)*shdr.sh_size);
 
@@ -40,9 +43,10 @@ unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
 }
 
 
+/* DISPLAY SECTION CONTENT */
+
 void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
   Elf32_Half num = 0;
-
   num = search_elf_section_num(f, tab, hdr, name);
 
   if (num == hdr.e_shnum){
@@ -66,11 +70,11 @@ void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hd
   printf(" ");
 
   for (int i=0; i<tab[num].sh_size; i++){
-  	printf("%02x", *(shdr_table + i));
+    printf("%02x", *(shdr_table + i));
 
-  	if ((i % 16) == 15){
-  		printf("\n ");
-  	} else if ((i % 4) == 3){
+    if ((i % 16) == 15){
+      printf("\n ");
+    } else if ((i % 4) == 3){
       printf(" ");
     }
   }
