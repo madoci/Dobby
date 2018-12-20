@@ -7,7 +7,7 @@
 
 Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name);
 
-char * read_elf_section_content(FILE *f, Elf32_Shdr shdr);
+unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr);
 
 void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name);
 void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, Elf32_Half num);

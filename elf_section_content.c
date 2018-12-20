@@ -23,18 +23,18 @@ Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, cha
     fseek(f, str_offset + tab[i].sh_name, SEEK_SET);
 
     if (compare_name(f, name)){
-      num = i;
       break;
     }
   }
+  num = i;
   return num;
 }
 
-char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
-  char* shdr_table = malloc(sizeof(char)*shdr.sh_size);
+unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
+  unsigned char* shdr_table = malloc(sizeof(unsigned char)*shdr.sh_size);
 
   fseek(f, shdr.sh_offset, SEEK_SET);
-  fread_8bits(shdr_table, str.sh_size, f);
+  fread_8bits(shdr_table, shdr.sh_size, f);
 
   return shdr_table;
 }
@@ -42,19 +42,10 @@ char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
 
 void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
   Elf32_Half num = 0;
-  long int str_offset = tab[hdr.e_shstrndx].sh_offset;
 
-  int i;
-  for (i=0; i<hdr.e_shnum; i++){
-  	fseek(f, str_offset + tab[i].sh_name, SEEK_SET);
+  num = search_elf_section_num(f, tab, hdr, name);
 
-  	if (compare_name(f, name)){
-      num = i;
-      break;
-  	}
-  }
-
-  if (i == hdr.e_shnum){
+  if (num == hdr.e_shnum){
     printf("Le nom de section n'existe pas.\n");
     return;
   }
@@ -69,19 +60,21 @@ void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hd
     return;
   }
 
-  fseek(f, tab[num].sh_offset, SEEK_SET);
-  unsigned char c;
+  unsigned char * shdr_table = NULL;
+  shdr_table = read_elf_section_content(f, tab[num]);
+
+  printf(" ");
 
   for (int i=0; i<tab[num].sh_size; i++){
-  	fread_8bits(&c, 1, f);
-  	printf("%02x", c);
+  	printf("%02x", *(shdr_table + i));
 
   	if ((i % 16) == 15){
-  		printf("\n");
+  		printf("\n ");
   	} else if ((i % 4) == 3){
       printf(" ");
     }
   }
-
   printf("\n");
+
+  free(shdr_table);
 }
