@@ -84,7 +84,7 @@ inline const char * section_name(char* str_table, Elf32_Word sh_name){
     return str_table+sh_name;
 }
 
-const char * section_flags(Elf32_Shdr hdr){
+char * section_flags(Elf32_Shdr hdr){
   Elf32_Word flag = hdr.sh_flags;
   char * tab = malloc(15); //14 flags maximum plus le \0 final
   unsigned int indice = 0;
@@ -174,7 +174,7 @@ void display_section_header(FILE* f){
     const Elf32_Word offset = tab_section_hdr[i].sh_offset;
     const Elf32_Word size = tab_section_hdr[i].sh_size;
     const Elf32_Word es = tab_section_hdr[i].sh_entsize;
-    const char *flags = section_flags(tab_section_hdr[i]);
+    char *flags = section_flags(tab_section_hdr[i]);
     const Elf32_Word ln = tab_section_hdr[i].sh_link;
     const Elf32_Word inf = tab_section_hdr[i].sh_info;
     const Elf32_Word al = tab_section_hdr[i].sh_addralign;

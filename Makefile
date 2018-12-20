@@ -1,5 +1,6 @@
 BIN_DIR=bin
 INC_DIR=includes
+OBJ_DIR=obj
 
 CC=clang
 CSTD=c99
@@ -23,18 +24,18 @@ init:
 clean: clean_bin clean_obj
 
 clean_bin:
-	rm -rf $(BIN_DIR)/* read-header read-section-table
+	rm -rf $(BIN_DIR)/*
 
 clean_obj:
-	rm -rf *.o
+	rm -rf $(OBJ_DIR)/*.o
 
-%.o: %.c $(INC_DIR)/%.h
-	$(CC) $(CFLAGS) $(IFLAGS) $< -c
+$(OBJ_DIR)/%.o: %.c $(INC_DIR)/%.h
+	$(CC) $(CFLAGS) $(IFLAGS) $< -c -o $@
 
 #Final executables
 
-$(BIN_DIR)/dobby-read-header: read-header
-	mv $< $@
+$(BIN_DIR)/dobby-%: %.c
+	$(CC) $(CFLAGS) $(IFLAGS) $^ -o $@
 
 $(BIN_DIR)/dobby-read-header:           $(OBJ_DIR)/elf_header.o                                                                  $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o
 $(BIN_DIR)/dobby-read-section-table:    $(OBJ_DIR)/elf_header.o $(OBJ_DIR)/elf_section_table.o                                   $(OBJ_DIR)/fread.o $(OBJ_DIR)/util.o $(OBJ_DIR)/elf_string_table.o
@@ -44,15 +45,22 @@ $(BIN_DIR)/elf_symbol: 					$(OBJ_DIR)/elf_symbol.o
 
 #Objects
 
-$(OBJ_DIR)/elf_header.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_header.o: 			$(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 
-$(OBJ_DIR)/elf.o: $(INC_DIR)/elf_types.h
-$(OBJ_DIR)/elf_section_table.o: $(INC_DIR)/elf_types.h $(INC_DIR)/elf_header.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf.o: 					$(INC_DIR)/elf_types.h
 
-$(OBJ_DIR)/fread.o: $(INC_DIR)/util.h
+$(OBJ_DIR)/elf_section_table.o: 	$(INC_DIR)/elf_types.h $(INC_DIR)/elf_header.h $(INC_DIR)/fread.h
 
-$(OBJ_DIR)/elf_symbol.o: $(INC_DIR)/elf_symbol.h $(INC_DIR)/elf_types_symbol.h $(INC_DIR)/elf_section_table.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_section_content.o: 	$(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h
+
+$(OBJ_DIR)/elf_relocation.o:     	$(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_string_table.h
+
+$(OBJ_DIR)/elf_string_table.o:    	$(INC_DIR)/elf_types.h
+
+$(OBJ_DIR)/fread.o: 				$(INC_DIR)/util.h
+
+$(OBJ_DIR)/elf_symbol.o: 			$(INC_DIR)/elf_symbol.h $(INC_DIR)/elf_types_symbol.h $(INC_DIR)/elf_section_table.h $(INC_DIR)/fread.h
 
 #Convenient to headers
 
-$(INC_DIR)/elf_types.h: $(INC_DIR)/elf_types_*.h
+$(INC_DIR)/elf_types.h: 			$(INC_DIR)/elf_types_*.h
