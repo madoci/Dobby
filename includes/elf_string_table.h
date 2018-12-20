@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include "elf_types_section.h"
 
-/* Return the string table */
+/* Return the string table 
+   !!!! PENSER A FREE !!!! */
 char * extract_string_table(FILE *f, Elf32_Shdr str);
 
 #endif
