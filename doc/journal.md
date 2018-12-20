@@ -71,21 +71,22 @@
   * __Stephen et Marius :__
     * Factorisation et aération du Makefile.
     * Correction de read-relocation
-    
-    
+
+
 * ## Jeudi 20 décembre 2018 [... A FINIR]
+> Le capitaine dobby dit :
 
 *Poursuite du développement de la phase 1. On n'avait pas compris la différence entre sh_strtab et strtab nous faisant alors perdre beaucoup de temps.*
+
+**ON PEUT ANNONCER QUE TOUS NOS PROGRAMMES SONT EXEMPTS DE FUITES MÉMOIRES !!!!!!!!!!!**
 
   * __Marius et Clément :__
     * Automatisation des tests.
     * Correction et terminaison de la table des symboles.
-    
+
   * __Stephen et Laura :__
     * Correction de diverses erreurs et création d'un schéma pour mieux comprendre.
     * Modification de elf_section_content.* (séparation entre lecture et affichage du contenu).
 
   * __Aurélien et Joris :__
-    * 
-
-    
+    *
