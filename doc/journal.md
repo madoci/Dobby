@@ -5,11 +5,13 @@
 > Après l'attaque du corsaire Alexander Lawrence Mccormack, le Wati Water a subit de lourds dégâts.
 > Mon précieux navire s'est échoué sur une île inconnue (que je vais nommer... euh... Aile-Ef) et nous voilà coincés ici.
 > Tout ceci promet d'être long, moussaillons !
+
 *Prise de connaissance de la doc*
 
 * ## Lundi 17 décembre 2018
 > En tant que capitaine, j'ai affecté les premières tâches vitales pour notre survie. Ces bons à rien
 > n'y comprendront sûrement rien, je les jetterais aux manchots !
+
 *Répartition des taches et organisation en binomes*
 
 
@@ -28,6 +30,7 @@
 > L'abri a bien avancé, mais il faut maintenant le ranger. Certains matelots finissent de monter leur tente de fortune.
 > Moi, Capitaine Dobby, je m'enrichis de ce que mes matelots me rapportent. J'ai divisé l'île en sections, et en explorant
 > les lieux, j'ai découvert des symboles cabalistiques disséminés un peu partout !
+
 *Correction des erreurs et poursuite du développement*
 
   * __Marius :__
@@ -51,6 +54,7 @@
 > Mes matelots n'ont pas bien travaillé ! Ils passent une bonne partie de la journée à réparer les murs de l'abri qui
 > s'écroulent ! Et pour couronner le tout, nous avons été attaqués par diverses créatures ! Satanés saigfolteux !
 > Ce séjour forcé s'annonce compliqué...
+
 *Factorisation et poursuite du développement*
 
   * __Marius et Clément :__
@@ -67,3 +71,22 @@
   * __Stephen et Marius :__
     * Factorisation et aération du Makefile.
     * Correction de read-relocation
+    
+    
+* ## Jeudi 20 décembre 2018 [... A FINIR]
+
+*En attente*
+
+  * __Marius :__
+    * Automatisation des tests.
+    
+  * __Clément :__
+    * Correction de la table des symboles.
+    
+  * __Stephen et Laura :__
+    * Correction de diverses erreurs et création d'un schéma pour mieux comprendre.
+
+  * __Aurélien et Joris :__
+    *   
+
+    
