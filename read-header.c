@@ -1,7 +1,6 @@
 #include "elf_types_header.h"
 #include "elf_header.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 int main(int argc, char **argv){
 	Elf32_Ehdr Elf;
