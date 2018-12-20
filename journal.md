@@ -3,8 +3,8 @@
 
 * ## Vendredi 14 décembre 2018
 *Prise de connaissance de la doc*
-> Après l'attaque du corsaire Alexander Lawrence Mccormack, le Wati Water a subit de lourds dégâts. 
-> Mon précieux navire s'est échoué sur une île inconnue (que je vais nommée... euh... Aile-Ef) et nous voilà coincés ici.
+> Après l'attaque du corsaire Alexander Lawrence Mccormack, le Wati Water a subit de lourds dégâts.
+> Mon précieux navire s'est échoué sur une île inconnue (que je vais nommer... euh... Aile-Ef) et nous voilà coincés ici.
 > Tout ceci promet d'être long, moussaillons !
 
 * ## Lundi 17 décembre 2018
@@ -16,14 +16,11 @@
     * Rédaction du fichier .h contenant les structures et les types nécessaires ( elf_types.h ).
     * Affichage de la table des sections (elf_section.c, elf_section.h).
 
-> Les mousses Clément et Marius sont affectés à comprendre la géographie de cette île étrange.
-
   * __Stephen et Laura :__
     * Lecture du header (elf_header.c, elf_header.h).
-> Les escrocs Laura et Stephen sont affectés à récupérer des ressources vitales.
+
   * __Aurélien et Joris :__
     * Affichage du header (read-header.c).
-> Les matelots Aurélien et Joris agencent les ressources pour former l'abri.
 
 
 * ## Mardi 18 décembre 2018
