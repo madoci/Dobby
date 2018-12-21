@@ -1,6 +1,5 @@
 #include "elf_types_header.h"
 #include "elf_header.h"
-#include <stdio.h>
 
 int main(int argc, char **argv){
 
