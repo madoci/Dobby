@@ -330,5 +330,5 @@ void display_header(Elf32_Ehdr * Elf){
   printf_d("Nombre d'en-tête du programme:", Elf->e_phnum);
   printf_d("Taille des en-têtes de section:", Elf->e_shentsize);
   printf_d("Nombre d'en-tête de section:", Elf->e_shnum);
-  printf_d("Table d'indexe des chaines d'en-tête de section:", Elf->e_shstrndx);
+  printf_d("Table d'indexes des chaines d'en-tête de section:", Elf->e_shstrndx);
 }
