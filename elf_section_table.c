@@ -7,7 +7,7 @@
 /* READ SECTION HEADER */
 
 Elf32_Shdr read_section_header(FILE *f){
-  
+
   Elf32_Shdr line;
   fread_32bits(&(line.sh_name), 1, f);
   fread_32bits(&(line.sh_type), 1, f);
@@ -165,9 +165,9 @@ void display_section_header(FILE* f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
   printf("\nIl y a %d en-têtes de section,\
   débutant à l'adresse de décalage 0x%08x:\n\n", header->e_shnum, header->e_shoff);
 
-  printf("[%2s] %-20s %-16s %-8s %-6s %-6s %-2s %5s %-2s %-3s %-2s\n",
+  printf("[%2s] %-17.17s %-16s %-8s %-6s %-6s %-2s %5s %-2s %-3s %-2s\n",
          "Nr","Nom","Type","Adr","Décala.","Taille","ES","Fan","LN","Inf","Al");
-
+  puts("En-tête de section:");
   Elf32_Half i;
   for (i=0; i<header->e_shnum; i++){
     const unsigned char *nom   = str_table + e_table[i].sh_name;
@@ -180,10 +180,13 @@ void display_section_header(FILE* f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
     const Elf32_Word ln = e_table[i].sh_link;
     const Elf32_Word inf = e_table[i].sh_info;
     const Elf32_Word al = e_table[i].sh_addralign;
-    printf("[%2d] %-20s %-16s %08x %06x  %06x %02x %5s %2d %3d %2d\n",
+    printf("[%2d] %-17.17s %-16s %08x %06x  %06x %02x %5s %2d %3d %2d\n",
             i, nom, type, addr, offset, size, es, flags, ln, inf, al);
     free(flags);
   }
-  
+  puts("Clé des fanions: \n \
+  W (écriture), A (allocation), X (exécution), M (fusion), S (chaînes) \n \
+  I (info), L (ordre des liens), G (groupe), T (TLS), E (exclu), x (inconnu) \n \
+  O (traiterment additionnel requis pour l'OS) o (spécifique à l'OS), p (spécifique au processeur)");
   free(str_table);
 }
