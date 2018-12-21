@@ -32,22 +32,6 @@ SelSection_Option get_option(int argc, char *argv[], int *argopt, int *argfile){
 }
 
 
-int get_num(){
-  int num = -1;
-  if (opt == SELSECTION_OPT_NAME){
-    num = search_elf_section_num(f, sh_tab, hdr, argv[sel_i]);
-    if (num == hdr.e_shnum){
-      printf("Le nom de section n'existe pas.\n");
-    }
-  } else {
-    num = atoi(argv[sel_i]);
-    if (num < 0 || hdr.e_shnum <= num){
-      printf("Le numéro de section n'existe pas.\n");
-      return -1;
-    }
-  }
-}
-
 int main(int argc, char *argv[]){
   if (argc != 4){
     printf("Format : %s <nom du fichier> -<s|i> <section>\n", argv[0]);
@@ -64,9 +48,9 @@ int main(int argc, char *argv[]){
     return -1;
   }
 
-  FILE *f = fopen(argv[sel_f], "r");
+  FILE *f = fopen(argv[sel_file], "r");
   if (f == NULL){
-    printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[sel_f]);
+    printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[sel_file]);
     return -1;
   }
 
@@ -83,17 +67,13 @@ int main(int argc, char *argv[]){
 
   int num = -1;
   if (opt == SELSECTION_OPT_NAME){
-    num = search_elf_section_num(f, sh_tab, hdr, argv[sel_i]);
-    if (num == hdr.e_shnum){
-      printf("Le nom de section n'existe pas.\n");
-      return -1;
-    }
+    num = search_elf_section_num(f, sh_tab, hdr, argv[sel_num]);
   } else {
-    num = atoi(argv[sel_i]);
-    if (num < 0 || hdr.e_shnum <= num){
-      printf("Le numéro de section n'existe pas.\n");
-      return -1;
-    }
+    num = atoi(argv[sel_num]);
+  }
+  if (num < 0 || hdr.e_shnum <= num){
+    printf("La section n'existe pas.\n");
+    return -1;
   }
 
   unsigned char *content = read_elf_section_content(f, sh_tab[num]);

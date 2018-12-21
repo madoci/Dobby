@@ -59,10 +59,8 @@ void free_all_section_content(unsigned char * tab[], int size){
 
 /* DISPLAY SECTION CONTENT */
 
-
-
 void display_elf_section_content(unsigned char *content, Elf32_Word size){
-  printf(" ");
+  printf("\n ");
   for (int i=0; i<size; i++){
     printf("%02x", *(content + i));
 
@@ -72,5 +70,4 @@ void display_elf_section_content(unsigned char *content, Elf32_Word size){
       printf(" ");
     }
   }
-  printf("\n");
 }
