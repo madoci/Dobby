@@ -8,6 +8,8 @@
 Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name);
 
 unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr);
+void read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char * tab[]);
+void free_all_section_content(unsigned char * tab[], int size);
 
 void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name);
 void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, Elf32_Half num);
