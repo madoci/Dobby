@@ -91,4 +91,4 @@
     * Modification de elf_section_content.* (séparation entre lecture et affichage du contenu).
 
   * __Aurélien et Joris :__
-    *
+    * Embellissement du code.
