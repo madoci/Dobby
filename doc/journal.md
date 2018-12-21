@@ -73,7 +73,7 @@
     * Correction de read-relocation
 
 
-* ## Jeudi 20 décembre 2018 [... A FINIR]
+* ## Jeudi 20 décembre 2018
 > J'ai enfin déchiffré les étranges symboles de l'île ! La dernière pièce du puzzle se cachait dans une petite grotte 
 > encore inexplorée. Je vais peut-être pouvoir découvrir les secrets que renferment ces lieux. Mes hommes, eux, ont
 > consolidé l'abri. Il devrait tenir par tous temps désormais. 
@@ -92,3 +92,16 @@
 
   * __Aurélien et Joris :__
     * Embellissement du code.
+    
+  * ## Vendredi 21 décembre 2018 [... A FINIR]
+  
+  *Prise de connaissance de la phase 2 et répartition des taches*
+  
+  * __Marius et Clément :__
+    * Automatisation des tests.
+  
+  * __Stephen et Laura :__
+    * Mise en mémoire des sections (dans elf_section_content.c).
+    
+  * __Aurélien et Joris :__
+    * Suppression des sections REL et RELA (réécriture de la table des entêtes de section dans rewrite_section_table.c).
