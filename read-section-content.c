@@ -69,7 +69,8 @@ int main(int argc, char* argv[]){
       num = atoi(argv[sel_i]);
       display_elf_section_content_by_num(f, sh_tab, hdr, num);
       break;
-    default:;
+    default:
+    	break;
   }
 
   fclose(f);
