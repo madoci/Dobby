@@ -10,7 +10,7 @@
 
 * ## Lundi 17 décembre 2018
 > En tant que capitaine, j'ai affecté les premières tâches vitales pour notre survie. Ces bons à rien
-> n'y comprendront sûrement rien, je les jetterais aux manchots !
+> n'y comprendront sûrement rien, je les jetterai aux manchots !
 
 *Répartition des taches et organisation en binomes*
 
