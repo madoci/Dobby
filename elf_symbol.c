@@ -46,8 +46,8 @@ char * symbol_vis(unsigned char other){
     case STV_PROTECTED:
       return "PROTECTED";
     default:;
+	  return "Error";
   }
-  return "Error";
 }
 
 
@@ -64,8 +64,8 @@ char * symbol_link(unsigned char info){
     case STB_HIPROC:
       return "HIPROC";
     default:;
+	  return "Error";
   }
-  return "Error";
 }
 
 
@@ -85,9 +85,9 @@ char * symbol_type(unsigned char info){
       return "LOPROC";
     case STT_HIPROC:
       return "HIPROC";
-    default:;
+    default:
+	  return "Error";
   }
-  return "error";
 }
 
 
