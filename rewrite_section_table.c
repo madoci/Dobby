@@ -5,9 +5,18 @@ void rewrite_section_table(Elf32_Ehdr *header, Elf32_Shdr *e_table, Elf32_Shdr *
 	for(i=0; i<header->e_shnum; i++){
 		if(e_table[i].sh_type != SHT_RELA && e_table[i].sh_type != SHT_REL){
 			rew_e_table[marq] = e_table[i];
-			rew_e_
+			if(marq != 0){
+				rew_e_table[marq].sh_offset = rew_e_table[marq-1].sh_offset + rew_e_table.sh_size;
+			}
 			marq++;
 			corres[i] = marq;
 		}
 	}
 }
+
+
+Elf32_Half compte_shnum(Elf32_Shdr *Shead){
+	return (Elf32_Half)0;
+} 
+
+
