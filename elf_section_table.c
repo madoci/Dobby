@@ -79,6 +79,8 @@ const char * section_type(Elf32_Shdr hdr){
         return "LOUSER";
     case SHT_HIUSER:
         return "HIUSER";
+    default:
+    	break;
   }
   return "erreurType";
 }

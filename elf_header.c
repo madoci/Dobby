@@ -189,7 +189,8 @@ void display_class(unsigned char class){
     case ELFCLASS64:
       printf_s("Classe:","ELF64");
       break;
-    default:;
+    default:
+    	break;
   }
 }
 
@@ -204,7 +205,8 @@ void display_data(unsigned char data){
     case ELFDATA2MSB:
       printf_s("Données:","Big Endian");
       break;
-    default:;
+    default:
+    	break;
   }
 }
 
@@ -253,6 +255,8 @@ void display_type(Elf32_Half type){
     case ET_HIPROC:
       printf_s("Type:","Processor-specific");
       break;
+     default:
+     	break;
   }
 }
 
@@ -264,7 +268,8 @@ void display_machine(Elf32_Half machine){
     case EM_ARM:
       printf_s("Machine:","ARM");
       break;
-    default:;
+    default:
+    	break;
   }
 }
 
@@ -276,7 +281,8 @@ void display_fileVersion(Elf32_Word  version){
     case EV_CURRENT:
       printf_s("Version:","Current version");
       break;
-    default:;
+    default:
+    	break;
   }
 }
 
