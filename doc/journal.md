@@ -14,7 +14,6 @@
 
 *Répartition des taches et organisation en binomes*
 
-
   * __Marius et Clément :__
     * Rédaction du fichier .h contenant les structures et les types nécessaires ( elf_types.h ).
     * Affichage de la table des sections (elf_section.c, elf_section.h).
@@ -78,9 +77,7 @@
 > encore inexplorée. Je vais peut-être pouvoir découvrir les secrets que renferment ces lieux. Mes hommes, eux, ont
 > consolidé l'abri. Il devrait tenir par tous temps désormais. 
 
-*Poursuite du développement de la phase 1. On n'avait pas compris la différence entre sh_strtab et strtab nous faisant alors perdre beaucoup de temps.*
-
-**ON PEUT ANNONCER QUE TOUS NOS PROGRAMMES SONT EXEMPTS DE FUITES MÉMOIRES !!!!!!!!!!!**
+*Poursuite du développement de la phase 1. On n'avait pas compris la différence entre sh_strtab et strtab nous faisant alors perdre beaucoup de temps. De plus l'utilisation de la commande valgrind nous indique que tous nos programmes sont exempts de fuite mémoire.*
 
   * __Marius et Clément :__
     * Automatisation des tests.
@@ -93,7 +90,7 @@
   * __Aurélien et Joris :__
     * Embellissement du code.
     
-  * ## Vendredi 21 décembre 2018 [... A FINIR]
+* ## Vendredi 21 décembre 2018 [... A FINIR]
   
   *Prise de connaissance de la phase 2 et répartition des taches*
   
