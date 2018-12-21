@@ -59,32 +59,12 @@ void free_all_section_content(unsigned char * tab[], int size){
 
 /* DISPLAY SECTION CONTENT */
 
-void display_elf_section_content_by_name(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
-  Elf32_Half num = 0;
-  num = search_elf_section_num(f, tab, hdr, name);
-
-  if (num == hdr.e_shnum){
-    printf("Le nom de section n'existe pas.\n");
-    return;
-  }
-
-  display_elf_section_content_by_num(f, tab, hdr, num);
-}
 
 
-void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, Elf32_Half num){
-  if (num < 0 || hdr.e_shnum <= num){
-    printf("Le numéro de section n'existe pas.\n");
-    return;
-  }
-
-  unsigned char * shdr_table = NULL;
-  shdr_table = read_elf_section_content(f, tab[num]);
-
+void display_elf_section_content(unsigned char *content, Elf32_Word size){
   printf(" ");
-
-  for (int i=0; i<tab[num].sh_size; i++){
-    printf("%02x", *(shdr_table + i));
+  for (int i=0; i<size; i++){
+    printf("%02x", *(content + i));
 
     if ((i % 16) == 15){
       printf("\n ");
@@ -93,6 +73,4 @@ void display_elf_section_content_by_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hd
     }
   }
   printf("\n");
-
-  free(shdr_table);
 }
