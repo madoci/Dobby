@@ -10,11 +10,11 @@ En-tête ELF:
 	Version:                                          	Current version
 	Adresse du point d'entrée:                       	0x00000000
 	Début des en-têtes du programme:                	0
-	Début des en-têtes de section:                  	728
+	Début des en-têtes de section:                  	804
 	Fanions:                                          	
 	Taille de cet en-tête du programme:              	52
 	Taille de l'en-tête du programme:                	0
 	Nombre d'en-tête du programme:                   	0
 	Taille des en-têtes de section:                  	40
-	Nombre d'en-tête de section:                     	15
-	Table d'indexe des chaines d'en-tête de section: 	12
+	Nombre d'en-tête de section:                     	16
+	Table d'indexe des chaines d'en-tête de section: 	15
