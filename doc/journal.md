@@ -74,7 +74,9 @@
 
 
 * ## Jeudi 20 décembre 2018 [... A FINIR]
-> Le capitaine dobby dit :
+> J'ai enfin déchiffré les étranges symboles de l'île ! La dernière pièce du puzzle se cachait dans une petite grotte 
+> encore inexplorée. Je vais peut-être pouvoir découvrir les secrets que renferment ces lieux. Mes hommes, eux, ont
+> consolidé l'abri. Il devrait tenir par tous temps désormais. 
 
 *Poursuite du développement de la phase 1. On n'avait pas compris la différence entre sh_strtab et strtab nous faisant alors perdre beaucoup de temps.*
 
