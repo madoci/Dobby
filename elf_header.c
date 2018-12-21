@@ -178,13 +178,6 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr* hdr){
 
 /* DISPLAY HEADER */
 
-void display_ident(unsigned char e_ident[]){
-  display_class(e_ident[EI_CLASS]);
-  display_data(e_ident[EI_DATA]);
-  display_eiVersion(e_ident[EI_VERSION]);
-  display_osabi(e_ident[EI_OSABI]);
-}
-
 void display_class(unsigned char class){
   switch (class){
     case ELFCLASSNONE:
@@ -229,6 +222,13 @@ void display_osabi(unsigned char osabi){
       break;
     default:;
   }
+}
+
+void display_ident(unsigned char e_ident[]){
+  display_class(e_ident[EI_CLASS]);
+  display_data(e_ident[EI_DATA]);
+  display_eiVersion(e_ident[EI_VERSION]);
+  display_osabi(e_ident[EI_OSABI]);
 }
 
 void display_type(Elf32_Half type){

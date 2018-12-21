@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]) {
   Elf32_Shdr tab_section_hdr[header.e_shnum];
   read_elf_section_table(f, &header, tab_section_hdr);
   
-  display_section_header(&header, tab_section_hdr);
+  display_section_header(f, &header, tab_section_hdr);
   
   fclose(f);
   return 0;

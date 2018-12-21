@@ -104,7 +104,7 @@ void display_rela_table(FILE* f, Elf32_Shdr *shdr){
 }
 
 void display_all_relocation_table(FILE* f, Elf32_Ehdr *hdr, Elf32_Shdr shdr[]){
-  char *str_table = read_elf_section_content(f, shdr[hdr->e_shstrndx]);
+  unsigned char *str_table = read_elf_section_content(f, shdr[hdr->e_shstrndx]);
 
   unsigned int i;
   for (i=0; i<hdr->e_shnum; i++){
