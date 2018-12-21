@@ -1,5 +1,5 @@
 En-tête ELF:
-	Magique: 7f 45 4c 46 01 02 01 00 00 00 00 00 00 00 00 00 
+	Magique: 7f 45 4c 46 01 02 01 00 00 00 00 00 00 00 00 00
 	Classe:                                           	ELF32
 	Données:                                         	Big Endian
 	Version courante:                                 	1
@@ -10,11 +10,11 @@ En-tête ELF:
 	Version:                                          	Current version
 	Adresse du point d'entrée:                       	0x00000000
 	Début des en-têtes du programme:                	0
-	Début des en-têtes de section:                  	728
-	Fanions:                                          	
+	Début des en-têtes de section:                  	876
+	Fanions:
 	Taille de cet en-tête du programme:              	52
 	Taille de l'en-tête du programme:                	0
 	Nombre d'en-tête du programme:                   	0
 	Taille des en-têtes de section:                  	40
-	Nombre d'en-tête de section:                     	15
-	Table d'indexe des chaines d'en-tête de section: 	12
+	Nombre d'en-tête de section:                     	17
+	Table d'indexe des chaines d'en-tête de section: 	16
