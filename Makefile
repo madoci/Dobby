@@ -46,15 +46,11 @@ $(BIN_DIR)/dobby-read-rewrite-section-table:   $(OBJ_DIR)/fread.o $(OBJ_DIR)/uti
 
 #Objects
 
-$(OBJ_DIR)/elf_header.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
-
-$(OBJ_DIR)/elf_section_table.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_section_content.h
-
+$(OBJ_DIR)/elf_header.o:          $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_section_table.o:   $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 $(OBJ_DIR)/elf_section_content.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
-
-$(OBJ_DIR)/elf_relocation.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_section_content.h
-
-$(OBJ_DIR)/elf_symbol.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_section_table.h $(INC_DIR)/elf_section_content.h
+$(OBJ_DIR)/elf_relocation.o:      $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_symbol.o:          $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 
 $(OBJ_DIR)/fread.o: $(INC_DIR)/util.h
 

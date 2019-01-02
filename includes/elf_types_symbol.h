@@ -38,9 +38,9 @@ enum Elf_StVis{
   STV_PROTECTED = 3,
 };
 
-#define ELF32_ST_BIND(i) ((i) >>4)
-#define ELF32_ST_TYPE(i) ((i) &0xf)
-#define ELF32_ST_VIS(o) ((o)&0x3)
+#define ELF32_ST_BIND(i)   ((i) >>4)
+#define ELF32_ST_TYPE(i)   ((i) &0xf)
+#define ELF32_ST_VIS(o)    ((o)&0x3)
 #define ELF32_ST_INFO(b,t) ((b)<<4+((t)&0xf))
 
 #endif

@@ -8,6 +8,6 @@
 void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]);
 
 /* Display all section headers */
-void display_section_header(FILE* f, Elf32_Ehdr *header, Elf32_Shdr e_table[]);
+void display_section_header(Elf32_Ehdr *header, Elf32_Shdr e_table[], unsigned char *str_table);
 
 #endif

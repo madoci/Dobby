@@ -1,8 +1,6 @@
 #include "elf_symbol.h"
 
 #include "fread.h"
-#include "elf_section_table.h"
-#include "elf_section_content.h"
 
 
 /* READ SYMBOL TABLE */
@@ -16,18 +14,16 @@ Elf32_Sym read_sym(FILE *f){
   fread_8bits(&(line.st_info), 1, f);
   fread_8bits(&(line.st_other), 1, f);
   fread_16bits(&(line.st_shndx), 1, f);
-	
+
   return line;
 }
 
 
-void read_elf_symbol_table(FILE *f, Elf32_Shdr* symbole_header, Elf32_Sym sym_table[]){
-  const int nb_tableSymbole = symbole_header->sh_size / sizeof(Elf32_Sym);
-  const int start_tableSymbole = symbole_header->sh_offset;
-  int i;
-
-  for (i=0; i<nb_tableSymbole; i++){
-    fseek(f, start_tableSymbole+i*sizeof(Elf32_Sym), SEEK_SET);
+void read_elf_symbol_table(FILE *f, Elf32_Shdr* symbol_header, Elf32_Sym sym_table[]){
+  const unsigned int num_symbols = symbol_header->sh_size / sizeof(Elf32_Sym);
+  unsigned int i;
+  for (i=0; i<num_symbols; i++){
+    fseek(f, symbol_header->sh_offset + i * sizeof(Elf32_Sym), SEEK_SET);
     sym_table[i] = read_sym(f);
   }
 }
@@ -46,7 +42,7 @@ char * symbol_vis(unsigned char other){
     case STV_PROTECTED:
       return "PROTECTED";
     default:
-	  return "Error";
+      return "Error";
   }
 }
 
@@ -64,7 +60,7 @@ char * symbol_link(unsigned char info){
     case STB_HIPROC:
       return "HIPROC";
     default:
-	  return "Error";
+      return "Error";
   }
 }
 
@@ -86,21 +82,18 @@ char * symbol_type(unsigned char info){
     case STT_HIPROC:
       return "HIPROC";
     default:
-	  return "Error";
+      return "Error";
   }
 }
 
 
-void display_symbol_table(FILE* f,Elf32_Shdr* symbole_header, Elf32_Sym sym_table[], Elf32_Shdr *string_table_hdr){
-  int i = 0;
-  const int nb_tableSymbole = (symbole_header->sh_size)/sizeof(Elf32_Sym);
-  unsigned char * string_table = read_elf_section_content(f, *string_table_hdr);
-
-  printf("\nLa table des symboles \" .symtab \" contient %d entrées \n\n", nb_tableSymbole);
+void display_symbol_table(Elf32_Sym sym_table[], unsigned int num_symbols, unsigned char *string_table, unsigned char *section_name){
+  printf("\nLa table des symboles \"%s\" contient %d entrées \n\n", section_name, num_symbols);
   printf("%2s\t %8s\t %-1s\t %-7s\t %-6s\t %-9s\t %-3s\t %-12s\n",
          "Num:","Valeur","Tail","Type","Lien","Vis","Ndx","Nom");
 
-  for (i = 0 ; i < nb_tableSymbole; i++){
+  unsigned int i;
+  for (i=0 ; i<num_symbols; i++){
     const unsigned char *nom = string_table + sym_table[i].st_name;
     const Elf32_Addr valeur = sym_table[i].st_value;
     const Elf32_Word size = sym_table[i].st_size;
@@ -112,5 +105,4 @@ void display_symbol_table(FILE* f,Elf32_Shdr* symbole_header, Elf32_Sym sym_tabl
     printf("%2d:\t %08x\t %-1d\t %-7s\t %-6s\t %-9s\t %-3d\t %-12s\n",
            i, valeur, size, type, lien, vis, ndx, nom);
   }
-  free(string_table);
 }

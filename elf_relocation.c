@@ -1,7 +1,6 @@
 #include "elf_relocation.h"
 
 #include "fread.h"
-#include "elf_section_content.h"
 
 
 /* READ RELOCATION TABLE */
@@ -33,7 +32,7 @@ void read_rel_section(FILE* f, Elf32_Shdr *hdr, Elf32_Rel entries[]){
 void read_rela_section(FILE* f, Elf32_Shdr *hdr, Elf32_Rela entries[]){
   unsigned int i;
   for (i=0; i<(hdr->sh_size/sizeof(Elf32_Rela)); i++){
-    fseek(f, hdr->sh_offset+i*sizeof(Elf32_Rela), SEEK_SET);
+    fseek(f, hdr->sh_offset + i * sizeof(Elf32_Rela), SEEK_SET);
     entries[i] = read_rela(f);
   }
 }
@@ -66,15 +65,15 @@ const char * relocation_type(Elf_RelT type){
   }
 }
 
-void display_rel_table(FILE* f, Elf32_Shdr *shdr){
-  Elf32_Rel entries[shdr->sh_size/sizeof(Elf32_Rel)];
-  read_rel_section(f, shdr, entries);
 
+void display_rel_table(Elf32_Rel entries[], const unsigned int num_entries, const unsigned char *name){
+  printf("\nSection de relocalisation '%s' :\n", name);
+  
   printf(" %-8s  %-8s  %-15s  %-8s\n",
          "Decalage", "Info", "Type", "Ind.-sym");
 
   unsigned int i;
-  for (i=0; i<shdr->sh_size/sizeof(Elf32_Rel); i++){
+  for (i=0; i<num_entries; i++){
     const Elf32_Addr decal = entries[i].r_offset;
     const Elf32_Word inf = entries[i].r_info;
     const char *type = relocation_type(ELF32_R_TYPE(entries[i].r_info));
@@ -84,15 +83,15 @@ void display_rel_table(FILE* f, Elf32_Shdr *shdr){
   }
 }
 
-void display_rela_table(FILE* f, Elf32_Shdr *shdr){
-  Elf32_Rela entries[shdr->sh_size / sizeof(Elf32_Rela)];
-  read_rela_section(f, shdr, entries);
 
+void display_rela_table(Elf32_Rela entries[], const unsigned int num_entries, const unsigned char *name){
+  printf("\nSection de relocalisation '%s' :\n", name);
+  
   printf(" %-8s  %-8s  %-15s  %-8s  %-8s\n",
          "Decalage", "Info", "Type", "Ind.-sym", "Addend");
 
   unsigned int i;
-  for (i=0; i<shdr->sh_size/sizeof(Elf32_Rel); i++){
+  for (i=0; i<num_entries; i++){
     const Elf32_Addr decal = entries[i].r_offset;
     const Elf32_Word inf = entries[i].r_info;
     const char *type = relocation_type(ELF32_R_TYPE(entries[i].r_info));
@@ -101,21 +100,4 @@ void display_rela_table(FILE* f, Elf32_Shdr *shdr){
     printf(" %08x  %08x  %-15s  %-8d  %-8d\n",
            decal, inf, type, ind, addend);
   }
-}
-
-void display_all_relocation_table(FILE* f, Elf32_Ehdr *hdr, Elf32_Shdr shdr[]){
-  unsigned char *str_table = read_elf_section_content(f, shdr[hdr->e_shstrndx]);
-
-  unsigned int i;
-  for (i=0; i<hdr->e_shnum; i++){
-    if (shdr[i].sh_type == SHT_REL){
-      printf("\nSection de relocalisation '%s' :\n", str_table + shdr[i].sh_name);
-    	display_rel_table(f, &shdr[i]);
-    }
-    else if (shdr[i].sh_type == SHT_RELA){
-      printf("\nSection de relocalisation '%s' :\n", str_table + shdr[i].sh_name);
-    	display_rela_table(f, &shdr[i]);
-    }
-  }
-  free(str_table);
 }
