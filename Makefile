@@ -4,7 +4,7 @@ OBJ_DIR=obj
 
 CC=clang
 CSTD=c99
-CFLAGS=-Wall -Werror --std=$(CSTD) -I$(INC_DIR)
+CFLAGS=-Wall -Werror --std=$(CSTD) -I$(INC_DIR) -g
 
 
 usage:

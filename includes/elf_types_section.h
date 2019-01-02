@@ -5,17 +5,6 @@
 
 /* Sections data types */
 
-//Undefined section
-enum Elf_SIndex{
-  SHN_UNDEF     = 0,
-  SHN_LORESERVE = 0xff00,
-  SHN_LOPROC    = 0xff00,
-  SHN_HIPROC    = 0xff1f,
-  SHN_ABS       = 0xfff1,
-  SHN_COMMON    = 0xfff2,
-  SHN_HIRESERVE = 0xffff
-};
-
 typedef struct {
   Elf32_Word sh_name; //Index into section header string table
   Elf32_Word sh_type; //Section type
@@ -28,6 +17,16 @@ typedef struct {
   Elf32_Word sh_addralign;//Address align constraints
   Elf32_Word sh_entsize;//Size of entries if "symbol table" in section
 } Elf32_Shdr;
+
+enum Elf_SIndex{
+  SHN_UNDEF     = 0,
+  SHN_LORESERVE = 0xff00,
+  SHN_LOPROC    = 0xff00,
+  SHN_HIPROC    = 0xff1f,
+  SHN_ABS       = 0xfff1,
+  SHN_COMMON    = 0xfff2,
+  SHN_HIRESERVE = 0xffff
+};
 
 //sh_types values
 enum Elf_ShType {
