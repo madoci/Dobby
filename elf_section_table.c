@@ -155,7 +155,7 @@ char * section_flags(Elf32_Word sh_flags){
 }
 
 
-void display_section_header(Elf32_Ehdr *header, Elf32_Shdr e_table[], unsigned char *str_table){
+void display_section_table(Elf32_Ehdr *header, Elf32_Shdr e_table[], unsigned char *str_table){
   printf("\nIl y a %d en-têtes de section,\
   débutant à l'adresse de décalage 0x%08x:\n\n", header->e_shnum, header->e_shoff);
 

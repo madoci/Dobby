@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   
-  display_section_header(&header, tab_section_hdr, str_table);
+  display_section_table(&header, tab_section_hdr, str_table);
   
   free(str_table);
   fclose(f);
