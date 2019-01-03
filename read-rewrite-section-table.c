@@ -48,7 +48,7 @@ int main(int argc, char const * argv[]){
   
   Elf32_Ehdr new_header = header;
   correct_header(&new_header, new_shnum, correl_table);
-  correct_symtab(new_e_table, new_shnum, correl_table);
+  correct_symtab_header(new_e_table, new_shnum, correl_table);
 
 #ifdef DEBUG
   puts("NEW");

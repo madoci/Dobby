@@ -31,7 +31,7 @@ void correct_header(Elf32_Ehdr *hdr, Elf32_Half shnum, Elf32_Half correl_table[]
   hdr->e_shnum = shnum;
 }
 
-void correct_symtab(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Half correl_table[]){
+void correct_symtab_header(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Half correl_table[]){
   unsigned int i;
   for(i=0; i<shnum; i++){
     if(e_table[i].sh_type == SHT_SYMTAB){

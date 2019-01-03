@@ -8,7 +8,7 @@ void rewrite_section_table(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Shdr ne
 
 void correct_header(Elf32_Ehdr *hdr, Elf32_Half shnum, Elf32_Half correl_table[]);
 
-void correct_symtab(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Half correl_table[]);
+void correct_symtab_header(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Half correl_table[]);
 
 Elf32_Half count_shnum(Elf32_Shdr e_table[], Elf32_Half shnum);
 
