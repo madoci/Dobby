@@ -42,15 +42,21 @@ int main(int argc, char *argv[]){
   for (i=0; i<hdr.e_shnum; i++){
     if (shdr[i].sh_type == SHT_REL){
       Elf32_Rel entries[shdr[i].sh_size/sizeof(Elf32_Rel)];
-      read_rel_section(f, shdr, entries);
+      unsigned char* rel_content = read_elf_section_content(f, shdr[i]);
+      read_rel_section(rel_content, &shdr[i], entries);
       
       display_rel_table(entries, shdr[i].sh_size/sizeof(Elf32_Rel), str_table + shdr[i].sh_name);
+    
+      free(rel_content);
     } 
     else if (shdr[i].sh_type == SHT_RELA){
       Elf32_Rela entries[shdr[i].sh_size/sizeof(Elf32_Rela)];
-      read_rela_section(f, shdr, entries);
+      unsigned char* rela_content = read_elf_section_content(f, shdr[i]);
+      read_rela_section(rela_content, &shdr[i], entries);
       
       display_rela_table(entries, shdr[i].sh_size/sizeof(Elf32_Rela), str_table + shdr[i].sh_name);
+    
+      free(rela_content);
     }
   }
   
