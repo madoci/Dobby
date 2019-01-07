@@ -49,7 +49,7 @@ int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], uns
   tab[0] = NULL;
   for (Elf32_Half i = 1; i < hdr.e_shnum; i++){
     tab[i] = NULL;
-    tab[i] = read_elf_section_content(f,&hdr);
+    tab[i] = read_elf_section_content(f, shdr[i]);
 /*
     if (tab[i] == NULL && shdr.sh_type != SHT_NOBITS){
       for (; i != 0; i--){
