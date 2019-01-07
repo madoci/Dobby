@@ -51,6 +51,7 @@ $(OBJ_DIR)/elf_section_table.o:   $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 $(OBJ_DIR)/elf_section_content.o: $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 $(OBJ_DIR)/elf_relocation.o:      $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
 $(OBJ_DIR)/elf_symbol.o:          $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h
+$(OBJ_DIR)/elf_file.o:          $(INC_DIR)/elf_types.h
 
 $(OBJ_DIR)/fread.o: $(INC_DIR)/util.h
 
