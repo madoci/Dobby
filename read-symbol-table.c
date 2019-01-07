@@ -51,11 +51,13 @@ int main(int argc, char *argv[]){
       const unsigned int num_symbols = s_table[i].sh_size / sizeof(Elf32_Sym);
       
       Elf32_Sym sym_table[num_symbols];
-      read_elf_symbol_table(f, &s_table[i], sym_table);
+      unsigned char* symtab_content = read_elf_section_content(f, s_table[i]);
+      read_elf_symbol_table(symtab_content, &s_table[i], sym_table);
 
       display_symbol_table(sym_table, num_symbols, string_table, str_section + s_table[i].sh_name);
       
       free(string_table);
+      free(symtab_content);
     }
   }
   

@@ -5,26 +5,32 @@
 
 /* READ SYMBOL TABLE */
 
-Elf32_Sym read_sym(FILE *f){
+Elf32_Sym read_sym(unsigned char* line){
 
-  Elf32_Sym line;
-  fread_32bits(&(line.st_name),1, f);
-  fread_32bits(&(line.st_value), 1, f);
-  fread_32bits(&(line.st_size), 1, f);
-  fread_8bits(&(line.st_info), 1, f);
-  fread_8bits(&(line.st_other), 1, f);
-  fread_16bits(&(line.st_shndx), 1, f);
+  Elf32_Sym sym;
 
-  return line;
+  read_32bits(&(sym.st_name), line);
+  line += 4;
+  read_32bits(&(sym.st_value), line);
+  line += 4;
+  read_32bits(&(sym.st_size), line);
+  line += 4;
+  read_8bits(&(sym.st_info), line);
+  line += 1;
+  read_8bits(&(sym.st_other), line);
+  line += 1;
+  read_16bits(&(sym.st_shndx), line);
+
+  return sym;
 }
 
 
-void read_elf_symbol_table(FILE *f, Elf32_Shdr* symbol_header, Elf32_Sym sym_table[]){
+void read_elf_symbol_table(unsigned char* symtab, Elf32_Shdr* symbol_header, Elf32_Sym sym_table[]){
   const unsigned int num_symbols = symbol_header->sh_size / sizeof(Elf32_Sym);
   unsigned int i;
   for (i=0; i<num_symbols; i++){
-    fseek(f, symbol_header->sh_offset + i * sizeof(Elf32_Sym), SEEK_SET);
-    sym_table[i] = read_sym(f);
+    unsigned char* line = symtab + i * sizeof(Elf32_Sym); //fseek(f, symbol_header->sh_offset + i * sizeof(Elf32_Sym), SEEK_SET);
+    sym_table[i] = read_sym(line);
   }
 }
 

@@ -43,10 +43,14 @@ unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
 }
 
 
-void read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char * tab[]){
+int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char * tab[]){
   for (int i=0; i<hdr.e_shnum; i++){
     tab[i] = read_elf_section_content(f, shdr[i]);
+    if (tab[i] == NULL){
+      return 1;
+    }
   }
+  return 0;
 }
 
 

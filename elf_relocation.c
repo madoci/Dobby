@@ -5,35 +5,42 @@
 
 /* READ RELOCATION TABLE */
 
-Elf32_Rel read_rel(FILE* f){
+Elf32_Rel read_rel(unsigned char* line){
   Elf32_Rel r;
-  fread_32bits(&(r.r_offset), 1, f);
-  fread_32bits(&(r.r_info), 1, f);
+
+  read_32bits(&(r.r_offset), line);
+  line += 4;
+  read_32bits(&(r.r_info), line);
+
   return r;
 }
 
-Elf32_Rela read_rela(FILE* f){
+Elf32_Rela read_rela(unsigned char* line){
   Elf32_Rela r;
-  fread_32bits(&(r.r_offset), 1, f);
-  fread_32bits(&(r.r_info), 1, f);
-  fread_32bits(&(r.r_addend), 1, f);
+  
+  read_32bits(&(r.r_offset), line);
+  line += 4;
+  read_32bits(&(r.r_info), line);
+  line += 4;
+  read_32bits(&(r.r_addend), line);
+
   return r;
 }
 
 
-void read_rel_section(FILE* f, Elf32_Shdr *hdr, Elf32_Rel entries[]){
+void read_rel_section(unsigned char* section_content, Elf32_Shdr *hdr, Elf32_Rel entries[]){
   unsigned int i;
   for (i=0; i<(hdr->sh_size/sizeof(Elf32_Rel)); i++){
-    fseek(f, hdr->sh_offset + i * sizeof(Elf32_Rel), SEEK_SET);
-    entries[i] = read_rel(f);
+    unsigned char* line = section_content + i * sizeof(Elf32_Rel); //fseek(f, hdr->sh_offset + i * sizeof(Elf32_Rel), SEEK_SET);
+    entries[i] = read_rel(line);
   }
 }
 
-void read_rela_section(FILE* f, Elf32_Shdr *hdr, Elf32_Rela entries[]){
+void read_rela_section(unsigned char* section_content, Elf32_Shdr *hdr, Elf32_Rela entries[]){
   unsigned int i;
   for (i=0; i<(hdr->sh_size/sizeof(Elf32_Rela)); i++){
-    fseek(f, hdr->sh_offset + i * sizeof(Elf32_Rela), SEEK_SET);
-    entries[i] = read_rela(f);
+    unsigned char* line = section_content + i * sizeof(Elf32_Rela); //fseek(f, hdr->sh_offset + i * sizeof(Elf32_Rela), SEEK_SET);
+    entries[i] = read_rela(line);
   }
 }
 
