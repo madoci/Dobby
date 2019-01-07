@@ -1,5 +1,5 @@
-#ifndef ELF_H
-#define ELF_H
+#ifndef ELF_FILE_H
+#define ELF_FILE_H
 
 #include "elf_types.h"
 

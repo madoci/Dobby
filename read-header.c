@@ -14,7 +14,11 @@ int main(int argc, char *argv[]){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
     return 1;
   }
+<<<<<<< HEAD
 #ifdef TEST
+=======
+
+>>>>>>> 84c0458d5398c4cf589f07a82f7c9f0d0cfc357e
   Elf32_Ehdr header;
   Err_ELF_Header error = read_elf_header(f, &header);
 
@@ -23,9 +27,14 @@ int main(int argc, char *argv[]){
     fclose(f);
     return 1;
   }
+<<<<<<< HEAD
   display_header(&header);
 #else
 #endif TEST
+=======
+
+  display_header(&header);
+>>>>>>> 84c0458d5398c4cf589f07a82f7c9f0d0cfc357e
 
   fclose(f);
 
