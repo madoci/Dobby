@@ -41,3 +41,24 @@ size_t fread_32bits(void *ptr, size_t nmemb, FILE *stream){
   }
   return res;
 }
+
+void read_8bits(void *ptr, unsigned char* string){
+  uint8_t *adr = ptr;
+  *adr = *((uint8_t*) string);
+}
+
+void read_16bits(void *ptr, unsigned char* string){
+  uint16_t *adr = ptr;
+  *adr = *((uint16_t*) string);
+  if (is_big_endian() != isBigEndian){
+    *adr = reverse_2(*adr);
+  }
+}
+
+void read_32bits(void *ptr, unsigned char* string){
+  uint32_t *adr = ptr;
+  *adr = *((uint32_t*) string);
+  if (is_big_endian() != isBigEndian){
+    *adr = reverse_4(*adr);
+  }
+}
