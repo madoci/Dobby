@@ -1,5 +1,7 @@
-#ifndef ELF_H
-#define ELF_H
+#ifndef ELF_FILE_H
+#define ELF_FILE_H
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "elf_types.h"
 
@@ -12,7 +14,7 @@ typedef struct {
 /* Fichier préalablement ouvert, à fermer vous même*/
 int read_elf_file(FILE* f, Elf32_File* ef);
 
-int free_elf_file(Elf32_File* f);
+void free_elf_file(Elf32_File* f);
 
 
 

@@ -45,20 +45,11 @@ unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
 }
 
 
-int read_elf_all_section_content( FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], \
-                                  unsigned char * tab[]){
+int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char * tab[]){
   tab[0] = NULL;
   for (Elf32_Half i = 1; i < hdr.e_shnum; i++){
     tab[i] = NULL;
-    tab[i] = malloc(sizeof(unsigned char)*shdr[i].sh_size));
-    if (tab[i] == NULL){
-      for (i=i-1; i != 0; i--){
-        if (tab[i] != NULL)
-          free(tab[i]);
-      }
-      return -1
-    }
-    *tab[i] = read_elf_section_content(f,&hdr);
+    tab[i] = read_elf_section_content(f, shdr[i]);
 /*
     if (tab[i] == NULL && shdr.sh_type != SHT_NOBITS){
       for (; i != 0; i--){
@@ -67,7 +58,7 @@ int read_elf_all_section_content( FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], \
       }
       return -1;
     }
-*/
+  */
   }
   return 0;
 }

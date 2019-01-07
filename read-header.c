@@ -1,6 +1,5 @@
 #include "elf_header.h"
 
-
 int main(int argc, char *argv[]){
 
   if (argc != 2){
@@ -14,7 +13,6 @@ int main(int argc, char *argv[]){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
     return 1;
   }
-
   Elf32_Ehdr header;
   Err_ELF_Header error = read_elf_header(f, &header);
 
@@ -23,7 +21,6 @@ int main(int argc, char *argv[]){
     fclose(f);
     return 1;
   }
-
   display_header(&header);
 
   fclose(f);
