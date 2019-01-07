@@ -6,13 +6,13 @@
 > Mon précieux navire s'est échoué sur une île inconnue (que je vais nommer... euh... Aile-Ef) et nous voilà coincés ici.
 > Tout ceci promet d'être long, moussaillons !
 
-*Prise de connaissance de la doc*
+*Prise de connaissance de la doc.*
 
 * ## Lundi 17 décembre 2018
 > En tant que capitaine, j'ai affecté les premières tâches vitales pour notre survie. Ces bons à rien
 > n'y comprendront sûrement rien, je les jetterai aux manchots !
 
-*Répartition des taches et organisation en binomes*
+*Répartition des taches et organisation en binomes.*
 
   * __Marius et Clément :__
     * Rédaction du fichier .h contenant les structures et les types nécessaires ( elf_types.h ).
@@ -30,7 +30,7 @@
 > Moi, Capitaine Dobby, je m'enrichis de ce que mes matelots me rapportent. J'ai divisé l'île en sections, et en explorant
 > les lieux, j'ai découvert des symboles cabalistiques disséminés un peu partout !
 
-*Correction des erreurs et poursuite du développement*
+*Correction des erreurs et poursuite du développement.*
 
   * __Marius :__
     * Organisation des dossiers et renommage des fichiers pour respecter une standardisation.
@@ -54,7 +54,7 @@
 > s'écroulent ! Et pour couronner le tout, nous avons été attaqués par diverses créatures ! Satanés saigfolteux !
 > Ce séjour forcé s'annonce compliqué...
 
-*Factorisation et poursuite du développement*
+*Factorisation et poursuite du développement.*
 
   * __Marius et Clément :__
     * Affichage des tables de réimplantation (prototypes).
@@ -93,7 +93,7 @@
 * ## Vendredi 21 décembre 2018
 >
   
-*Prise de connaissance de la phase 2 et répartition des taches*
+*Prise de connaissance de la phase 2 et répartition des taches.*
   
   * __Marius et Clément :__
     * Automatisation des tests.
@@ -109,10 +109,10 @@
 
 *Poursuite du développement (et de la compréhension) de la phase 2.*
   
-  *__Marius et Clément :__
+  * __Marius et Clément :__
     * Automatisation des tests (sabrage de la sortie de grepp).
     * Test des fuites mémoires.
     * Mise en place de la représentation mémoire du fichier (fusion de tous les types).
 
-  *__Stephen et Laura :__
+  * __Stephen et Laura :__
     * Correction des fuites mémoires.
