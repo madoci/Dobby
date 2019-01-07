@@ -317,13 +317,13 @@ void display_header(Elf32_Ehdr *hdr){
   display_machine(hdr->e_machine);
   display_fileVersion(hdr->e_version);
   printf_x("Adresse du point d'entrée:", hdr->e_entry);
-  printf_d("Début des en-têtes du programme:", hdr->e_phoff);
+  printf_d("Début des en-têtes de programme:", hdr->e_phoff);
   printf_d("Début des en-têtes de section:", hdr->e_shoff);
   display_flags(hdr->e_flags);
   printf_d("Taille de cet en-tête du programme:", hdr->e_ehsize);
   printf_d("Taille de l'en-tête du programme:", hdr->e_phentsize);
   printf_d("Nombre d'en-tête du programme:", hdr->e_phnum);
   printf_d("Taille des en-têtes de section:", hdr->e_shentsize);
-  printf_d("Nombre d'en-tête de section:", hdr->e_shnum);
-  printf_d("Table d'indexes des chaines d'en-tête de section:", hdr->e_shstrndx);
+  printf_d("Nombre d'en-têtes de section:", hdr->e_shnum);
+  printf_d("Table d'indexes des chaînes d'en-tête de section:", hdr->e_shstrndx);
 }
