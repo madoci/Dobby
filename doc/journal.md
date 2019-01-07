@@ -90,9 +90,10 @@
   * __Aurélien et Joris :__
     * Embellissement du code.
     
-* ## Vendredi 21 décembre 2018 [... A FINIR]
+* ## Vendredi 21 décembre 2018
+>
   
-  *Prise de connaissance de la phase 2 et répartition des taches*
+*Prise de connaissance de la phase 2 et répartition des taches*
   
   * __Marius et Clément :__
     * Automatisation des tests.
@@ -102,3 +103,16 @@
     
   * __Aurélien et Joris :__
     * Suppression des sections REL et RELA (réécriture de la table des entêtes de section dans rewrite_section_table.c).
+    
+* ## Lundi 7 janvier 2018
+>
+
+*Poursuite du développement (et de la compréhension) de la phase 2.*
+  
+  *__Marius et Clément :__
+    * Automatisation des tests (sabrage de la sortie de grepp).
+    * Test des fuites mémoires.
+    * Mise en place de la représentation mémoire du fichier (fusion de tous les types).
+
+  *__Stephen et Laura :__
+    * Correction des fuites mémoires.
