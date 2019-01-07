@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
   }
 
   Elf32_Shdr tab_section_hdr[header.e_shnum];
+  init_section_table(tab_section_hdr, header.e_shnum);
   read_elf_section_table(f, &header, tab_section_hdr);
   
   unsigned char *str_table = NULL;

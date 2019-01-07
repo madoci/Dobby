@@ -58,7 +58,8 @@ int main(int argc, char *argv[]){
       free(string_table);
     }
   }
-
+  
+  free(str_section);
   fclose(f);
   
   return 0;

@@ -60,14 +60,13 @@ void free_all_section_content(unsigned char * tab[], int size){
 /* DISPLAY SECTION CONTENT */
 
 void display_elf_section_content(unsigned char *content, Elf32_Word size){
-  printf("\n ");
   for (int i=0; i<size; i++){
-    printf("%02x", *(content + i));
-
-    if ((i % 16) == 15){
+    if ((i % 16) == 0){
       printf("\n ");
-    } else if ((i % 4) == 3){
+    } else if ((i % 4) == 0){
       printf(" ");
     }
+    printf("%02x", *(content + i));
   }
+  printf("\n ");
 }

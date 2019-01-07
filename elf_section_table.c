@@ -22,6 +22,22 @@ Elf32_Shdr read_section_header(FILE *f){
   return line;
 }
 
+void init_section_table(Elf32_Shdr e_table[], Elf32_Half e_shnum){
+  for(int i=0; i<e_shnum; i++){
+    e_table[i].sh_name      = SHN_UNDEF;
+    e_table[i].sh_type      = SHT_NULL;
+    e_table[i].sh_flags     = 0;
+    e_table[i].sh_addr      = 0;
+    e_table[i].sh_offset    = 0;
+    e_table[i].sh_size      = 0;
+    e_table[i].sh_link      = 0;
+    e_table[i].sh_info      = 0;
+    e_table[i].sh_addralign = 0;
+    e_table[i].sh_entsize   = 0;
+
+  }
+
+}
 
 void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
   unsigned int i;
