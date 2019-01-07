@@ -3,6 +3,7 @@
 #include "fread.h"
 
 #define printf_8x(s,x) printf("\t%-50s\t0x%08x\n",s,x)
+#define printf_x(s,x) printf("\t%-50s\t0x%x\n",s,x)
 #define printf_d(s,d)  printf("\t%-50s\t%d\n",s,d)
 #define printf_s(s,s2) printf("\t%-50s\t%s\n",s,s2)
 #define printf_se(s)   printf("\t%-50s\t",s)
@@ -119,7 +120,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr *hdr){
   fread_32bits(&(hdr->e_entry), 1, f);          // ELF ENTRY
   fread_32bits(&(hdr->e_phoff), 1, f);          // ELF PHOFF
   fread_32bits(&(hdr->e_shoff), 1, f);          // ELF SHOFF
-  
+
   fread_32bits(&(hdr->e_flags), 1, f);          // ELF FLAGS
   erreur = check_flags(hdr->e_flags);
   if (erreur != ERR_EH_NONE){
@@ -233,10 +234,10 @@ void display_type(Elf32_Half type){
       printf_s("Type:","No file type");
       break;
     case ET_REL:
-      printf_s("Type:","Relocatable file");
+      printf_s("Type:","REL");
       break;
     case ET_EXEC:
-      printf_s("Type:","Executable file");
+      printf_s("Type:","EXEC");
       break;
     case ET_DYN:
       printf_s("Type:","Shared object file");
@@ -315,7 +316,7 @@ void display_header(Elf32_Ehdr *hdr){
   display_type(hdr->e_type);
   display_machine(hdr->e_machine);
   display_fileVersion(hdr->e_version);
-  printf_8x("Adresse du point d'entrée:", hdr->e_entry);
+  printf_x("Adresse du point d'entrée:", hdr->e_entry);
   printf_d("Début des en-têtes du programme:", hdr->e_phoff);
   printf_d("Début des en-têtes de section:", hdr->e_shoff);
   display_flags(hdr->e_flags);

@@ -19,7 +19,7 @@ typedef enum Err_ELF_Header{
 	ERR_EH_FLAGS    = 10
 } Err_ELF_Header;
 
-/* Read the header of an ELF file and in the hdr argument */
+/* Read the header of an ELF file and fill the hdr argument */
 Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr *hdr);
 
 /* Return an Err_ELF_Header as a string */

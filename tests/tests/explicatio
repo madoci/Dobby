@@ -1,0 +1,10 @@
+./test-header.sh notre-programme le.o
+
+-les fichier existe ok
+-prendre readelf -h dans un fichier du .o
+-comparaison
+
+doby bin c'est nos programme
+
+file = exemple.o
+magique, la classe, donnee, type, dresse, debut,debut tout apres les fanion
