@@ -37,6 +37,10 @@ int read_elf_file(FILE* f, Elf32_File *ef){
   return 0;
 }
 
-int free_elf_file(Elf32_File* f){
-  return (int) f;
+void free_elf_file(Elf32_File* f){
+  for (Elf32_Half i = 0; i < f->header.e_shnum;i++){
+    free(f->section_content[i]);
+  }
+  free(f->section_content);
+  free(f->section_table);
 }
