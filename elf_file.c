@@ -52,9 +52,11 @@ void reorder_elf_file(Elf32_File *ef){
 }
 
 void free_elf_file(Elf32_File* f){
-  for (Elf32_Half i = 0; i < f->header.e_shnum;i++){
-    free(f->section_content[i]);
+  if (f != NULL){
+    for (Elf32_Half i = 0; i < f->header.e_shnum;i++){
+      free(f->section_content[i]);
+    }
+    free(f->section_content);
+    free(f->section_table);
   }
-  free(f->section_content);
-  free(f->section_table);
 }
