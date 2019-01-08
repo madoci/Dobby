@@ -1,18 +1,5 @@
-/*
 
-header = read_header()
-sh_table = read_section_table()
-
-new_header = header
-new_header.e_shnum = count_shnum()
-
-new_sh_table[new_header.e_shnum]
-
-
-*/
-
-/*
-
+/* HEADER */
 typedef struct {
   unsigned char e_ident[EI_NIDENT];
   Elf32_Half e_type;                        CHANGE (APRES)
@@ -30,12 +17,13 @@ typedef struct {
   Elf32_Half e_shstrndx;                 +  CHANGE
 } Elf32_Ehdr;
 
+/* SECTION TABLE */
 typedef struct {
   Elf32_Word sh_name;
   Elf32_Word sh_type;
   Elf32_Word sh_flags;
   Elf32_Addr sh_addr;                       CHANGE PEUT-ETRE (APRES)
-  Elf32_Off  sh_offset;                  +  CHANGE                              1er = e_shoff + e_shnum * e_shentsize
+  Elf32_Off  sh_offset;                  +  CHANGE
   Elf32_Word sh_size;
   Elf32_Word sh_link;                    +  CHANGE POUR SYM_TAB -> index de la string table des symboles   (et pour SHT_HASH ?)
   Elf32_Word sh_info;                    +  ??? (pour la SYM_TAB -> index d'elle même ?)
@@ -43,6 +31,7 @@ typedef struct {
   Elf32_Word sh_entsize;
 } Elf32_Shdr;
 
+/* SYMBOLS */
 typedef struct {
   Elf32_Word st_name;
   Elf32_Addr st_value;                      CHANGE (APRES)
@@ -52,11 +41,10 @@ typedef struct {
   Elf32_Half st_shndx;                      CHANGE (index de la section)
 } Elf32_Sym;
 
-*/
 
 /* SHF_ARM_NOREAD       = 0x20000000 -> SECTION FLAGS
  * 
- * Sections de taille 0 supprimées (ex: .data, .bss)
+ * 
  * 
  * 
  */
