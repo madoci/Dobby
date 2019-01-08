@@ -1,11 +1,13 @@
 #!/bin/bash
 
 dobby_bin=$1
+nom=$3
 reussi="true"
+rm -f $output file_out*
 
-if [ $# -ne 2 ]
+if [ $# -lt 2 ] || [ $# -gt 3 ]
 then
-  echo "Argument manquant"
+  echo "Argument invalide"
   exit 1
 fi
 
@@ -26,8 +28,19 @@ then
 fi
 
 
-readelf -s $file_exemple | grep '[0-9]:' > file_out_elf
-$dobby_bin $file_exemple | grep '[0-9]:' > file_out_prog
+if [ $# -eq 2 ]
+then
+  n=$(readelf -S $file_exemple | head -n 1 | cut --delimiter=" " --fields=4)
+  for i in $(seq 0 $(($n-1)))
+  do
+    readelf -x $i $file_exemple | grep "0x" | cut --delimiter=" " --fields=4-7 >> file_out_elf
+    $dobby_bin $file_exemple -i $i | grep '[0-9]' >> file_out_prog
+  done
+
+else
+  readelf -x $nom $file_exemple | grep "0x" | cut --delimiter=" " --fields=4-7 >> file_out_elf
+  $dobby_bin $file_exemple -s $nom | grep '[0-9]' > file_out_prog
+fi
 
 diff --ignore-blank-lines --ignore-all-space \
 --old-line-format='OBTENU  > (Ligne %3dn) %L' \
@@ -37,7 +50,7 @@ diff --ignore-blank-lines --ignore-all-space \
 if [ -s $output ]
 then
   reussi="false"
-  echo "Table section differente"
+  echo "Content differente"
   echo -e "$(cat $output) \n EOF"
 fi
 #------------------------------------------------------------------

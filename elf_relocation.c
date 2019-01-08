@@ -17,7 +17,7 @@ Elf32_Rel read_rel(unsigned char* line){
 
 Elf32_Rela read_rela(unsigned char* line){
   Elf32_Rela r;
-  
+
   read_32bits(&(r.r_offset), line);
   line += 4;
   read_32bits(&(r.r_info), line);
@@ -75,8 +75,8 @@ const char * relocation_type(Elf_RelT type){
 
 void display_rel_table(Elf32_Rel entries[], const unsigned int num_entries, const unsigned char *name){
   printf("\nSection de relocalisation '%s' :\n", name);
-  
-  printf(" %-8s  %-8s  %-15s  %-8s\n",
+
+  printf("%-8s  %-8s  %-15s  %-8s\n",
          "Decalage", "Info", "Type", "Ind.-sym");
 
   unsigned int i;
@@ -85,7 +85,7 @@ void display_rel_table(Elf32_Rel entries[], const unsigned int num_entries, cons
     const Elf32_Word inf = entries[i].r_info;
     const char *type = relocation_type(ELF32_R_TYPE(entries[i].r_info));
     const Elf32_Word ind = ELF32_R_SYM(entries[i].r_info);
-    printf(" %08x  %08x  %-15s  %-8d\n",
+    printf("%08x  %08x  %-15s  %-8d\n",
            decal, inf, type, ind);
   }
 }
@@ -93,8 +93,8 @@ void display_rel_table(Elf32_Rel entries[], const unsigned int num_entries, cons
 
 void display_rela_table(Elf32_Rela entries[], const unsigned int num_entries, const unsigned char *name){
   printf("\nSection de relocalisation '%s' :\n", name);
-  
-  printf(" %-8s  %-8s  %-15s  %-8s  %-8s\n",
+
+  printf("%-8s  %-8s  %-15s  %-8s  %-8s\n",
          "Decalage", "Info", "Type", "Ind.-sym", "Addend");
 
   unsigned int i;
@@ -104,7 +104,7 @@ void display_rela_table(Elf32_Rela entries[], const unsigned int num_entries, co
     const char *type = relocation_type(ELF32_R_TYPE(entries[i].r_info));
     const Elf32_Word ind = ELF32_R_SYM(entries[i].r_info);
     const Elf32_Sword addend = entries[i].r_addend;
-    printf(" %08x  %08x  %-15s  %-8d  %-8d\n",
+    printf("%08x  %08x  %-15s  %-8d  %-8d\n",
            decal, inf, type, ind, addend);
   }
 }

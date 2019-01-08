@@ -2,7 +2,7 @@
 
 dobby_bin=$1
 reussi="true"
-
+rm $output file_out*
 
 if [ $# -ne 2 ]
 then
@@ -17,7 +17,7 @@ then
 fi
 
 output="output_"
-echo "TEST" > $output
+
 
 file_exemple=$2
 if [ ! -f $file_exemple ]
@@ -27,16 +27,10 @@ then
 fi
 
 
+readelf -r $file_exemple | grep "^[0-9abcdef]" | cut --delimiter=" " --fields=1-5 > file_out_elf
+$dobby_bin $file_exemple | grep "^[0-9abcdef]" | cut --delimiter=" " --fields=1-5 > file_out_prog
 
-n=readelf -S $file_exemple | head -n 1 | cut --delimiter=" " --fields=4
-for i in $(seq 0 $(($n-1)))
-do
-  readelf -x $n file_exemple | grep "0x" | cut --delimiter" " --fields=4-7 >> file_out_elf
-done
-for i in $(seq 0 $(($n-1)))
-do
-  $dobby_bin $file_exemple | grep '[0-9]' >> file_out_prog
-done
+
 
 diff --ignore-blank-lines --ignore-all-space \
 --old-line-format='OBTENU  > (Ligne %3dn) %L' \
@@ -57,4 +51,3 @@ if [ "$reussi" = "true" ]
   else
     echo "Test Echoué"
 fi
-#rm $output file_out*
