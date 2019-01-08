@@ -1,4 +1,6 @@
 #include "elf_load_symbol.h"
+#include "elf_symbol.h"
+#include "fread.h"
 #include <stdio.h>
 
 Elf32_Sym correct_symbol_section(Elf32_Sym sym, Elf32_Half correl_table[]){
@@ -48,12 +50,12 @@ void correct_all_symbol(Elf32_File ef, Elf32_Half sh_num, Elf32_Half correl_tabl
         ef.section_table[sh_num].sh_size / sizeof(Elf32_Sym);
 
   Elf32_Sym sym_table[num_symbols];
-  read_elf_symbol_table(symbol_addr, ef.section_table[sh_num], sym_table);
+  read_elf_symbol_table(symbol_addr, &ef.section_table[sh_num], sym_table);
 
   for(Elf32_Half i = 1; i < num_symbols; i++){
     sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
     sym_table[i] = correct_symbol_value(sym_table[i],ef.section_table);
     write_symbol(symbol_addr, sym_table[i]);
-    addr += sizeof(Elf32_Sym);
+    symbol_addr += sizeof(Elf32_Sym);
   }
 }
