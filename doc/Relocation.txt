@@ -2,16 +2,16 @@
 /* HEADER */
 typedef struct {
   unsigned char e_ident[EI_NIDENT];
-  Elf32_Half e_type;                        CHANGE (APRES)
+  Elf32_Half e_type;                        CHANGE (APRES) devient EXEC
   Elf32_Half e_machine;
   Elf32_Word e_version;
-  Elf32_Addr e_entry;
-  Elf32_Off  e_phoff;
+  Elf32_Addr e_entry;                       CHANGE
+  Elf32_Off  e_phoff;                       CHANGE (ajout de l'entete de programme)
   Elf32_Off  e_shoff;                       //CHANGE PEUT-ETRE
-  Elf32_Word e_flags;
+  Elf32_Word e_flags;                       CHANGE (soft-float ABI)
   Elf32_Half e_ehsize;
-  Elf32_Half e_phentsize;
-  Elf32_Half e_phnum;
+  Elf32_Half e_phentsize;                   CHANGE (ajout de l'entete de programme)
+  Elf32_Half e_phnum;                       CHANGE (ajout de l'entete de programme)
   Elf32_Half e_shentsize;
   Elf32_Half e_shnum;                    +  CHANGE
   Elf32_Half e_shstrndx;                 +  CHANGE
