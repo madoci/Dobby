@@ -45,7 +45,7 @@ unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr){
 }
 
 
-int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char * tab[]){
+int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char *tab[]){
   tab[0] = NULL;
   for (Elf32_Half i = 1; i < hdr.e_shnum; i++){
     tab[i] = NULL;
@@ -64,9 +64,25 @@ int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], uns
 }
 
 
-void free_all_section_content(unsigned char * tab[], int size){
+void free_all_section_content(unsigned char *tab[], int size){
   for (int i=0; i<size; i++){
     free(tab[i]);
+  }
+}
+
+
+/* WRITE SECTION CONTENT */
+
+void write_elf_section_content(FILE *f, Elf32_Shdr shdr, unsigned char *content){
+  fseek(f, shdr.sh_offset, SEEK_SET);
+  fwrite_8bits(content, shdr.sh_size, f);
+}
+
+
+void write_elf_all_section_content(FILE *f, Elf32_Half shnum, Elf32_Shdr shdr[], unsigned char *content[]){
+  unsigned int i;
+  for (i=1; i<shnum; i++){
+    write_elf_section_content(f, shdr[i], content[i]);
   }
 }
 

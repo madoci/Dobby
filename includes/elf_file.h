@@ -14,8 +14,11 @@ typedef struct {
 /* Fichier préalablement ouvert, à fermer vous même*/
 int read_elf_file(FILE* f, Elf32_File* ef);
 
-void free_elf_file(Elf32_File* f);
+void write_elf_file(FILE* f, Elf32_File ef);
 
+void reorder_elf_file(Elf32_File *ef);
+
+void free_elf_file(Elf32_File* f);
 
 
 #endif

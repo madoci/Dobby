@@ -10,6 +10,8 @@ void init_section_table(Elf32_Shdr e_table[], Elf32_Half e_shnum);
 /* Read the section header table of an ELF file and fill the e_table argument */
 void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]);
 
+void write_elf_section_table(FILE *f, Elf32_Ehdr header, Elf32_Shdr e_table[]);
+
 /* Display all section headers */
 void display_section_table(Elf32_Ehdr *header, Elf32_Shdr e_table[], unsigned char *str_table);
 

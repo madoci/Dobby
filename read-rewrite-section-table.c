@@ -3,6 +3,7 @@
 #include "rewrite_section_table.h"
 #include "elf_section_table.h"
 #include "elf_section_content.h"
+#include "elf_file.h"
 
 
 int main(int argc, char const * argv[]){
@@ -38,28 +39,48 @@ int main(int argc, char const * argv[]){
   display_section_table(&src.header, src.section_table, src.section_content[src.header.e_shstrndx]);
 #endif
   
-  Elf32_Half new_shnum = count_shnum(src.section_table, src.header.e_shnum);
+  Elf32_File dest;
+  dest.header = src.header;
+  dest.header.e_shnum = count_shnum(src.section_table, src.header.e_shnum);
   
 #ifdef DEBUG
-  printf("%d section headers without rela on %d sections header\n", new_shnum, src.header.e_shnum);
+  printf("%d section headers without rela on %d sections header\n", dest.header.e_shnum, src.header.e_shnum);
 #endif
   
-  Elf32_Shdr new_e_table[new_shnum];
-  Elf32_Half correl_table[header.e_shnum];
+  dest.section_table = malloc(sizeof(Elf32_Shdr) * dest.header.e_shnum);
+
+  Elf32_Half correl_table[src.header.e_shnum];
   
-  rewrite_section_table(src.section_table, src.header.e_shnum, new_e_table, correl_table);
+  rewrite_section_table(src.section_table, src.header.e_shnum, dest.section_table, dest.header.e_shnum, correl_table);
   
-  Elf32_Ehdr new_header = src.header;
-  correct_header(&new_header, new_shnum, correl_table);
-  correct_symtab_header(new_e_table, new_shnum, correl_table);
+  correct_header(&(dest.header), dest.header.e_shnum, correl_table);
+  correct_symtab_header(dest.section_table, dest.header.e_shnum, correl_table);
 
 #ifdef DEBUG
   puts("NEW");
+  display_section_table(&(dest.header), dest.section_table, src.section_content[src.header.e_shstrndx]);
 #endif
+
+  FILE* output = fopen("output", "w");
+
+  dest.section_content = malloc(sizeof(unsigned char*) * dest.header.e_shnum);
+  dest.section_content[0] = src.section_content[0];
+  unsigned int k = 1;
+  for (int i=1; i<src.header.e_shnum; i++){
+    if(src.section_table[i].sh_type != SHT_RELA && src.section_table[i].sh_type != SHT_REL && src.section_table[i].sh_size != 0){
+      dest.section_content[k] = src.section_content[i];
+      ++k;
+    }
+  }
+
+  reorder_elf_file(&dest);
+  write_elf_file(output, dest);
   
-  display_section_table(&new_header, new_e_table, src.section_content[src.header.e_shstrndx]);
-  
-  free_elf_file(f);
+  free_elf_file(&src);
+  free(dest.section_table);
+  free(dest.section_content);
+
+  fclose(output);
   fclose(f);
   
   return 0;

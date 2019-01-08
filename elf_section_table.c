@@ -6,8 +6,8 @@
 /* READ SECTION HEADER */
 
 Elf32_Shdr read_section_header(FILE *f){
-
   Elf32_Shdr line;
+
   fread_32bits(&(line.sh_name), 1, f);
   fread_32bits(&(line.sh_type), 1, f);
   fread_32bits(&(line.sh_flags), 1, f);
@@ -44,6 +44,30 @@ void read_elf_section_table(FILE *f, Elf32_Ehdr *header, Elf32_Shdr e_table[]){
   for (i = 0; i<header->e_shnum; i++){
     fseek(f, header->e_shoff + i * header->e_shentsize, SEEK_SET);
     e_table[i] = read_section_header(f);
+  }
+}
+
+
+/* READ SECTION HEADER */
+
+void write_section_header(FILE *f, Elf32_Shdr line){
+  fwrite_32bits(&(line.sh_name), 1, f);
+  fwrite_32bits(&(line.sh_type), 1, f);
+  fwrite_32bits(&(line.sh_flags), 1, f);
+  fwrite_32bits(&(line.sh_addr), 1, f);
+  fwrite_32bits(&(line.sh_offset), 1, f);
+  fwrite_32bits(&(line.sh_size), 1, f);
+  fwrite_32bits(&(line.sh_link), 1, f);
+  fwrite_32bits(&(line.sh_info), 1, f);
+  fwrite_32bits(&(line.sh_addralign), 1, f);
+  fwrite_32bits(&(line.sh_entsize), 1, f);
+}
+
+void write_elf_section_table(FILE *f, Elf32_Ehdr header, Elf32_Shdr e_table[]){
+  unsigned int i;
+  for (i = 0; i<header.e_shnum; i++){
+    fseek(f, header.e_shoff + i * header.e_shentsize, SEEK_SET);
+    write_section_header(f, e_table[i]);
   }
 }
 
