@@ -108,9 +108,28 @@ void display_symbol_table(Elf32_Sym sym_table[], unsigned int num_symbols, unsig
     char * vis = symbol_vis(sym_table[i].st_other);
     Elf32_Half ndx = sym_table[i].st_shndx;
 
-    printf("%2d:\t %08x\t %-1d\t %-7s\t %-6s\t %-9s\t %-3d\t %-12s\n",
-           i, valeur, size, type, lien, vis, ndx, nom);
+    printf("%2d:\t %08x\t %-1d\t %-7s\t %-6s\t %-9s\t",
+           i, valeur, size, type, lien, vis);
+    switch(ndx){
+      case SHN_ABS:
+        printf(" ABS\t");
+        break;
+      case SHN_COMMON:
+        printf(" COM\t");
+        break;
+      case SHN_UNDEF:
+        printf(" UND\t");
+        break;
+      default:
+        printf(" %-3d\t", ndx);
+        break;
+    }
+    printf(" %-12s\n",nom);
   }
+}
+
+void correct_symbol_section(Elf32_Sym *sym, Elf32_Half correl_table[]){
+  sym->st_shndx = correl_table[sym->st_shndx];
 }
 
 void correct_symbol_value(Elf32_Sym *sym, Elf32_Shdr section_table[]){
@@ -124,4 +143,5 @@ void correct_symbol_value(Elf32_Sym *sym, Elf32_Shdr section_table[]){
   }
 
   sym->st_value += section_table[sym->st_shndx].sh_addr;
+  //Ajouter switch case selon type symbole
 }
