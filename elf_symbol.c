@@ -112,3 +112,16 @@ void display_symbol_table(Elf32_Sym sym_table[], unsigned int num_symbols, unsig
            i, valeur, size, type, lien, vis, ndx, nom);
   }
 }
+
+void correct_symbol_value(Elf32_Sym *sym, Elf32_Shdr section_table[]){
+  if (sym->st_shndx==SHN_ABS){
+    return;
+  }
+
+  if (sym->st_shndx==SHN_COMMON){
+      printf("SHN_COMMON non géré, valeur non modifiée");
+      return;
+  }
+
+  sym->st_value += section_table[sym->st_shndx].sh_addr;
+}
