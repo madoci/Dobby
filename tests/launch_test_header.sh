@@ -1,4 +1,5 @@
 #!/bin/bash
+
 dobby_bin=$1
 
 if [ ! -f $dobby_bin ]
@@ -61,12 +62,12 @@ fi
 #---------------------Type--------------------------------------
 
 
-type= readelf -h $file_exemple | grep "Type" | \
-      cut --delimiter=":" --fields=2 | cut --delimiter=" " --fields=1 \
-      &>/dev/null
-type2= $dobby_bin $file_exemple | grep "Type" | \
-      cut --delimiter=":" --fields=2 | cut --delimiter=" " --fields=1 \
-      &>/dev/null
+type="$( readelf -h $file_exemple | grep "Type" | \
+      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
+
+type2="$( $dobby_bin $file_exemple | grep "Type" | \
+      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
+
 if [ -z $(echo $type | grep $type2) ]
 then
   echo "Type different"
@@ -88,6 +89,7 @@ fi
 #------------------------------------------------------------------
 #---------------------Debut programme--------------------------------------
 readelf -h $file_exemple | grep "Début des en-têtes du programme" > file_out_elf
+
 $dobby_bin $file_exemple | grep "Début des en-têtes du programme" > file_out_prog
 
 diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
@@ -95,13 +97,15 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  echo "$(cat file_out_elf) file_out_elf"
+  echo "$(cat file_out_prog) file_outpro"
   echo "Adresse de debut programme differente"
   echo "$(cat $output) EOF"
 fi
 #------------------------------------------------------------------
 #---------------------Debut section--------------------------------------
-readelf -h $file_exemple | grep "Début des en-têtes de section" > file_out_elf
-$dobby_bin $file_exemple | grep "Début des en-têtes de section  " > file_out_prog
+readelf -h $file_exemple | grep "Début des en-têtes de section" | cut --delimiter="(" --fields=1 > file_out_elf
+$dobby_bin $file_exemple | grep "Début des en-têtes de section" > file_out_prog
 
 diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --new-line-format="ATTENDU < (Ligne %3dn) %L" \
@@ -113,12 +117,10 @@ then
 fi
 #------------------------------------------------------------------
 #---------------------Taille header--------------------------------------
-taille= readelf -h $file_exemple | grep "Taille de cet en-tête" | \
-      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 \
-      &>/dev/null
-taille2= $dobby_bin $file_exemple | grep "Taille de cet en-tête" | \
-      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 \
-      &>/dev/null
+taille="$( readelf -h $file_exemple | grep "Taille de cet en-tête" | \
+      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
+taille2="$( $dobby_bin $file_exemple | grep "Taille de cet en-tête" | \
+      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
 if [ -z $(echo $type | grep $type2) ]
 then
   echo "Taille differente header"
@@ -126,12 +128,10 @@ then
 fi
 #------------------------------------------------------------------
 #---------------------Taille en-tete--------------------------------------
-taille= readelf -h $file_exemple | grep "Taille de l'en-tête du programme" | \
-      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 \
-      &>/dev/null
-taille2= $dobby_bin $file_exemple | grep "Taille de l'en-tête du programme" | \
-      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 \
-      &>/dev/null
+taille="$(readelf -h $file_exemple | grep "Taille de l'en-tête du programme" | \
+      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
+taille2="$( $dobby_bin $file_exemple | grep "Taille de l'en-tête du programme" | \
+      cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
 if [ -z $(echo $type | grep $type2) ]
 then
   echo "Taille differente en-tête programme"
@@ -152,8 +152,8 @@ then
 fi
 #------------------------------------------------------------------
 #---------------------Debut section--------------------------------------
-readelf -h $file_exemple | grep "Début des en-têtes de section" > file_out_elf
-$dobby_bin $file_exemple | grep "Début des en-têtes de section  " > file_out_prog
+readelf -h $file_exemple | grep "Début des en-têtes de section" | cut --delimiter="(" --fields=1 > file_out_elf
+$dobby_bin $file_exemple | grep "Début des en-têtes de section" > file_out_prog
 
 diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --new-line-format="ATTENDU < (Ligne %3dn) %L" \
@@ -187,6 +187,8 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  echo "$(cat file_out_elf) file_out_elf"
+  echo "$(cat file_out_prog) file_outpro"
   echo "Nombre d'en-tête differente"
   echo "$(cat $output) EOF"
 fi
@@ -200,10 +202,11 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  echo "$(cat file_out_elf) file_out_elf"
+  echo "$(cat file_out_prog) file_outpro"
   echo "Table d'indexes differente"
   echo "$(cat $output) EOF"
 fi
 #------------------------------------------------------------------
 
-file $output
 rm $output file_out_elf file_out_prog
