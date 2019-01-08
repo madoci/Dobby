@@ -127,21 +127,3 @@ void display_symbol_table(Elf32_Sym sym_table[], unsigned int num_symbols, unsig
     printf(" %-12s\n",nom);
   }
 }
-
-void correct_symbol_section(Elf32_Sym *sym, Elf32_Half correl_table[]){
-  sym->st_shndx = correl_table[sym->st_shndx];
-}
-
-void correct_symbol_value(Elf32_Sym *sym, Elf32_Shdr section_table[]){
-  if (sym->st_shndx==SHN_ABS){
-    return;
-  }
-
-  if (sym->st_shndx==SHN_COMMON){
-      printf("SHN_COMMON non géré, valeur non modifiée");
-      return;
-  }
-
-  sym->st_value += section_table[sym->st_shndx].sh_addr;
-  //Ajouter switch case selon type symbole
-}
