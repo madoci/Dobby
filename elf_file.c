@@ -37,6 +37,20 @@ int read_elf_file(FILE* f, Elf32_File *ef){
   return 0;
 }
 
+void write_elf_file(FILE* f, Elf32_File ef){
+  write_elf_header(f, ef.header);
+  write_elf_section_table(f, ef.header, ef.section_table);
+  write_elf_all_section_content(f, ef.header.e_shnum, ef.section_table, ef.section_content);
+}
+
+void reorder_elf_file(Elf32_File *ef){
+  ef->header.e_shoff = ef->header.e_ehsize;
+  ef->section_table[1].sh_offset = ef->header.e_shoff + ef->header.e_shnum * ef->header.e_shentsize;
+  for (int i=2; i<ef->header.e_shnum; i++){
+    ef->section_table[i].sh_offset = ef->section_table[i-1].sh_offset + ef->section_table[i-1].sh_size;
+  }
+}
+
 void free_elf_file(Elf32_File* f){
   for (Elf32_Half i = 0; i < f->header.e_shnum;i++){
     free(f->section_content[i]);

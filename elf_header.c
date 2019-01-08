@@ -139,6 +139,26 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr *hdr){
 }
 
 
+/* WRITE HEADER */
+
+void write_elf_header(FILE *f, Elf32_Ehdr hdr){
+  fwrite_8bits(hdr.e_ident, 16, f);             // ELF IDENTIFICATION
+  fwrite_16bits(&(hdr.e_type), 1, f);           // ELF TYPE
+  fwrite_16bits(&(hdr.e_machine), 1, f);        // ELF MACHINE
+  fwrite_32bits(&(hdr.e_version), 1, f);        // ELF VERSION
+  fwrite_32bits(&(hdr.e_entry), 1, f);          // ELF ENTRY
+  fwrite_32bits(&(hdr.e_phoff), 1, f);          // ELF PHOFF
+  fwrite_32bits(&(hdr.e_shoff), 1, f);          // ELF SHOFF
+  fwrite_32bits(&(hdr.e_flags), 1, f);          // ELF FLAGS
+  fwrite_16bits(&(hdr.e_ehsize), 1, f);         // ELF EHSIZE
+  fwrite_16bits(&(hdr.e_phentsize), 1, f);      // ELF PHENTSIZE
+  fwrite_16bits(&(hdr.e_phnum), 1, f);          // ELF PHNUM
+  fwrite_16bits(&(hdr.e_shentsize), 1, f);      // ELF SHENTSIZE
+  fwrite_16bits(&(hdr.e_shnum), 1, f);          // ELF SHNUM
+  fwrite_16bits(&(hdr.e_shstrndx), 1, f);       // ELF SHSTRNDX
+}
+
+
 /* HEADER ERROR */
 
 const char* get_header_error(Err_ELF_Header err){
