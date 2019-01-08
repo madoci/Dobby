@@ -19,4 +19,8 @@ void read_8bits(void *ptr, unsigned char* string);
 void read_16bits(void *ptr, unsigned char* string);
 void read_32bits(void *ptr, unsigned char* string);
 
+void write_8bits(unsigned char* string, void *ptr);
+void write_16bits(unsigned char* string, void *ptr);
+void write_32bits(unsigned char* string, void *ptr);
+
 #endif
