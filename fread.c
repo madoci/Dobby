@@ -56,8 +56,9 @@ size_t fwrite_8bits(void *ptr, size_t nmemb, FILE *stream){
 }
 
 size_t fwrite_16bits(void *ptr, size_t nmemb, FILE *stream){
-  uint16_t *adr = malloc(2 * nmemb);
+  uint16_t adr[2 * nmemb];
   memmove(adr, ptr, 2 * nmemb);
+
   if (is_big_endian() != isBigEndian){
     uint16_t *tmp = adr;
     for (int i=0; i<nmemb; i++){
@@ -65,13 +66,15 @@ size_t fwrite_16bits(void *ptr, size_t nmemb, FILE *stream){
       ++tmp;
     }
   }
+
   size_t res = fwrite(adr, 2, nmemb, stream);
   return res;
 }
 
 size_t fwrite_32bits(void *ptr, size_t nmemb, FILE *stream){
-  uint32_t *adr = malloc(4 * nmemb);
+  uint32_t adr[4 * nmemb];
   memmove(adr, ptr, 4 * nmemb);
+
   if (is_big_endian() != isBigEndian){
     uint32_t *tmp = adr;
     for (int i=0; i<nmemb; i++){
@@ -79,6 +82,7 @@ size_t fwrite_32bits(void *ptr, size_t nmemb, FILE *stream){
       ++tmp;
     }
   }
+
   size_t res = fwrite(adr, 4, nmemb, stream);
   return res;
 }

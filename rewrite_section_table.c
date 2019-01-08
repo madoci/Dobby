@@ -5,28 +5,15 @@ void rewrite_section_table(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Shdr ne
   unsigned int i;
   unsigned int k = 1;
 
-  
   //First section is null and must stay null
   new_e_table[0] = e_table[0];
   correl_table[0] = 0;
-
-  int first = 1;
   
   //Significant sections
   for(i=1; i<shnum; i++){
     if(e_table[i].sh_type != SHT_RELA && e_table[i].sh_type != SHT_REL && e_table[i].sh_size != 0){
       new_e_table[k] = e_table[i];
       correl_table[i] = k;
-      
-      if (!first){
-        new_e_table[k].sh_offset = new_e_table[k-1].sh_offset + new_e_table[k-1].sh_size;
-      }
-      
-      //DEBUG: Help to see what changed
-      /*
-       *      printf( "Section %d mapped on %d has offset %d -> %d\n",i,k,
-       *              e_table[i].sh_offset, rew_e_table[k].sh_offset);
-       */
       ++k;
     }
   }

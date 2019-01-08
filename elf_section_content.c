@@ -50,15 +50,9 @@ int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], uns
   for (Elf32_Half i = 1; i < hdr.e_shnum; i++){
     tab[i] = NULL;
     tab[i] = read_elf_section_content(f, shdr[i]);
-/*
-    if (tab[i] == NULL && shdr.sh_type != SHT_NOBITS){
-      for (; i != 0; i--){
-        if (tab[i] != NULL)
-          free(tab[i]);
-      }
-      return -1;
+    if (tab[i] == NULL){
+      return 1;
     }
-  */
   }
   return 0;
 }
@@ -66,7 +60,9 @@ int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], uns
 
 void free_all_section_content(unsigned char *tab[], int size){
   for (int i=0; i<size; i++){
-    free(tab[i]);
+    if (tab[i] != NULL){
+      free(tab[i]);
+    }
   }
 }
 

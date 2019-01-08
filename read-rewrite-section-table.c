@@ -73,6 +73,7 @@ int main(int argc, char const * argv[]){
     }
   }
 
+  renum_section_elf_file(&dest, src, correl_table);
   reorder_elf_file(&dest);
   write_elf_file(output, dest);
   
