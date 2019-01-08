@@ -91,7 +91,7 @@
     * Embellissement du code.
     
 * ## Vendredi 21 décembre 2018
-> L'abri étant terminé, les réparations du bateau ont pu commencé. C'est encore un peu chaotique mais je vais mettre de 
+> L'abri étant terminé, les réparations du bateau ont pu commencé. C'est encore un peu chaotique, mais je vais mettre de 
 > l'ordre dans tout ça. Et je n'hésiterais pas à donner des coups de bâton si le chantier n'avance pas assez rapidement 
 > à mon goût. 
   
@@ -124,8 +124,8 @@
     
 * ## Mardi 8 janvier 2018
 > Aujourd'hui, les réparations du bateau ont plutôt bien avancé. Mon fidèle voilier commence à reprendre forme ! Mais 
-> j'ai peur que les travaux prennent du retard. La maladie a touché une partie de l'équipage et notre docteur . Si on 
-> ne se dépêche pas, cette île va finir par avoir notre peau.
+> j'ai peur que les travaux prennent du retard. La maladie a touché une partie de l'équipage et notre docteur est 
+> complètement dépassé. Si on ne se dépêche pas, cette île va finir par avoir notre peau.
 
 *Poursuite du développement de la phase 2.*
 
