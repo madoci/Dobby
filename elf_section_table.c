@@ -172,13 +172,13 @@ char * section_flags(Elf32_Word sh_flags){
 
 
 void display_section_table(Elf32_Ehdr *header, Elf32_Shdr e_table[], unsigned char *str_table){
-  printf("\nIl y a %d en-têtes de section,\
-  débutant à l'adresse de décalage 0x%08x:\n\n", header->e_shnum, header->e_shoff);
-
+  printf("Il y a %d en-têtes de section,\
+  débutant à l'adresse de décalage 0x%x:\n\n", header->e_shnum, header->e_shoff);
+  puts("En-têtes de section :");
   printf("[%2s] %-17.17s %-16s %-8s %-6s %-6s %-2s %5s %-2s %-3s %-2s\n",
          "Nr","Nom","Type","Adr","Décala.","Taille","ES","Fan","LN","Inf","Al");
-  puts("En-tête de section:");
-  
+
+
   Elf32_Half i;
   for (i=0; i<header->e_shnum; i++){
     const unsigned char *nom   = str_table + e_table[i].sh_name;

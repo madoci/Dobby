@@ -1,6 +1,7 @@
 #!/bin/bash
 
 dobby_bin=$1
+reussi="true"
 
 if [ ! -f $dobby_bin ]
 then
@@ -8,8 +9,7 @@ then
   exit 1
 fi
 
-output="output_"
-echo "TEST" > $output
+output="output_$(date +%s)"
 
 file_exemple=$2
 if [ ! -f $file_exemple ]
@@ -29,6 +29,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
 if [ -s $output ]
 then
   echo "Magique different"
+  reussi="false"
   echo "$(cat $output) EOF"
 fi
 #------------------------------------------------------------------
@@ -41,6 +42,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  reussi="false"
   echo "Classe different"
   echo "$(cat $output) EOF"
 fi
@@ -55,6 +57,7 @@ donnees2= $dobby_bin $file_exemple | grep "Données" | \
 
 if [ "${donnees,,}" != "${donnees2,,}" ]
 then
+  reussi="false"
   echo "Données different"
   echo -e "Attendu : $donnees\n Obtenu : $donnees2"
 fi
@@ -70,6 +73,7 @@ type2="$( $dobby_bin $file_exemple | grep "Type" | \
 
 if [ -z $(echo $type | grep $type2) ]
 then
+  reussi="false"
   echo "Type different"
   echo -e "Attendu : $type Obtenu : $type2"
 fi
@@ -83,6 +87,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  reussi="false"
   echo "Adresse d'entrée differente"
   echo "$(cat $output) EOF"
 fi
@@ -97,8 +102,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  echo "$(cat file_out_elf) file_out_elf"
-  echo "$(cat file_out_prog) file_outpro"
+  reussi="false"
   echo "Adresse de debut programme differente"
   echo "$(cat $output) EOF"
 fi
@@ -112,6 +116,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  reussi="false"
   echo "Adresse de debut section differente"
   echo "$(cat $output) EOF"
 fi
@@ -123,6 +128,7 @@ taille2="$( $dobby_bin $file_exemple | grep "Taille de cet en-tête" | \
       cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
 if [ -z $(echo $type | grep $type2) ]
 then
+  reussi="false"
   echo "Taille differente header"
   echo -e "Attendu : $taille Obtenu : $taille2"
 fi
@@ -134,6 +140,7 @@ taille2="$( $dobby_bin $file_exemple | grep "Taille de l'en-tête du programme" 
       cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
 if [ -z $(echo $type | grep $type2) ]
 then
+  reussi="false"
   echo "Taille differente en-tête programme"
   echo -e "Attendu : $taille Obtenu : $taille2"
 fi
@@ -147,6 +154,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  reussi="false"
   echo "Nombre d'en-tête different"
   echo "$(cat $output) EOF"
 fi
@@ -160,6 +168,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
+  reussi="false"
   echo "Adresse de debut section differente"
   echo "$(cat $output) EOF"
 fi
@@ -173,6 +182,7 @@ taille2= $dobby_bin $file_exemple | grep "Taille des en-têtes de section:" | \
       &>/dev/null
 if [ -z $(echo $type | grep $type2) ]
 then
+  reussi="false"
   echo "Taille differente en-tête section"
   echo -e "Attendu : $taille Obtenu : $taille2"
 fi
@@ -187,8 +197,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  echo "$(cat file_out_elf) file_out_elf"
-  echo "$(cat file_out_prog) file_outpro"
+  reussi="false"
   echo "Nombre d'en-tête differente"
   echo "$(cat $output) EOF"
 fi
@@ -202,11 +211,16 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  echo "$(cat file_out_elf) file_out_elf"
-  echo "$(cat file_out_prog) file_outpro"
+  reussi="false"
   echo "Table d'indexes differente"
   echo "$(cat $output) EOF"
 fi
 #------------------------------------------------------------------
+if [ "$reussi" = "true" ]
+  then
+    echo "Test Reussi"
+  else
+    echo "Test Echoué"
+fi
 
 rm $output file_out_elf file_out_prog
