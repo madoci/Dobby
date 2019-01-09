@@ -52,25 +52,33 @@ void write_symbol(unsigned char *addr, Elf32_Sym symbol){
   write_16bits(addr, &symbol.st_shndx);
 }
 
-void correct_all_symbol(Elf32_File ef, Elf32_Half sh_num, Elf32_Half correl_table[]){
-  unsigned char *symbol_addr = ef.section_content[sh_num];
+void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_table[]){
+  unsigned char *symbol_addr = ef->section_content[sh_num];
   Elf32_Sym temp;
   const unsigned int num_symbols =
-        ef.section_table[sh_num].sh_size / sizeof(Elf32_Sym);
+        ef->section_table[sh_num].sh_size / sizeof(Elf32_Sym);
 
+  Elf32_Word nb_symbol = 1;
   Elf32_Sym sym_table[num_symbols];
-  read_elf_symbol_table(symbol_addr, &ef.section_table[sh_num], sym_table);
 
+  read_elf_symbol_table(symbol_addr, &ef->section_table[sh_num], sym_table);
+
+  //Let the undef symbol
+  symbol_addr += sizeof(Elf32_Sym);
+
+  //Modify other symbols
   for(Elf32_Half i = 1; i < num_symbols; i++){
-    symbol_addr += sizeof(Elf32_Sym);
     sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
-    temp = correct_symbol_value(sym_table[i],ef.section_table,ef.header.e_shnum);
+    temp = correct_symbol_value(sym_table[i],ef->section_table,ef->header.e_shnum);
     if (temp.st_shndx != sym_table[i].st_shndx){
       printf("Error below appears on symbol %d\n",i);
     }
     else{
       sym_table[i] = temp;
+      write_symbol(symbol_addr, sym_table[i]);
+      symbol_addr += sizeof(Elf32_Sym);
+      nb_symbol++;
     }
-    write_symbol(symbol_addr, sym_table[i]);
   }
+  ef->section_table[sh_num].sh_size = nb_symbol;
 }
