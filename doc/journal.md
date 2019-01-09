@@ -91,7 +91,9 @@
     * Embellissement du code.
     
 * ## Vendredi 21 décembre 2018
->
+> L'abri étant terminé, les réparations du bateau ont pu commencé. C'est encore un peu chaotique, mais je vais mettre de 
+> l'ordre dans tout ça. Et je n'hésiterais pas à donner des coups de bâton si le chantier n'avance pas assez rapidement 
+> à mon goût. 
   
 *Prise de connaissance de la phase 2 et répartition des taches.*
   
@@ -105,7 +107,10 @@
     * Suppression des sections REL et RELA (réécriture de la table des entêtes de section dans rewrite_section_table.c).
     
 * ## Lundi 7 janvier 2018
->
+> Enfin libre ! Je respire! Cela faisait deux semaines que j'étais coincé dans une grotte de l'autre côté de l'île.
+> Et que vois-je en revenant au camp ? Un ramassis de fainéants allongés sur le sable les pieds en éventails, pas même 
+> un peu inquiets de la disparition de leur capitaine. Quelle bande d'ingrats ! Il va falloir leur rappeler que je ne 
+> les paie pas à lambiner.
 
 *Poursuite du développement (et de la compréhension) de la phase 2.*
   
@@ -116,3 +121,18 @@
 
   * __Stephen et Laura :__
     * Correction des fuites mémoires.
+    
+* ## Mardi 8 janvier 2018
+> Aujourd'hui, les réparations du bateau ont plutôt bien avancé. Mon fidèle voilier commence à reprendre forme ! Mais 
+> j'ai peur que les travaux prennent du retard. La maladie a touché une partie de l'équipage et notre docteur est 
+> complètement dépassé. Si on ne se dépêche pas, cette île va finir par avoir notre peau.
+
+*Poursuite du développement de la phase 2.*
+
+  * __Marius et Clément :__
+    * Automatisation des tests.
+    * Fonctions de correction des symboles.
+
+  * __Stephen et Laura :__
+    * Organisation de la renumérotation des sections.
+    * Ecriture des structures modifiées dans un fichier de sortie.
