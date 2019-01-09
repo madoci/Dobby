@@ -1,84 +1,72 @@
-#include "elf_load_symbol.h"
+#include "elf_load_reloc.h"
 #include "elf_symbol.h"
 #include "elf_io.h"
 #include <stdio.h>
 
-Elf32_Sym correct_symbol_section(Elf32_Sym sym, Elf32_Half correl_table[]){
-  switch(sym.st_shndx){
-    case SHN_ABS:
-    case SHN_UNDEF:
-    case SHN_COMMON:
-      break;
-    default:
-      sym.st_shndx = correl_table[sym.st_shndx];
-      break;
+int32_t signExtend(uint32_t number, int n){
+  int32_t ret;
+  uint32_t mask = 0xffffffff << n;
+
+  if (number & (1 << (n - 1))){
+    // number is negative
+    ret = number | mask;
   }
-  return sym;
+  else {
+    // number is positive
+    ret = number & ~mask;
+  }
+  return ret;
 }
 
-Elf32_Sym correct_symbol_value(Elf32_Sym sym, Elf32_Shdr section_table[], Elf32_Half sh_count){
-  if (sym.st_shndx==SHN_ABS){
-    return sym;
+Elf32_Word compute_addend(Elf32_Rel reloc, unsigned char * place){
+  uint32_t i32 = 0;
+  uint16_t i16 = 0;
+  uint8_t  i8  = 0;
+  switch(ELF32_R_TYPE(reloc.r_info)){
+    case R_ARM_ABS32:
+      read_32bits(place, &i32);
+      return (Elf32_Word) i32;
+    case R_ARM_ABS16:
+      read_16bits(place, &i16);
+      return (Elf32_Word) signExtend(i16, 16);
+    case R_ARM_ABS8:
+      read_8bits(place, &i8);
+      return (Elf32_Word) signExtend(i8, 8);
   }
-
-  if (sym.st_shndx==SHN_COMMON){
-      printf("SHN_COMMON index for this symbol : WHAT HAPPENED NEXT ?\n");
-      return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
-  }
-
-  if (sym.st_shndx >= sh_count || sym.st_shndx == SHN_UNDEF){
-    printf("Erreur : Symbol reference bad section %d\n"
-            , sym.st_shndx);
-    return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
-  }
-
-  if (ELF32_ST_TYPE(sym.st_info) == STT_NOTYPE || ELF32_ST_TYPE(sym.st_info) == STT_SECTION)
-    sym.st_value += section_table[sym.st_shndx].sh_addr;
-
-  return sym;
 }
 
-void write_symbol(unsigned char *addr, Elf32_Sym symbol){
-  write_32bits(addr, &symbol.st_name);
-  addr += sizeof(symbol.st_name);
-  write_32bits(addr, &symbol.st_value);
-  addr += sizeof(symbol.st_value);
-  write_32bits(addr, &symbol.st_size);
-  addr += sizeof(symbol.st_size);
-  write_8bits(addr, &symbol.st_info);
-  addr += sizeof(symbol.st_info);
-  write_8bits(addr, &symbol.st_other);
-  addr += sizeof(symbol.st_other);
-  write_16bits(addr, &symbol.st_shndx);
+void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
+              Elf32_Word addend, Elf32_Word type){
+
+  Elf32_Word value = 0;
+  switch(ELF32_R_TYPE(reloc.r_info)){
+    case R_ARM_ABS32:
+      value = (symbol.st_value + addend) | type
+      write_32bits(addr,)
+  }
 }
 
-void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_table[]){
-  unsigned char *symbol_addr = ef->section_content[sh_num];
-  Elf32_Sym temp;
-  const unsigned int num_symbols =
-        ef->section_table[sh_num].sh_size / sizeof(Elf32_Sym);
+//Bit immediate : bit 25 == 0 ==> valeur immediate (bits 0-11)
+//Bit UP : ??
+void execute_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
+  //Compute relocation adress
+  unsigned char *to_reloc = ef->elf_section_content[shdr.sh_info]
+                            + rel.r_offset;
 
-  Elf32_Word nb_symbol = 1;
-  Elf32_Sym sym_table[num_symbols];
+  //Compute symbol table associated with relocation
+  Elf32_Sym sym_table[ef->section_table[shdr.sh_link].sh_size];
+  read_elf_symbol_table(ef->section_content[shdr.sh_link],
+                        &ef->section_table[shdr.sh_link],
+                        sym_table);
 
-  read_elf_symbol_table(symbol_addr, &ef->section_table[sh_num], sym_table);
+  //Compute symbol to be relocated
+  const Elf32_Sym symbol = sym_table[ELF32_R_SYM(rel.r_info)];
 
-  //Let the undef symbol
-  symbol_addr += sizeof(Elf32_Sym);
+  //Compute addend
+  const Elf32_Word addend = compute_addend(rel, to_reloc);
 
-  //Modify other symbols
-  for(Elf32_Half i = 1; i < num_symbols; i++){
-    sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
-    temp = correct_symbol_value(sym_table[i],ef->section_table,ef->header.e_shnum);
-    if (temp.st_shndx != sym_table[i].st_shndx){
-      printf("Error below appears on symbol %d\n",i);
-    }
-    else{
-      sym_table[i] = temp;
-      write_symbol(symbol_addr, sym_table[i]);
-      symbol_addr += sizeof(Elf32_Sym);
-      nb_symbol++;
-    }
-  }
-  ef->section_table[sh_num].sh_size = nb_symbol*sizeof(Elf32_Sym);
+  //Type is always 0 (no thumb instructions)
+  const Elf32_Word type = 0;
+
+  do_reloc(rel,to_reloc,symbol,addend,type);
 }
