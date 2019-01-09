@@ -3,6 +3,7 @@
 # Ce test compare la sortie parsé de readelf et de notre binaire (dobby-read-section-table) placé en argument.
 #--------------------------------------------------------------------------------
 dobby_bin=$1
+output="output_"
 
 if [ ! -f $dobby_bin ]
 then
@@ -10,7 +11,7 @@ then
   exit 1
 fi
 
-output="output_"
+
 
 file_exemple=$2
 if [ ! -f $file_exemple ]
@@ -34,4 +35,3 @@ fi
 #------------------------------------------------------------------
 
 exit 0
-rm $output file_out*
