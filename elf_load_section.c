@@ -6,14 +6,14 @@
 
 Elf32_Half count_shnum(Elf32_Shdr e_table[], Elf32_Half shnum){
   Elf32_Half non_rel = 1;
-  
+
   unsigned int i;
   for(i=1; i<shnum; i++){
     if(e_table[i].sh_type != SHT_RELA && e_table[i].sh_type != SHT_REL && e_table[i].sh_size != 0){
       ++non_rel;
     }
   }
-  
+
   return non_rel;
 }
 
@@ -60,7 +60,7 @@ void renum_section_elf_file(Elf32_File *dest, Elf32_File src, Elf32_Half correl_
   // First section is null and must stay null
   dest->section_table[0] = src.section_table[0];
   correl_table[0] = 0;
-  
+
   // Significant sections
   unsigned int i;
   unsigned int k = 1;

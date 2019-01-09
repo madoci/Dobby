@@ -5,14 +5,71 @@
 #include "elf_load_symbol.h"
 
 
+typedef enum {
+  ERR_OL_NONE,
+  ERR_OL_TOOMANY_O,
+  ERR_OL_TOOMANY_S,
+  ERR_OL_OUTOFRANGE_O,
+  ERR_OL_OUTOFRANGE_S
+} Err_Opt_Load;
 
-int get_option(int argc, char* argv[], int indexes[], size_t num_ndx){
-  if (strcmp(argv[2], "--output") || )
+Err_Opt_Load check_option_index(int argc, int o_ndx, int s_ndx){
+  if (o_ndx >= arc){
+    return ERR_OL_OUTOFRANGE_O;
+  } else if (s_ndx >= argc){
+    return ERR_OL_OUTOFRANGE_S;
+  }
+  return ERR_OL_NONE;
 }
+
+Err_Opt_Load get_option_index(int argc, char* argv[], int *o_ndx, int *s_ndx){
+  *o_ndx = 0;
+  *s_ndx = 0;
+  for (int i=2; i<argc; i++){
+    if (!strcmp(argv[i], "--output") || !strcmp(argv[i], "-o")){
+      if (*o_ndx != 0){
+        return ERR_OL_TOOMANY_O;
+      }
+      *o_ndx = i + 1;
+    } else if (!strcmp(argv[i], "--section-start") || !strcmp(argv[i], "-s")){
+      if (*s_ndx != 0){
+        return ERR_OL_TOOMANY_S;
+      }
+      *s_ndx = i + 1;
+    }
+  }
+  return check_option_index(argc, *o_ndx, *s_ndx);
+}
+
+char* str_opt_load_error(Err_Opt_Load err){
+  switch (err){
+    case ERR_OL_TOOMANY_O:
+      return "Trop d'arguments \"-o\"";
+    case ERR_OL_TOOMANY_S:
+      return "Trop d'arguments \"-s\"";
+    case ERR_OL_OUTOFRANGE_O:
+      return "Manque l'argument après -o";
+    case ERR_OL_OUTOFRANGE_S:
+      return "Manque le ou les arguments après -s";
+    default:
+      return "";
+  }
+}
+
+char* get_output_name(char* argv[], int o_ndx){
+  if (o_ndx == 0){
+
+  } else {
+    return argv[o_ndx];
+  }
+}
+
 
 int main(int argc, char* argv[]){
   if (argc != 2){
-    printf("Format : %s <fichier>\n", argv[0]);
+    printf("Format : %s <fichier> <options>\n", argv[0]);
+    printf("  Options : -o --output         <Chemin/Du/FichierSortie>\n");
+    printf("            -s --section-start  <nome de section>=<adresse> ...\n");
     return 1;
   }
 
@@ -22,7 +79,13 @@ int main(int argc, char* argv[]){
     return 1;
   }
 
-  FILE* output = fopen("output", "w");
+  int o_ndx, s_ndx;
+  Err_Opt_Load err_opt = get_option_index(argc, argv, &o_ndx, &s_ndx);
+  if (err_opt != ERR_OL_NONE){
+    printf("Erreur : %s\n", str_opt_load_error(err_opt));
+  }
+
+  FILE* output = fopen(get_output_name(argv, o_ndx), "w");
   if (output == NULL){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
     return 1;
