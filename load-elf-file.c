@@ -9,7 +9,7 @@ int main(int argc, char const * argv[]){
     printf("Format : %s <fichier>\n", argv[0]);
     return 1;
   }
-  
+
   FILE *f = fopen(argv[1], "r");
   if (f == NULL){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
@@ -21,7 +21,7 @@ int main(int argc, char const * argv[]){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
     return 1;
   }
-  
+
   Elf32_File src;
 
   // PENSER
@@ -36,7 +36,7 @@ int main(int argc, char const * argv[]){
     fclose(f);
     return 1;
   }
-  
+
   Elf32_File dest;
   Elf32_Half correl_table[src.header.e_shnum];
 
@@ -56,7 +56,7 @@ int main(int argc, char const * argv[]){
 
   reorder_elf_file(&dest);
   write_elf_file(output, dest);
-  
+
   free_elf_file(&src);
   free_elf_file(&dest);
 
