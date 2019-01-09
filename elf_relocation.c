@@ -1,6 +1,6 @@
 #include "elf_relocation.h"
 
-#include "fread.h"
+#include "elf_io.h"
 
 
 /* READ RELOCATION TABLE */

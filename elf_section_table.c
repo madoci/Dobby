@@ -1,6 +1,6 @@
 #include "elf_section_table.h"
 
-#include "fread.h"
+#include "elf_io.h"
 
 
 /* READ SECTION HEADER */
