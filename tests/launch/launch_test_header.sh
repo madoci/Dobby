@@ -1,7 +1,10 @@
 #!/bin/bash
 
+#-------------------------------------------------------------------------------
+# Ce test compare la sortie parsé de readelf et de notre binaire (dobby_read_header) placé en argument.
+#--------------------------------------------------------------------------------
 dobby_bin=$1
-reussi="true"
+
 
 if [ ! -f $dobby_bin ]
 then
@@ -28,9 +31,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
 
 if [ -s $output ]
 then
-  echo "Magique different"
-  reussi="false"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Classe--------------------------------------
@@ -42,9 +43,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Classe different"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Donnee--------------------------------------
@@ -57,9 +56,7 @@ donnees2= $dobby_bin $file_exemple | grep "Données" | \
 
 if [ "${donnees,,}" != "${donnees2,,}" ]
 then
-  reussi="false"
-  echo "Données different"
-  echo -e "Attendu : $donnees\n Obtenu : $donnees2"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Type--------------------------------------
@@ -74,8 +71,7 @@ type2="$( $dobby_bin $file_exemple | grep "Type" | \
 if [ -z $(echo $type | grep $type2) ]
 then
   reussi="false"
-  echo "Type different"
-  echo -e "Attendu : $type Obtenu : $type2"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Adresse--------------------------------------
@@ -87,9 +83,8 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Adresse d'entrée differente"
-  echo "$(cat $output) EOF"
+  echo -e "Adresse d'entrée differente sur $file_exemple avec $dobby_bin \n"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Debut programme--------------------------------------
@@ -102,9 +97,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Adresse de debut programme differente"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Debut section--------------------------------------
@@ -116,9 +109,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Adresse de debut section differente"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Taille header--------------------------------------
@@ -128,9 +119,7 @@ taille2="$( $dobby_bin $file_exemple | grep "Taille de cet en-tête" | \
       cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
 if [ -z $(echo $type | grep $type2) ]
 then
-  reussi="false"
-  echo "Taille differente header"
-  echo -e "Attendu : $taille Obtenu : $taille2"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Taille en-tete--------------------------------------
@@ -140,9 +129,7 @@ taille2="$( $dobby_bin $file_exemple | grep "Taille de l'en-tête du programme" 
       cut --delimiter=":" --fields=2 | cut --delimiter="(" --fields=1 )"
 if [ -z $(echo $type | grep $type2) ]
 then
-  reussi="false"
-  echo "Taille differente en-tête programme"
-  echo -e "Attendu : $taille Obtenu : $taille2"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------nombre d'entete prog--------------------------------------
@@ -154,9 +141,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Nombre d'en-tête different"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Debut section--------------------------------------
@@ -168,9 +153,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Adresse de debut section differente"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Taille en-tete section--------------------------------------
@@ -182,9 +165,7 @@ taille2= $dobby_bin $file_exemple | grep "Taille des en-têtes de section:" | \
       &>/dev/null
 if [ -z $(echo $type | grep $type2) ]
 then
-  reussi="false"
-  echo "Taille differente en-tête section"
-  echo -e "Attendu : $taille Obtenu : $taille2"
+  exit 1
 fi
 #------------------------------------------------------------------
 
@@ -197,9 +178,7 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Nombre d'en-tête differente"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 #---------------------Table indexe--------------------------------------
@@ -211,16 +190,8 @@ diff -w -B --old-line-format="OBTENU  > (Ligne %3dn) %L" \
      --unchanged-line-format="" file_out_prog file_out_elf > $output
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Table d'indexes differente"
-  echo "$(cat $output) EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
-if [ "$reussi" = "true" ]
-  then
-    echo "Test Reussi"
-  else
-    echo "Test Echoué"
-fi
-
 rm $output file_out_elf file_out_prog
+exit 0

@@ -1,13 +1,8 @@
 #!/bin/bash
-
+#-------------------------------------------------------------------------------
+# Ce test compare la sortie parsé de readelf et de notre binaire (dobby-read-section-table) placé en argument.
+#--------------------------------------------------------------------------------
 dobby_bin=$1
-reussi="true"
-
-if [ $# -ne 2 ]
-then
-  echo "Argument manquant"
-  exit 1
-fi
 
 if [ ! -f $dobby_bin ]
 then
@@ -17,7 +12,6 @@ fi
 
 output="output_"
 
-
 file_exemple=$2
 if [ ! -f $file_exemple ]
 then
@@ -25,9 +19,8 @@ then
   exit 1
 fi
 
-
-readelf -s $file_exemple | grep '[0-9]:' > file_out_elf
-$dobby_bin $file_exemple | grep '[0-9]:' > file_out_prog
+readelf -S $file_exemple | grep '[0-9]' > file_out_elf
+$dobby_bin $file_exemple | grep '[0-9]' > file_out_prog
 
 diff --ignore-blank-lines --ignore-all-space \
 --old-line-format='OBTENU  > (Ligne %3dn) %L' \
@@ -36,16 +29,9 @@ diff --ignore-blank-lines --ignore-all-space \
 
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Table section differente"
-  echo -e "$(cat $output) \n EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 
-if [ "$reussi" = "true" ]
-  then
-    echo -e "Test Reussi"
-  else
-    echo "Test Echoué"
-fi
-#rm $output file_out*
+exit 0
+rm $output file_out*

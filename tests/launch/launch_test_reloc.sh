@@ -1,8 +1,9 @@
 #!/bin/bash
-
+#-------------------------------------------------------------------------------
+# Ce test compare la sortie parsé de readelf et de notre binaire (dobby-read-relocation-table) placé en argument.
+#--------------------------------------------------------------------------------
 dobby_bin=$1
-reussi="true"
-rm $output file_out*
+rm -f $output file_out*
 
 if [ $# -ne 2 ]
 then
@@ -39,15 +40,8 @@ diff --ignore-blank-lines --ignore-all-space \
 
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Content differente"
-  echo -e "$(cat $output) \n EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 
-if [ "$reussi" = "true" ]
-  then
-    echo -e "Test Reussi"
-  else
-    echo "Test Echoué"
-fi
+exit 0
