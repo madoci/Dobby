@@ -1,5 +1,6 @@
 #include "elf_section_content.h"
 
+#include <string.h>
 #include "elf_io.h"
 
 
@@ -16,20 +17,15 @@ int compare_name(FILE *f, char *str){
 }
 
 
-Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name){
-  Elf32_Half num = 0;
-  long int str_offset = tab[hdr.e_shstrndx].sh_offset;
-
-  int i;
-  for (i=0; i<hdr.e_shnum; i++){
-    fseek(f, str_offset + tab[i].sh_name, SEEK_SET);
-
-    if (compare_name(f, name)){
+Elf32_Half search_elf_section_num(Elf32_Half shnum, Elf32_Shdr tab[], const char *name, unsigned char* string_table){
+  Elf32_Half i;
+  for (i=0; i<shnum; i++){
+    char* ptr_name = (char*) (string_table + tab[i].sh_name);
+    if (!strcmp(name, ptr_name)){
       break;
     }
   }
-  num = i;
-  return num;
+  return i;
 }
 
 

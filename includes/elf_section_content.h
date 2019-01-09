@@ -5,7 +5,7 @@
 #include "elf_types_header.h"
 #include "elf_types_section.h"
 
-Elf32_Half search_elf_section_num(FILE *f, Elf32_Shdr tab[], Elf32_Ehdr hdr, char *name);
+Elf32_Half search_elf_section_num(Elf32_Half shnum, Elf32_Shdr tab[], const char *name, unsigned char* string_table);
 
 unsigned char * read_elf_section_content(FILE *f, Elf32_Shdr shdr);
 int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], unsigned char *tab[]);

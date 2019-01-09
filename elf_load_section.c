@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "elf_section_content.h"
 
 
 Elf32_Half count_shnum(Elf32_Shdr e_table[], Elf32_Half shnum){
@@ -77,4 +78,14 @@ void renum_section_elf_file(Elf32_File *dest, Elf32_File src, Elf32_Half correl_
   correct_symtab_header(dest->section_table, dest->header.e_shnum, correl_table);
 
   copy_section_content(dest, src, correl_table);
+}
+
+
+int change_section_address(Elf32_File *dest, const char* section_name, Elf32_Half addr){
+  Elf32_Half index = search_elf_section_num(dest->header.e_shnum, dest->section_table, section_name, dest->section_content[dest->header.e_shstrndx]);
+  if (index <= 0 || dest->header.e_shnum <= index){
+    return -1;
+  }
+  dest->section_table[index].sh_addr = addr;
+  return 0;
 }

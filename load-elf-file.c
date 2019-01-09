@@ -92,12 +92,44 @@ void init_correl_table(Elf32_Half correl_table[], Elf32_Half shnum, Elf32_Half v
   }
 }
 
+Elf32_Addr string_to_addr(const char* string){
+  if (string == NULL || string[0] == '\0'){
+    return 0;
+  } else if (string[0] == '0' && string[1] == 'x'){
+    return (Elf32_Addr) strtol(string, NULL, 0);
+  } else {
+    return (Elf32_Addr) atoi(string);
+  }
+}
+
+void manage_section_option(Elf32_File* ef, char* argv[], int s_first, int s_last){
+  for (int i=s_first; i<=s_last; i++){
+    char* separator = strchr(argv[i], '=');
+    if (separator == NULL){
+      printf("Argument invalide : <nom de section>=<adresse>\n");
+      continue;
+    }
+    int sep_ndx = strlen(argv[i]) - strlen(separator);
+    char* section_name = malloc(sizeof(char) * sep_ndx);
+    if (section_name == NULL){
+      printf("Erreur d'allocation mémoire.\n");
+      continue;
+    }
+    memmove(section_name, argv[i], sep_ndx);
+    Elf32_Addr addr = string_to_addr(separator+1);
+    if (change_section_address(ef, section_name, addr)){
+      printf("La section \"%s\" n'existe pas.\n", section_name);
+    }
+    free(section_name);
+  }
+}
+
 
 int main(int argc, char* argv[]){
   if (argc < 2){
     printf("Format : %s <fichier> <options>\n", argv[0]);
     printf("  Options : -o --output         <Chemin/Du/FichierSortie>\n");
-    printf("            -s --section-start  <nome de section>=<adresse> ...\n");
+    printf("            -s --section-start  <nom de section>=<adresse> ...\n");
     return -1;
   }
 
@@ -144,6 +176,8 @@ int main(int argc, char* argv[]){
   init_correl_table(correl_table, src.header.e_shnum, 0);
 
   renum_section_elf_file(&dest, src, correl_table);
+
+  manage_section_option(&dest, argv, s_first, s_last);
 
   unsigned int i;
   for (i=0; i<dest.header.e_shnum; i++){
