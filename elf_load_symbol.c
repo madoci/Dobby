@@ -31,7 +31,10 @@ Elf32_Sym correct_symbol_value(Elf32_Sym sym, Elf32_Shdr section_table[], Elf32_
             , sym.st_shndx, sh_count);
     return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
   }
-  sym.st_value += section_table[sym.st_shndx].sh_addr;
+  printf("%d\n", sym.st_shndx);
+  if (ELF32_ST_TYPE(sym.st_info) == STT_NOTYPE || ELF32_ST_TYPE(sym.st_info) == STT_SECTION)
+    sym.st_value += section_table[sym.st_shndx].sh_addr;
+
   return sym;
 }
 
@@ -59,6 +62,7 @@ void correct_all_symbol(Elf32_File ef, Elf32_Half sh_num, Elf32_Half correl_tabl
   read_elf_symbol_table(symbol_addr, &ef.section_table[sh_num], sym_table);
 
   for(Elf32_Half i = 1; i < num_symbols; i++){
+    symbol_addr += sizeof(Elf32_Sym);
     sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
     temp = correct_symbol_value(sym_table[i],ef.section_table,ef.header.e_shnum);
     if (temp.st_shndx != sym.st_shndx){
@@ -68,6 +72,5 @@ void correct_all_symbol(Elf32_File ef, Elf32_Half sh_num, Elf32_Half correl_tabl
       sym_table[i] = temp;
     }
     write_symbol(symbol_addr, sym_table[i]);
-    symbol_addr += sizeof(Elf32_Sym);
   }
 }
