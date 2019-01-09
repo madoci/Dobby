@@ -36,8 +36,8 @@
 *.x86_64
 *.hex
 bin/
-tests/ARM_*/
-tests/log/
+tests/ARM_BIN/
+tests/ARM_OBJ/
 tests/logs/
 
 # Debug files
