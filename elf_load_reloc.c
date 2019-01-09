@@ -1,6 +1,6 @@
 #include "elf_load_symbol.h"
 #include "elf_symbol.h"
-#include "fread.h"
+#include "elf_io.h"
 #include <stdio.h>
 
 Elf32_Sym correct_symbol_section(Elf32_Sym sym, Elf32_Half correl_table[]){

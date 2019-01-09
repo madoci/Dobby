@@ -1,6 +1,6 @@
 #include "elf_symbol.h"
 
-#include "fread.h"
+#include "elf_io.h"
 
 
 /* READ SYMBOL TABLE */

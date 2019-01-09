@@ -1,6 +1,6 @@
 #include "elf_load_symbol.h"
 #include "elf_symbol.h"
-#include "fread.h"
+#include "elf_io.h"
 #include <stdio.h>
 
 Elf32_Sym correct_symbol_section(Elf32_Sym sym, Elf32_Half correl_table[]){
@@ -22,13 +22,10 @@ Elf32_Sym correct_symbol_value(Elf32_Sym sym, Elf32_Shdr section_table[], Elf32_
   }
 
   if (sym.st_shndx==SHN_COMMON){
-      printf("SHN_COMMON index for this symbol : WHAT HAPPENED NEXT ?\n");
       return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
   }
 
   if (sym.st_shndx >= sh_count || sym.st_shndx == SHN_UNDEF){
-    printf("Erreur : Symbol reference bad section %d\n"
-            , sym.st_shndx);
     return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
   }
 
@@ -71,7 +68,7 @@ void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_tab
     sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
     temp = correct_symbol_value(sym_table[i],ef->section_table,ef->header.e_shnum);
     if (temp.st_shndx != sym_table[i].st_shndx){
-      printf("Error below appears on symbol %d\n",i);
+      continue;
     }
     else{
       sym_table[i] = temp;

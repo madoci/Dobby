@@ -1,6 +1,6 @@
 #include "elf_header.h"
 
-#include "fread.h"
+#include "elf_io.h"
 
 #define printf_8x(s,x) printf("\t%-50s\t0x%08x\n",s,x)
 #define printf_x(s,x) printf("\t%-50s\t0x%x\n",s,x)

@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "fread.h"
+#include "elf_io.h"
 #include "util.h"
 
 
@@ -86,7 +86,6 @@ size_t fwrite_32bits(void *ptr, size_t nmemb, FILE *stream){
   size_t res = fwrite(adr, 4, nmemb, stream);
   return res;
 }
-
 
 /* STRING READ */
 
