@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
   Elf32_Ehdr header;
   Err_ELF_Header err_hdr = read_elf_header(f, &header);
   if (err_hdr != ERR_EH_NONE){
-    printf("Erreur de lecture du header : %s\n.", get_header_error(err_hdr));
+    printf("Erreur de lecture du header : %s\n.", str_Err_ELF_Header(err_hdr));
     fclose(f);
     return 1;
   }
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   Elf32_Shdr tab_section_hdr[header.e_shnum];
   init_section_table(tab_section_hdr, header.e_shnum);
   read_elf_section_table(f, &header, tab_section_hdr);
-  
+
   unsigned char *str_table = NULL;
   str_table = read_elf_section_content(f, tab_section_hdr[header.e_shstrndx]);
   if (str_table == NULL){
@@ -35,11 +35,11 @@ int main(int argc, char *argv[]) {
     fclose(f);
     return 1;
   }
-  
+
   display_section_table(&header, tab_section_hdr, str_table);
-  
+
   free(str_table);
   fclose(f);
-  
+
   return 0;
 }

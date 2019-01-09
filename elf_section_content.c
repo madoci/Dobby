@@ -1,6 +1,6 @@
 #include "elf_section_content.h"
 
-#include "fread.h"
+#include "elf_io.h"
 
 
 /* READ SECTION CONTENT */
@@ -51,7 +51,7 @@ int read_elf_all_section_content(FILE *f, Elf32_Ehdr hdr, Elf32_Shdr shdr[], uns
     tab[i] = NULL;
     tab[i] = read_elf_section_content(f, shdr[i]);
     if (tab[i] == NULL){
-      return 1;
+      return -1;
     }
   }
   return 0;

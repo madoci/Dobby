@@ -25,7 +25,7 @@ Err_ELF_Header read_elf_header(FILE *f, Elf32_Ehdr *hdr);
 void write_elf_header(FILE *f, Elf32_Ehdr hdr);
 
 /* Return an Err_ELF_Header as a string */
-const char* get_header_error(Err_ELF_Header err);
+const char* str_Err_ELF_Header(Err_ELF_Header err);
 
 /* Display an ELF header */
 void display_header(Elf32_Ehdr *hdr);
