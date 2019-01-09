@@ -1,33 +1,64 @@
-file_to_test=$1
 
-if [ ! -f $file_to_test ] then
-  echo "Fichier \"$file_to_test\" non existant"
-  exit 1
-fi
 
-test_files=$(ls tests/$file_to_test.*.test)
+liste_bin=$(find ARM_BIN -type f)
+liste_obj=$(find ARM_OBJ -type f)
 
-if [ -z "$test_files" ] then
-  echo "Aucun fichier test existant pour \"$file_to_test\""
-  exit 1
-fi
-
-for file in $test_files
+echo -e "\nHeader : "
+for file in $liste_bin $liste_obj
 do
-    ext_file=${file%.*}
+  ./launch/launch_test_header.sh ../bin/dobby-read-header $file
+  if [ $? -eq 1 ]
+  then
+    echo "test echoué sur $file"
+  else
+    echo "OK."
+  fi
+done
 
-    case "$ext_file" in
-      ".h.test")
-        #Do the header test
-        ;;
-      ".st.test")
-      ;;
-      ".sc.test")
-      ;;
-      ".rel.test")
-      ;;
-      ".sym.test")
-      ;;
-      *)
-      ;;
+echo -e "\nSection table :"
+for file in $liste_bin $liste_obj
+do
+  ./launch/launch_test_section_table.sh ../bin/dobby-read-section-table $file
+  if [ $? -eq 1 ]
+  then
+    echo "test echoué sur $file"
+  else
+    echo "OK."
+  fi
+done
+
+echo -e "\nSection content"
+for file in $liste_bin $liste_obj
+do
+  ./launch/launch_test_section_content.sh ../bin/dobby-read-section-content $file
+  if [ $? -eq 1 ]
+  then
+    echo "test echoué sur: $file"
+  else
+    echo "OK."
+  fi
+done
+
+echo -e "\nRelocs : "
+for file in $liste_obj
+do
+  ./launch/launch_test_reloc.sh ../bin/dobby-read-relocation-table $file
+  if [ $? -eq 1 ]
+  then
+    echo "test echoué sur $file"
+  else
+    echo "OK."
+  fi
+done
+
+echo -e "\nSymbole"
+for file in $liste_obj
+do
+  ./launch/launch_test_symbole.sh ../bin/dobby-read-symbol-table $file
+  if [ $? -eq 1 ]
+  then
+    echo "test echoué sur $file"
+  else
+    echo "OK."
+  fi
 done
