@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
   Elf32_Ehdr hdr;
   Err_ELF_Header err_hdr = read_elf_header(f, &hdr);
   if (err_hdr != ERR_EH_NONE){
-    printf("Erreur de lecture du header : %s\n.", get_header_error(err_hdr));
+    printf("Erreur de lecture du header : %s\n.", str_Err_ELF_Header(err_hdr));
     fclose(f);
     return 1;
   }
@@ -82,9 +82,9 @@ int main(int argc, char *argv[]){
   if (content == NULL){
     printf("Erreur de lecture du contenu de section.\n");
     fclose(f);
-    return 1; 
+    return 1;
   }
-  
+
   display_elf_section_content(content, sh_tab[num].sh_size);
 
   free(content);

@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
     printf("Format : %s <fichier>\n", argv[0]);
     return 1;
   }
-    
+
   FILE* f = fopen(argv[1], "r");
   if (f == NULL){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[1]);
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
   Elf32_Ehdr hdr;
   Err_ELF_Header err_hdr = read_elf_header(f, &hdr);
   if (err_hdr != ERR_EH_NONE){
-    printf("Erreur de lecture du header : %s\n.", get_header_error(err_hdr));
+    printf("Erreur de lecture du header : %s\n.", str_Err_ELF_Header(err_hdr));
     fclose(f);
     return 1;
   }
@@ -47,22 +47,22 @@ int main(int argc, char *argv[]){
         fclose(f);
         return 1;
       }
-      
+
       const unsigned int num_symbols = s_table[i].sh_size / sizeof(Elf32_Sym);
-      
+
       Elf32_Sym sym_table[num_symbols];
       unsigned char* symtab_content = read_elf_section_content(f, s_table[i]);
       read_elf_symbol_table(symtab_content, &s_table[i], sym_table);
 
       display_symbol_table(sym_table, num_symbols, string_table, str_section + s_table[i].sh_name);
-      
+
       free(string_table);
       free(symtab_content);
     }
   }
-  
+
   free(str_section);
   fclose(f);
-  
+
   return 0;
 }

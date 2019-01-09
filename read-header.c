@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
   Err_ELF_Header error = read_elf_header(f, &header);
 
   if (error != ERR_EH_NONE){
-    printf("Erreur de lecture du header : %s\n", get_header_error(error));
+    printf("Erreur de lecture du header : %s\n", str_Err_ELF_Header(error));
     fclose(f);
     return 1;
   }
