@@ -73,9 +73,9 @@
 
 
 * ## Jeudi 20 décembre 2018
-> J'ai enfin déchiffré les étranges symboles de l'île ! La dernière pièce du puzzle se cachait dans une petite grotte 
+> J'ai enfin déchiffré les étranges symboles de l'île ! La dernière pièce du puzzle se cachait dans une petite grotte
 > encore inexplorée. Je vais peut-être pouvoir découvrir les secrets que renferment ces lieux. Mes hommes, eux, ont
-> consolidé l'abri. Il devrait tenir par tous temps désormais. 
+> consolidé l'abri. Il devrait tenir par tous temps désormais.
 
 *Poursuite du développement de la phase 1. On n'avait pas compris la différence entre sh_strtab et strtab nous faisant alors perdre beaucoup de temps. De plus l'utilisation de la commande valgrind nous indique que tous nos programmes sont exempts de fuite mémoire.*
 
@@ -89,31 +89,31 @@
 
   * __Aurélien et Joris :__
     * Embellissement du code.
-    
+
 * ## Vendredi 21 décembre 2018
-> L'abri étant terminé, les réparations du bateau ont pu commencé. C'est encore un peu chaotique, mais je vais mettre de 
-> l'ordre dans tout ça. Et je n'hésiterais pas à donner des coups de bâton si le chantier n'avance pas assez rapidement 
-> à mon goût. 
-  
+> L'abri étant terminé, les réparations du bateau ont pu commencé. C'est encore un peu chaotique, mais je vais mettre de
+> l'ordre dans tout ça. Et je n'hésiterais pas à donner des coups de bâton si le chantier n'avance pas assez rapidement
+> à mon goût.
+
 *Prise de connaissance de la phase 2 et répartition des taches.*
-  
+
   * __Marius et Clément :__
     * Automatisation des tests.
-  
+
   * __Stephen et Laura :__
     * Mise en mémoire des sections (dans elf_section_content.c).
-    
+
   * __Aurélien et Joris :__
     * Suppression des sections REL et RELA (réécriture de la table des entêtes de section dans rewrite_section_table.c).
-    
-* ## Lundi 7 janvier 2018
+
+* ## Lundi 7 janvier 2019
 > Enfin libre ! Je respire! Cela faisait deux semaines que j'étais coincé dans une grotte de l'autre côté de l'île.
-> Et que vois-je en revenant au camp ? Un ramassis de fainéants allongés sur le sable les pieds en éventails, pas même 
-> un peu inquiets de la disparition de leur capitaine. Quelle bande d'ingrats ! Il va falloir leur rappeler que je ne 
+> Et que vois-je en revenant au camp ? Un ramassis de fainéants allongés sur le sable les pieds en éventails, pas même
+> un peu inquiets de la disparition de leur capitaine. Quelle bande d'ingrats ! Il va falloir leur rappeler que je ne
 > les paie pas à lambiner.
 
 *Poursuite du développement (et de la compréhension) de la phase 2.*
-  
+
   * __Marius et Clément :__
     * Automatisation des tests (sabrage de la sortie de grepp).
     * Test des fuites mémoires.
@@ -121,10 +121,10 @@
 
   * __Stephen et Laura :__
     * Correction des fuites mémoires.
-    
-* ## Mardi 8 janvier 2018
-> Aujourd'hui, les réparations du bateau ont plutôt bien avancé. Mon fidèle voilier commence à reprendre forme ! Mais 
-> j'ai peur que les travaux prennent du retard. La maladie a touché une partie de l'équipage et notre docteur est 
+
+* ## Mardi 8 janvier 2019
+> Aujourd'hui, les réparations du bateau ont plutôt bien avancé. Mon fidèle voilier commence à reprendre forme ! Mais
+> j'ai peur que les travaux prennent du retard. La maladie a touché une partie de l'équipage et notre docteur est
 > complètement dépassé. Si on ne se dépêche pas, cette île va finir par avoir notre peau.
 
 *Poursuite du développement de la phase 2.*
@@ -135,4 +135,21 @@
 
   * __Stephen et Laura :__
     * Organisation de la renumérotation des sections.
-    * Ecriture des structures modifiées dans un fichier de sortie.
+    * Écriture des structures modifiées dans un fichier de sortie.
+
+* ## Mercredi 9 janvier 2019
+>
+
+*Poursuite du développement de la phase 2.*
+
+  * __Marius et Clément :__
+    * Finalisation de l'automatisation des tests.
+    * Automatisation des tests de fuites mémoires.
+    * Finalisation correction des symboles.
+    * Étude des relocations.
+    * Modification de l'organisation des fichiers.
+
+  * __Stephen et Laura :__
+    * Écriture du rapport.
+    * Gestion des options pour Load-Elf-file.c.
+    * Gestion d'erreurs pour Load-Elf-file.c
