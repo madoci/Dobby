@@ -65,7 +65,7 @@ void correct_all_symbol(Elf32_File ef, Elf32_Half sh_num, Elf32_Half correl_tabl
     symbol_addr += sizeof(Elf32_Sym);
     sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
     temp = correct_symbol_value(sym_table[i],ef.section_table,ef.header.e_shnum);
-    if (temp.st_shndx != sym.st_shndx){
+    if (temp.st_shndx != sym_table[i].st_shndx){
       printf("Error below appears on symbol %d\n",i);
     }
     else{
