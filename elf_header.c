@@ -161,7 +161,7 @@ void write_elf_header(FILE *f, Elf32_Ehdr hdr){
 
 /* HEADER ERROR */
 
-const char* get_header_error(Err_ELF_Header err){
+const char* str_Err_ELF_Header(Err_ELF_Header err){
   switch (err){
     case ERR_EH_IMAG:
       return "ERR_EH_IMAG";
