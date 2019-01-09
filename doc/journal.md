@@ -91,14 +91,14 @@
     * Embellissement du code.
 
 * ## Vendredi 21 décembre 2018
-> L'abri étant terminé, les réparations du bateau ont pu commencé. C'est encore un peu chaotique, mais je vais mettre de
-> l'ordre dans tout ça. Et je n'hésiterais pas à donner des coups de bâton si le chantier n'avance pas assez rapidement
+> L'abri étant terminé, les réparations du bateau ont pu commencées. C'est encore un peu chaotique, mais je vais mettre de
+> l'ordre dans tout ça. Et je n'hésiterai pas à donner des coups de bâton si le chantier n'avance pas assez rapidement
 > à mon goût.
 
 *Prise de connaissance de la phase 2 et répartition des taches.*
 
   * __Marius et Clément :__
-    * Automatisation des tests.
+    * Automatisation des tests, compréhension de la phase 2.
 
   * __Stephen et Laura :__
     * Mise en mémoire des sections (dans elf_section_content.c).
@@ -107,7 +107,7 @@
     * Suppression des sections REL et RELA (réécriture de la table des entêtes de section dans rewrite_section_table.c).
 
 * ## Lundi 7 janvier 2019
-> Enfin libre ! Je respire! Cela faisait deux semaines que j'étais coincé dans une grotte de l'autre côté de l'île.
+> Enfin libre ! Je respire ! Cela faisait deux semaines que j'étais coincé dans une grotte de l'autre côté de l'île.
 > Et que vois-je en revenant au camp ? Un ramassis de fainéants allongés sur le sable les pieds en éventails, pas même
 > un peu inquiets de la disparition de leur capitaine. Quelle bande d'ingrats ! Il va falloir leur rappeler que je ne
 > les paie pas à lambiner.
@@ -123,7 +123,7 @@
     * Correction des fuites mémoires.
 
 * ## Mardi 8 janvier 2019
-> Aujourd'hui, les réparations du bateau ont plutôt bien avancé. Mon fidèle voilier commence à reprendre forme ! Mais
+> Aujourd'hui, les réparations du bateau ont plutôt bien avancées. Mon fidèle voilier commence à reprendre forme ! Mais
 > j'ai peur que les travaux prennent du retard. La maladie a touché une partie de l'équipage et notre docteur est
 > complètement dépassé. Si on ne se dépêche pas, cette île va finir par avoir notre peau.
 
@@ -140,16 +140,19 @@
 * ## Mercredi 9 janvier 2019
 >
 
-*Poursuite du développement de la phase 2.*
+*Poursuite du développement de la phase 2; rédaction du rapport, finalisation de l'automatisation des tests.*
 
   * __Marius et Clément :__
     * Finalisation de l'automatisation des tests.
     * Automatisation des tests de fuites mémoires.
-    * Finalisation correction des symboles.
+    * Finalisation de la correction des symboles.
     * Étude des relocations.
     * Modification de l'organisation des fichiers.
 
   * __Stephen et Laura :__
     * Écriture du rapport.
     * Gestion des options pour Load-Elf-file.c.
-    * Gestion d'erreurs pour Load-Elf-file.c
+    * Gestion d'erreurs pour Load-Elf-file.c.
+    
+  * __Aurélien et Joris :__
+    * Compréhension et utilisation d'automake/autoconf.
