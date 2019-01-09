@@ -35,7 +35,7 @@ SelSection_Option get_option(int argc, char *argv[], int *argopt, int *argfile){
 int main(int argc, char *argv[]){
   if (argc != 4){
     printf("Format : %s <nom du fichier> -<s|i> <section>\n", argv[0]);
-    return 1;
+    return -1;
   }
 
   int sel_num = -1;
@@ -45,13 +45,13 @@ int main(int argc, char *argv[]){
     printf("Option manquante :\n");
     printf("-s : section donnée par son nom\n");
     printf("-i : section donnée par son numéro\n");
-    return 1;
+    return -1;
   }
 
   FILE *f = fopen(argv[sel_file], "r");
   if (f == NULL){
     printf("Impossible d'ouvrir le fichier \"%s\".\n", argv[sel_file]);
-    return 1;
+    return -1;
   }
 
   Elf32_Ehdr hdr;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
   if (err_hdr != ERR_EH_NONE){
     printf("Erreur de lecture du header : %s\n.", str_Err_ELF_Header(err_hdr));
     fclose(f);
-    return 1;
+    return -1;
   }
 
   Elf32_Shdr sh_tab[hdr.e_shnum];
@@ -67,14 +67,21 @@ int main(int argc, char *argv[]){
 
   int num = -1;
   if (opt == SELSECTION_OPT_NAME){
-    num = search_elf_section_num(f, sh_tab, hdr, argv[sel_num]);
+    unsigned char* string_table = read_elf_section_content(f, sh_tab[hdr.e_shstrndx]);
+    if (string_table == NULL){
+      printf("Erreur de lecture de la string table.\n");
+      fclose(f);
+      return -1;
+    }
+    num = search_elf_section_num(hdr.e_shnum, sh_tab, argv[sel_num], string_table);
+    free(string_table);
   } else {
     num = atoi(argv[sel_num]);
   }
   if (num < 0 || hdr.e_shnum <= num){
     printf("La section n'existe pas.\n");
     fclose(f);
-    return 1;
+    return -1;
   }
 
   unsigned char *content = NULL;
@@ -82,7 +89,7 @@ int main(int argc, char *argv[]){
   if (content == NULL){
     printf("Erreur de lecture du contenu de section.\n");
     fclose(f);
-    return 1;
+    return -1;
   }
 
   display_elf_section_content(content, sh_tab[num].sh_size);
