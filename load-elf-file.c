@@ -50,7 +50,7 @@ int main(int argc, char const * argv[]){
   unsigned int i;
   for (i=0; i<dest.header.e_shnum; i++){
     if (dest.section_table[i].sh_type == SHT_SYMTAB){
-      correct_all_symbol(dest, i, correl_table);
+      correct_all_symbol(&dest, i, correl_table);
     }
   }
 

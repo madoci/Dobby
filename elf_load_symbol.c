@@ -22,16 +22,16 @@ Elf32_Sym correct_symbol_value(Elf32_Sym sym, Elf32_Shdr section_table[], Elf32_
   }
 
   if (sym.st_shndx==SHN_COMMON){
-      printf("SHN_COMMON non géré, valeur non modifiée");
+      printf("SHN_COMMON index for this symbol : WHAT HAPPENED NEXT ?\n");
       return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
   }
 
-  if (sym.st_shndx >= sh_count){
-    printf("Erreur : Symbol reference section %d (but only %d section)\n"
-            , sym.st_shndx, sh_count);
+  if (sym.st_shndx >= sh_count || sym.st_shndx == SHN_UNDEF){
+    printf("Erreur : Symbol reference bad section %d\n"
+            , sym.st_shndx);
     return (Elf32_Sym) {.st_shndx=sym.st_shndx+1};
   }
-  printf("%d\n", sym.st_shndx);
+
   if (ELF32_ST_TYPE(sym.st_info) == STT_NOTYPE || ELF32_ST_TYPE(sym.st_info) == STT_SECTION)
     sym.st_value += section_table[sym.st_shndx].sh_addr;
 
@@ -80,5 +80,5 @@ void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_tab
       nb_symbol++;
     }
   }
-  ef->section_table[sh_num].sh_size = nb_symbol;
+  ef->section_table[sh_num].sh_size = nb_symbol*sizeof(Elf32_Sym);
 }
