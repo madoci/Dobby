@@ -38,7 +38,7 @@
 bin/
 tests/ARM_*/
 tests/log/
-
+tests/logs/
 
 # Debug files
 *.dSYM/
