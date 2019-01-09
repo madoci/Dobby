@@ -1,4 +1,5 @@
 CC="arm-none-eabi-gcc -mbig-endian -mno-thumb-interwork -O0"
+#CC="arm-linux-gnu-eabi-gcc -mbig-endian -mno-thumb-interwork -O0"
 CC_COMP="-c"
 CC_S="-S"
 CC_E="-nostdlib --entry main -n -Wl,--section-start -Wl,.text=0x20 -Wl,--section-start -Wl,.data=0x2800 -Wl,-EB"

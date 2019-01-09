@@ -5,14 +5,11 @@
 	.eabi_attribute 24, 1
 	.eabi_attribute 25, 1
 	.eabi_attribute 26, 2
-	.eabi_attribute 30, 2
+	.eabi_attribute 30, 6
 	.eabi_attribute 34, 0
 	.eabi_attribute 18, 4
 	.file	"exampleC.c"
 	.text
-.Ltext0:
-	.cfi_sections	.debug_frame
-	.section	.text.startup,"ax",%progbits
 	.align	2
 	.global	main
 	.syntax unified
@@ -20,228 +17,25 @@
 	.fpu softvfp
 	.type	main, %function
 main:
-.LFB0:
-	.file 1 "ARM_SOURCE/exampleC.c"
-	.loc 1 1 15 view -0
-	.cfi_startproc
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
+	@ args = 0, pretend = 0, frame = 8
+	@ frame_needed = 1, uses_anonymous_args = 0
 	@ link register save eliminated.
-	.loc 1 1 16 view .LVU1
-.LVL0:
-	.loc 1 1 29 view .LVU2
-	.loc 1 1 44 view .LVU3
-	.loc 1 1 1 is_stmt 0 view .LVU4
-	mov	r0, #0
+	str	fp, [sp, #-4]!
+	add	fp, sp, #0
+	sub	sp, sp, #12
+	mov	r3, #0
+	str	r3, [fp, #-12]
+	sub	r3, fp, #12
+	str	r3, [fp, #-8]
+	ldr	r3, [fp, #-8]
+	add	r2, r3, #4
+	str	r2, [fp, #-8]
+	ldr	r3, [r3]
+	mov	r0, r3
+	add	sp, fp, #0
+	@ sp needed
+	ldr	fp, [sp], #4
 	bx	lr
-	.cfi_endproc
-.LFE0:
 	.size	main, .-main
-	.text
-.Letext0:
-	.section	.debug_info,"",%progbits
-.Ldebug_info0:
-	.4byte	0x6e
-	.2byte	0x4
-	.4byte	.Ldebug_abbrev0
-	.byte	0x4
-	.uleb128 0x1
-	.4byte	.LASF0
-	.byte	0xc
-	.4byte	.LASF1
-	.4byte	.LASF2
-	.4byte	.Ldebug_ranges0+0
-	.4byte	0
-	.4byte	.Ldebug_line0
-	.uleb128 0x2
-	.4byte	.LASF3
-	.byte	0x1
-	.byte	0x1
-	.byte	0x5
-	.4byte	0x64
-	.4byte	.LFB0
-	.4byte	.LFE0-.LFB0
-	.uleb128 0x1
-	.byte	0x9c
-	.4byte	0x64
-	.uleb128 0x3
-	.ascii	"a\000"
-	.byte	0x1
-	.byte	0x1
-	.byte	0x14
-	.4byte	0x64
-	.4byte	.LLST0
-	.4byte	.LVUS0
-	.uleb128 0x3
-	.ascii	"b\000"
-	.byte	0x1
-	.byte	0x1
-	.byte	0x23
-	.4byte	0x6b
-	.4byte	.LLST1
-	.4byte	.LVUS1
-	.byte	0
-	.uleb128 0x4
-	.byte	0x4
-	.byte	0x5
-	.ascii	"int\000"
-	.uleb128 0x5
-	.byte	0x4
-	.4byte	0x64
-	.byte	0
-	.section	.debug_abbrev,"",%progbits
-.Ldebug_abbrev0:
-	.uleb128 0x1
-	.uleb128 0x11
-	.byte	0x1
-	.uleb128 0x25
-	.uleb128 0xe
-	.uleb128 0x13
-	.uleb128 0xb
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x1b
-	.uleb128 0xe
-	.uleb128 0x55
-	.uleb128 0x17
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x10
-	.uleb128 0x17
-	.byte	0
-	.byte	0
-	.uleb128 0x2
-	.uleb128 0x2e
-	.byte	0x1
-	.uleb128 0x3f
-	.uleb128 0x19
-	.uleb128 0x3
-	.uleb128 0xe
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
-	.uleb128 0x39
-	.uleb128 0xb
-	.uleb128 0x27
-	.uleb128 0x19
-	.uleb128 0x49
-	.uleb128 0x13
-	.uleb128 0x11
-	.uleb128 0x1
-	.uleb128 0x12
-	.uleb128 0x6
-	.uleb128 0x40
-	.uleb128 0x18
-	.uleb128 0x2117
-	.uleb128 0x19
-	.uleb128 0x1
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.uleb128 0x3
-	.uleb128 0x34
-	.byte	0
-	.uleb128 0x3
-	.uleb128 0x8
-	.uleb128 0x3a
-	.uleb128 0xb
-	.uleb128 0x3b
-	.uleb128 0xb
-	.uleb128 0x39
-	.uleb128 0xb
-	.uleb128 0x49
-	.uleb128 0x13
-	.uleb128 0x2
-	.uleb128 0x17
-	.uleb128 0x2137
-	.uleb128 0x17
-	.byte	0
-	.byte	0
-	.uleb128 0x4
-	.uleb128 0x24
-	.byte	0
-	.uleb128 0xb
-	.uleb128 0xb
-	.uleb128 0x3e
-	.uleb128 0xb
-	.uleb128 0x3
-	.uleb128 0x8
-	.byte	0
-	.byte	0
-	.uleb128 0x5
-	.uleb128 0xf
-	.byte	0
-	.uleb128 0xb
-	.uleb128 0xb
-	.uleb128 0x49
-	.uleb128 0x13
-	.byte	0
-	.byte	0
-	.byte	0
-	.section	.debug_loc,"",%progbits
-.Ldebug_loc0:
-.LVUS0:
-	.uleb128 .LVU2
-	.uleb128 .LVU4
-.LLST0:
-	.4byte	.LVL0
-	.4byte	.LVL0
-	.2byte	0x2
-	.byte	0x30
-	.byte	0x9f
-	.4byte	0
-	.4byte	0
-.LVUS1:
-	.uleb128 .LVU3
-	.uleb128 .LVU4
-	.uleb128 .LVU4
-	.uleb128 0
-.LLST1:
-	.4byte	.LVL0
-	.4byte	.LVL0
-	.2byte	0x6
-	.byte	0xf2
-	.4byte	.Ldebug_info0+63
-	.sleb128 0
-	.4byte	.LVL0
-	.4byte	.LFE0
-	.2byte	0x6
-	.byte	0xf2
-	.4byte	.Ldebug_info0+63
-	.sleb128 4
-	.4byte	0
-	.4byte	0
-	.section	.debug_aranges,"",%progbits
-	.4byte	0x1c
-	.2byte	0x2
-	.4byte	.Ldebug_info0
-	.byte	0x4
-	.byte	0
-	.2byte	0
-	.2byte	0
-	.4byte	.LFB0
-	.4byte	.LFE0-.LFB0
-	.4byte	0
-	.4byte	0
-	.section	.debug_ranges,"",%progbits
-.Ldebug_ranges0:
-	.4byte	.LFB0
-	.4byte	.LFE0
-	.4byte	0
-	.4byte	0
-	.section	.debug_line,"",%progbits
-.Ldebug_line0:
-	.section	.debug_str,"MS",%progbits,1
-.LASF2:
-	.ascii	"/home/luci/Documents/L3_INFO/Projet/dobby/tests\000"
-.LASF0:
-	.ascii	"GNU C17 8.2.0 -mbig-endian -mno-thumb-interwork -mf"
-	.ascii	"loat-abi=soft -mtls-dialect=gnu -marm -march=armv5t"
-	.ascii	"e -g -O2\000"
-.LASF1:
-	.ascii	"ARM_SOURCE/exampleC.c\000"
-.LASF3:
-	.ascii	"main\000"
 	.ident	"GCC: (Debian 8.2.0-11) 8.2.0"
 	.section	.note.GNU-stack,"",%progbits
