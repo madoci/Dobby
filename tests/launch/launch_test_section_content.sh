@@ -1,8 +1,10 @@
 #!/bin/bash
-
+#-------------------------------------------------------------------------------
+# Ce test compare la sortie parsé de readelf et de notre binaire (dobby-read-section-content) placé en argument.
+#--------------------------------------------------------------------------------
 dobby_bin=$1
 nom=$3
-reussi="true"
+
 rm -f $output file_out*
 
 if [ $# -lt 2 ] || [ $# -gt 3 ]
@@ -49,16 +51,9 @@ diff --ignore-blank-lines --ignore-all-space \
 
 if [ -s $output ]
 then
-  reussi="false"
-  echo "Content differente"
-  echo -e "$(cat $output) \n EOF"
+  exit 1
 fi
 #------------------------------------------------------------------
 
-if [ "$reussi" = "true" ]
-  then
-    echo -e "Test Reussi"
-  else
-    echo "Test Echoué"
-fi
-#rm $output file_out*
+exit 0
+rm $output file_out*

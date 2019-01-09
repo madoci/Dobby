@@ -1,0 +1,2 @@
+OBTENU  > (Ligne   6) [ 4] .gnu.hash         erreurType       0001010c 0101c0  000018 04     A  5   0  4
+ATTENDU < (Ligne   6)   [ 4] .gnu.hash         GNU_HASH        0001010c 0101c0 000018 04   A  5   0  4
