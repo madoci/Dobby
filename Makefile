@@ -55,7 +55,7 @@ $(OBJ_DIR)/elf_file.o:            $(INC_DIR)/elf_types.h
 $(OBJ_DIR)/elf_load_section.o:    $(INC_DIR)/elf_types.h
 $(OBJ_DIR)/elf_load_symbol.o:     $(INC_DIR)/elf_types.h $(INC_DIR)/fread.h $(INC_DIR)/elf_symbol.h
 
-$(OBJ_DIR)/fread.o: $(INC_DIR)/util.h
+$(OBJ_DIR)/elf_io.o: $(INC_DIR)/util.h
 
 #Convenient to headers
 
