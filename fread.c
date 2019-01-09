@@ -120,23 +120,23 @@ void write_8bits(unsigned char* string, void *ptr){
 }
 
 void write_16bits(unsigned char* string, void *ptr){
-  uint16_t *adr = NULL;
-  memmove(adr, ptr, 2);
+  uint16_t adr;
+  memmove(&adr, ptr, 2);
 
   if (is_big_endian() != isBigEndian){
-    *adr = reverse_2(*adr);
+    adr = reverse_2(adr);
   }
 
-  memmove(string, adr, 2);
+  memmove(string, &adr, 2);
 }
 
 void write_32bits(unsigned char* string, void *ptr){
-  uint32_t *adr = NULL;
-  memmove(adr, ptr, 4);
+  uint32_t adr;
+  memmove(&adr, ptr, 4);
 
   if (is_big_endian() != isBigEndian){
-    *adr = reverse_4(*adr);
+    adr = reverse_4(adr);
   }
 
-  memmove(string, adr, 4);
+  memmove(string, &adr, 4);
 }

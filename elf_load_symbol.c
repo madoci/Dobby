@@ -25,7 +25,10 @@ Elf32_Sym correct_symbol_value(Elf32_Sym sym, Elf32_Shdr section_table[]){
       printf("SHN_COMMON non géré, valeur non modifiée");
       return sym;
   }
-  sym.st_value += section_table[sym.st_shndx].sh_addr;
+  printf("%d\n", sym.st_shndx);
+  if (ELF32_ST_TYPE(sym.st_info) == STT_NOTYPE || ELF32_ST_TYPE(sym.st_info) == STT_SECTION)
+    sym.st_value += section_table[sym.st_shndx].sh_addr;
+
   return sym;
 }
 
@@ -53,9 +56,9 @@ void correct_all_symbol(Elf32_File ef, Elf32_Half sh_num, Elf32_Half correl_tabl
   read_elf_symbol_table(symbol_addr, &ef.section_table[sh_num], sym_table);
 
   for(Elf32_Half i = 1; i < num_symbols; i++){
+    symbol_addr += sizeof(Elf32_Sym);
     sym_table[i] = correct_symbol_section(sym_table[i],correl_table);
     sym_table[i] = correct_symbol_value(sym_table[i],ef.section_table);
     write_symbol(symbol_addr, sym_table[i]);
-    symbol_addr += sizeof(Elf32_Sym);
   }
 }

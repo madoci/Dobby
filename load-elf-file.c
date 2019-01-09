@@ -1,6 +1,8 @@
 #include <stdlib.h>
 
 #include "elf_load_section.h"
+#include "elf_load_symbol.h"
+
 
 int main(int argc, char const * argv[]){
   if (argc != 2){
@@ -40,8 +42,19 @@ int main(int argc, char const * argv[]){
 
   renum_section_elf_file(&dest, src, correl_table);
 
-  reorder_elf_file(&dest);
+  dest.section_table[1].sh_addr = 1;
 
+  for (int i=0; i<src.header.e_shnum; i++)
+  	printf("%d : %d\n", i, correl_table[i]);
+
+  unsigned int i;
+  for (i=0; i<dest.header.e_shnum; i++){
+    if (dest.section_table[i].sh_type == SHT_SYMTAB){
+      correct_all_symbol(dest, i, correl_table);
+    }
+  }
+
+  reorder_elf_file(&dest);
   write_elf_file(output, dest);
   
   free_elf_file(&src);
