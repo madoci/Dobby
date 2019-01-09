@@ -4,8 +4,8 @@
 #--------------------------------------------------------------------------------
 dobby_bin=$1
 nom=$3
+output="output_"
 
-rm -f $output file_out*
 
 if [ $# -lt 2 ] || [ $# -gt 3 ]
 then
@@ -19,7 +19,7 @@ then
   exit 1
 fi
 
-output="output_"
+
 
 
 file_exemple=$2
@@ -56,4 +56,3 @@ fi
 #------------------------------------------------------------------
 
 exit 0
-rm $output file_out*

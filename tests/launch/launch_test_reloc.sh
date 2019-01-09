@@ -3,7 +3,7 @@
 # Ce test compare la sortie parsé de readelf et de notre binaire (dobby-read-relocation-table) placé en argument.
 #--------------------------------------------------------------------------------
 dobby_bin=$1
-rm -f $output file_out*
+output="output_"
 
 if [ $# -ne 2 ]
 then
@@ -17,7 +17,7 @@ then
   exit 1
 fi
 
-output="output_"
+
 
 
 file_exemple=$2

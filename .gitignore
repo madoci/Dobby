@@ -37,6 +37,7 @@
 *.hex
 bin/
 tests/ARM_*/
+tests/log/
 
 
 # Debug files
