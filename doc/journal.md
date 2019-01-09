@@ -153,3 +153,6 @@
     * Écriture du rapport.
     * Gestion des options pour Load-Elf-file.c.
     * Gestion d'erreurs pour Load-Elf-file.c
+    
+  * __Aurélien et Joris :__
+    * Compréhension et utilisation d'automake/autoconf.
