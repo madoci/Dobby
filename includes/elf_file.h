@@ -28,16 +28,20 @@ typedef struct {
   unsigned char **section_content;
 } Elf32_File;
 
-/* Fichier préalablement ouvert, à fermer vous même*/
+/* Read an ELF file from f (opened prior to function call) and fill the Elf32_File argument
+   Return ERR_EF_NONE if no error occured and another Err_ELF_File otherwise */
 Err_ELF_File read_elf_file(FILE* f, Elf32_File* ef);
 
+/* Return a string of an Err_ELF_File */
 const char* str_Err_ELF_File(Err_ELF_File err);
 
+/* Write the content of an Elf32_File in a file f (opened prior to function call) */
 void write_elf_file(FILE* f, Elf32_File ef);
 
+/* Correct offsets of an Elf32_File */
 void reorder_elf_file(Elf32_File *ef);
 
+/* Free all allocated memory in an Elf32_File */
 void free_elf_file(Elf32_File* f);
-
 
 #endif

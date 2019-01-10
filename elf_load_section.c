@@ -55,6 +55,7 @@ void correct_symtab_header(Elf32_Shdr e_table[], Elf32_Half shnum, Elf32_Half co
 
 void renum_section_elf_file(Elf32_File *dest, Elf32_File src, Elf32_Half correl_table[]){
   dest->header = src.header;
+  dest->header.e_type = ET_EXEC;
   dest->header.e_shnum = count_shnum(src.section_table, src.header.e_shnum);
   dest->section_table = malloc(sizeof(Elf32_Shdr) * dest->header.e_shnum);
 
