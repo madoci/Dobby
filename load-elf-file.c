@@ -72,7 +72,8 @@ char* get_output_name(char* argv[], int o_ndx){
   if (o_ndx == 0){
     int length = 1;
     char* c = argv[1];
-    while (*c != '\0' && *c != '.'){
+    char* stop = strrchr(c, '.');
+    while (*c != '\0' && c != stop){
       ++length;
       ++c;
     }
@@ -103,6 +104,9 @@ Elf32_Addr string_to_addr(const char* string){
 }
 
 void manage_section_option(Elf32_File* ef, char* argv[], int s_first, int s_last){
+  if (s_first == 0){
+  	return;
+  }
   for (int i=s_first; i<=s_last; i++){
     char* separator = strchr(argv[i], '=');
     if (separator == NULL){
@@ -156,7 +160,7 @@ int main(int argc, char* argv[]){
 
   FILE* output = fopen(output_name, "w");
   if (output == NULL){
-    printf("Impossible d'ouvrir le fichier \"%s\".\n", output_name);
+    printf("Impossible d'ouvrir le fichier de sortie \"%s\".\n", output_name);
     fclose(f);
     free(output_name);
     return -1;
