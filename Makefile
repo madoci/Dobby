@@ -2,7 +2,7 @@ BIN_DIR=bin
 INC_DIR=includes
 OBJ_DIR=obj
 
-CC=clang
+CC=gcc
 CSTD=c99
 CFLAGS=-Wall -Werror --std=$(CSTD) -I$(INC_DIR) -g
 
