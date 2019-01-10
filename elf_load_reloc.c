@@ -1,5 +1,8 @@
+#include "elf_types_atomic.h"
+#include "elf_types_relocation.h"
 #include "elf_load_reloc.h"
 #include "elf_symbol.h"
+#include "elf_relocation.h"
 #include "elf_io.h"
 #include <stdio.h>
 
@@ -24,37 +27,51 @@ Elf32_Word compute_addend(Elf32_Rel reloc, unsigned char * place){
   uint8_t  i8  = 0;
   switch(ELF32_R_TYPE(reloc.r_info)){
     case R_ARM_ABS32:
-      read_32bits(place, &i32);
+      read_32bits(&i32,place);
       return (Elf32_Word) i32;
     case R_ARM_ABS16:
-      read_16bits(place, &i16);
+      read_16bits(&i16,place+2);
       return (Elf32_Word) signExtend(i16, 16);
     case R_ARM_ABS8:
-      read_8bits(place, &i8);
+      read_8bits(&i8,place+3);
       return (Elf32_Word) signExtend(i8, 8);
+    default:
+      return (Elf32_Word) 0;
   }
 }
 
 void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
               Elf32_Word addend, Elf32_Word type){
+  union {Elf32_Word v32; Elf32_Half v16; unsigned char v8; } value;
 
-  Elf32_Word value = 0;
   switch(ELF32_R_TYPE(reloc.r_info)){
     case R_ARM_ABS32:
-      value = (symbol.st_value + addend) | type
-      write_32bits(addr,)
+      value.v32 = symbol.st_value + addend | type;
+      write_32bits(addr,&value.v32);
+      break;
+    case R_ARM_ABS16:
+      value.v16 = symbol.st_value + addend;
+      write_16bits(addr+2, &value.v16);
+      break;
+    case R_ARM_ABS8:
+      value.v8 = symbol.st_value + addend;
+      write_8bits(addr+1, &value.v8);
+      break;
+    default:
+        break;
   }
 }
 
 //Bit immediate : bit 25 == 0 ==> valeur immediate (bits 0-11)
 //Bit UP : ??
-void execute_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
+void execute_single_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
   //Compute relocation adress
-  unsigned char *to_reloc = ef->elf_section_content[shdr.sh_info]
+  unsigned char *to_reloc = ef->section_content[shdr.sh_info]
                             + rel.r_offset;
 
   //Compute symbol table associated with relocation
-  Elf32_Sym sym_table[ef->section_table[shdr.sh_link].sh_size];
+  const unsigned int nb_sym = ef->section_table[shdr.sh_link].sh_size / sizeof(Elf32_Sym);
+  Elf32_Sym sym_table[nb_sym];
   read_elf_symbol_table(ef->section_content[shdr.sh_link],
                         &ef->section_table[shdr.sh_link],
                         sym_table);
@@ -69,4 +86,16 @@ void execute_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
   const Elf32_Word type = 0;
 
   do_reloc(rel,to_reloc,symbol,addend,type);
+}
+
+void execute_relocation_section(Elf32_File *ef, Elf32_Shdr reloc_shdr,
+                                unsigned char * reloc_content){
+  const unsigned int nb_rel = reloc_shdr.sh_size / sizeof(Elf32_Rel);
+  Elf32_Rel rel_table[nb_rel];
+
+  read_rel_section(reloc_content,&reloc_shdr, rel_table);
+
+  for (Elf32_Half i = 0; i < nb_rel; i++){
+    execute_single_relocation(ef,reloc_shdr, rel_table[i]);
+  }
 }
