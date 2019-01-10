@@ -2,4 +2,5 @@
 #include "elf_file.h"
 
 void execute_relocation_section(Elf32_File *ef, Elf32_Shdr reloc_shdr,
-                                unsigned char * reloc_content);
+                                unsigned char * reloc_content,
+                                Elf32_Half correl_symbol[]);
