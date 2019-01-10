@@ -3,6 +3,7 @@
 
 #include "elf_load_section.h"
 #include "elf_load_symbol.h"
+#include "elf_load_reloc.h"
 
 
 typedef enum {
@@ -196,9 +197,9 @@ int main(int argc, char* argv[]){
   for (Elf32_Half i = 0; i < src.header.e_shnum; i++){
     if (src.section_table[i].sh_type == SHT_REL){
       Elf32_Shdr reloc_shdr = src.section_table[i];
-      reloc_shdr.sh_link = correl_table[sh_link];
-      reloc_shdr.sh_info = correl_table[sh_info];
-      execute_relocation_section(&dest, reloc_shdr, src.section_content[i], correl_symbol)
+      reloc_shdr.sh_link = correl_table[reloc_shdr.sh_link];
+      reloc_shdr.sh_info = correl_table[reloc_shdr.sh_info];
+      execute_relocation_section(&dest, reloc_shdr, src.section_content[i], correl_symbol);
     }
   }
 
