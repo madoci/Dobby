@@ -27,14 +27,20 @@ Elf32_Word compute_addend(Elf32_Rel reloc, unsigned char * place){
   uint8_t  i8  = 0;
   switch(ELF32_R_TYPE(reloc.r_info)){
     case R_ARM_ABS32:
-      read_32bits(&i32,place);
+      read_32bits(&i32, place);
       return (Elf32_Word) i32;
     case R_ARM_ABS16:
-      read_16bits(&i16,place+2);
+      read_16bits(&i16, place+2);
       return (Elf32_Word) signExtend(i16, 16);
     case R_ARM_ABS8:
-      read_8bits(&i8,place+3);
+      read_8bits(&i8, place+3);
       return (Elf32_Word) signExtend(i8, 8);
+    case R_ARM_CALL:
+    case R_ARM_JUMP24:
+      read_32bits(&i32, place);
+      i32 &= 0x00FFFFFF;
+      i32 = (i32 & 0x00800000) ? i32 | 0xFF000000 : i32;
+      return (Elf32_Word) i32;
     default:
       return (Elf32_Word) 0;
   }
@@ -43,11 +49,13 @@ Elf32_Word compute_addend(Elf32_Rel reloc, unsigned char * place){
 void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
               Elf32_Word addend, Elf32_Word type){
   union {Elf32_Word v32; Elf32_Half v16; unsigned char v8; } value;
+  int32_t inst;
+  int32_t imm24;
 
   switch(ELF32_R_TYPE(reloc.r_info)){
     case R_ARM_ABS32:
       value.v32 = symbol.st_value + addend | type;
-      write_32bits(addr,&value.v32);
+      write_32bits(addr, &value.v32);
       break;
     case R_ARM_ABS16:
       value.v16 = symbol.st_value + addend;
@@ -57,8 +65,17 @@ void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
       value.v8 = symbol.st_value + addend;
       write_8bits(addr+1, &value.v8);
       break;
+    case R_ARM_CALL:
+    case R_ARM_JUMP24:
+      imm24 = symbol.st_value + (addend << 2);
+      imm24 -= reloc.r_offset;
+      imm24 = (imm24 & 0x03FFFFFE) >> 2;
+      read_32bits(&inst, addr);
+      value.v32 = (inst & 0xFF000000) | (imm24 & 0x00FFFFFF);
+      write_32bits(addr, &value.v32);
+      break;
     default:
-        break;
+      break;
   }
 }
 
