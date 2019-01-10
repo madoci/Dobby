@@ -8,7 +8,7 @@ echo -e "\nHeader : "
 for file in $liste_bin $liste_obj
 do
   rm -f output* file_out*
-  ./launch/launch_test_header.sh ../bin/dobby-read-header $file
+  ./launch/launch_test_header.sh ../bin/dobby-read-header $file 2>/dev/null
   if [ $? -eq 1 ]
   then
     echo "test echoué sur $file"
@@ -33,7 +33,7 @@ echo -e "\nSection table :"
 for file in $liste_bin $liste_obj
 do
   rm -f ./output* ./file_out*
-  ./launch/launch_test_section_table.sh ../bin/dobby-read-section-table $file
+  ./launch/launch_test_section_table.sh ../bin/dobby-read-section-table $file 2>/dev/null
   if [ $? -eq 1 ]
   then
     echo "test echoué sur $file"
@@ -56,7 +56,7 @@ echo -e "\nSection content"
 for file in $liste_bin $liste_obj
 do
   rm -f ./output* ./file_out*
-  ./launch/launch_test_section_content.sh ../bin/dobby-read-section-content $file
+  ./launch/launch_test_section_content.sh ../bin/dobby-read-section-content $file 2>/dev/null
   if [ $? -eq 1 ]
   then
     echo "test echoué sur: $file"
@@ -79,7 +79,7 @@ echo -e "\nRelocs : "
 for file in $liste_obj
 do
   rm -f ./output* ./file_out*
-  ./launch/launch_test_reloc.sh ../bin/dobby-read-relocation-table $file
+  ./launch/launch_test_reloc.sh ../bin/dobby-read-relocation-table $file 2>/dev/null
   if [ $? -eq 1 ]
   then
     echo "test echoué sur $file"
@@ -102,7 +102,7 @@ echo -e "\nSymbole"
 for file in $liste_obj
 do
   rm -f ./output* ./file_out*
-  ./launch/launch_test_symbole.sh ../bin/dobby-read-symbol-table $file
+  ./launch/launch_test_symbole.sh ../bin/dobby-read-symbol-table $file 2>/dev/null
   if [ $? -eq 1 ]
   then
     echo "test echoué sur $file"
