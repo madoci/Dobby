@@ -42,6 +42,7 @@ Elf32_Word compute_addend(Elf32_Rel reloc, unsigned char * place){
       i32 = (i32 & 0x00800000) ? i32 | 0xFF000000 : i32;
       return (Elf32_Word) i32;
     default:
+      puts("Unknow");
       return (Elf32_Word) 0;
   }
 }
@@ -63,7 +64,7 @@ void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
       break;
     case R_ARM_ABS8:
       value.v8 = symbol.st_value + addend;
-      write_8bits(addr+1, &value.v8);
+      write_8bits(addr+3, &value.v8);
       break;
     case R_ARM_CALL:
     case R_ARM_JUMP24:
