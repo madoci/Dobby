@@ -138,7 +138,9 @@
     * Écriture des structures modifiées dans un fichier de sortie.
 
 * ## Mercredi 9 janvier 2019
->
+> En suivant la piste des symboles de l'île, je me suis finalement retrouvé au pied d'une pierre sur laquelle était
+> gravé un texte. Mais les symboles y étaient arrangés bizarrement. Je n'avais encore jamais rien vu de tel. Impossible
+> d'en comprendre le sens ! Je vais tenter de déchiffrer ça pendant que mes hommes finissent de réparer mon navire. 
 
 *Poursuite du développement de la phase 2; rédaction du rapport, finalisation de l'automatisation des tests.*
 
@@ -153,6 +155,7 @@
     * Écriture du rapport.
     * Gestion des options pour Load-Elf-file.c.
     * Gestion d'erreurs pour Load-Elf-file.c.
+    * Adressage des sections. 
     
   * __Aurélien et Joris :__
     * Compréhension et utilisation d'automake/autoconf.
