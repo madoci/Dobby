@@ -36,6 +36,7 @@ Elf32_Word compute_addend(Elf32_Rel reloc, unsigned char * place){
       read_8bits(&i8,place+3);
       return (Elf32_Word) signExtend(i8, 8);
     default:
+      puts("Unknow");
       return (Elf32_Word) 0;
   }
 }
@@ -55,7 +56,7 @@ void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
       break;
     case R_ARM_ABS8:
       value.v8 = symbol.st_value + addend;
-      write_8bits(addr+1, &value.v8);
+      write_8bits(addr+3, &value.v8);
       break;
     default:
         break;

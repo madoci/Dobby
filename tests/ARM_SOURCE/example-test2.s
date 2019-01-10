@@ -13,9 +13,12 @@ suite:
 	mov pc, lr
 .data
 	.skip 8
+moi:
+	.hword 0x45
+	.hword 0x26
 test:
 	.word test
-	.hword suite
+	.hword moi
 	.byte 0x0
 	.align 4
 fin:
