@@ -49,7 +49,7 @@ void write_symbol(unsigned char *addr, Elf32_Sym symbol){
   write_16bits(addr, &symbol.st_shndx);
 }
 
-void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_table[]){
+void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_table[], Elf32_Half correl_symbol[]){
   unsigned char *symbol_addr = ef->section_content[sh_num];
   Elf32_Sym temp;
   const unsigned int num_symbols =
@@ -62,6 +62,7 @@ void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_tab
 
   //Let the undef symbol
   symbol_addr += sizeof(Elf32_Sym);
+  correl_symbol[0] = 0;
 
   //Modify other symbols
   for(Elf32_Half i = 1; i < num_symbols; i++){
@@ -74,6 +75,8 @@ void correct_all_symbol(Elf32_File* ef, Elf32_Half sh_num, Elf32_Half correl_tab
       sym_table[i] = temp;
       write_symbol(symbol_addr, sym_table[i]);
       symbol_addr += sizeof(Elf32_Sym);
+      
+      correl_symbol[i] = nb_symbol;
       nb_symbol++;
     }
   }

@@ -64,7 +64,7 @@ void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
 
 //Bit immediate : bit 25 == 0 ==> valeur immediate (bits 0-11)
 //Bit UP : ??
-void execute_single_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
+void execute_single_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel, Elf32_Half correl_symbol[]){
   //Compute relocation adress
   unsigned char *to_reloc = ef->section_content[shdr.sh_info]
                             + rel.r_offset;
@@ -77,7 +77,7 @@ void execute_single_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
                         sym_table);
 
   //Compute symbol to be relocated
-  const Elf32_Sym symbol = sym_table[ELF32_R_SYM(rel.r_info)];
+  const Elf32_Sym symbol = sym_table[correl_symbol[ELF32_R_SYM(rel.r_info)]];
 
   //Compute addend
   const Elf32_Word addend = compute_addend(rel, to_reloc);
@@ -89,13 +89,13 @@ void execute_single_relocation(Elf32_File * ef, Elf32_Shdr shdr, Elf32_Rel rel){
 }
 
 void execute_relocation_section(Elf32_File *ef, Elf32_Shdr reloc_shdr,
-                                unsigned char * reloc_content){
+                                unsigned char * reloc_content, Elf32_Half correl_symbol[]){
   const unsigned int nb_rel = reloc_shdr.sh_size / sizeof(Elf32_Rel);
   Elf32_Rel rel_table[nb_rel];
 
-  read_rel_section(reloc_content,&reloc_shdr, rel_table);
+  read_rel_section(reloc_content, &reloc_shdr, rel_table);
 
   for (Elf32_Half i = 0; i < nb_rel; i++){
-    execute_single_relocation(ef,reloc_shdr, rel_table[i]);
+    execute_single_relocation(ef, reloc_shdr, rel_table[i], correl_symbol);
   }
 }

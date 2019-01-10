@@ -183,10 +183,22 @@ int main(int argc, char* argv[]){
 
   manage_section_option(&dest, argv, s_first, s_last);
 
-  unsigned int i;
-  for (i=0; i<dest.header.e_shnum; i++){
-    if (dest.section_table[i].sh_type == SHT_SYMTAB){
-      correct_all_symbol(&dest, i, correl_table);
+  unsigned int i_symtab;
+  for (i_symtab=0; i_symtab<dest.header.e_shnum; i_symtab++){
+    if (dest.section_table[i_symtab].sh_type == SHT_SYMTAB){
+      break;
+    }
+  }
+
+  Elf32_Half correl_symbol[dest.section_table[i_symtab].sh_size/sizeof(Elf32_Sym)];
+  correct_all_symbol(&dest, i_symtab, correl_table, correl_symbol);
+
+  for (Elf32_Half i = 0; i < src.header.e_shnum; i++){
+    if (src.section_table[i].sh_type == SHT_REL){
+      Elf32_Shdr reloc_shdr = src.section_table[i];
+      reloc_shdr.sh_link = correl_table[sh_link];
+      reloc_shdr.sh_info = correl_table[sh_info];
+      execute_relocation_section(&dest, reloc_shdr, src.section_content[i], correl_symbol)
     }
   }
 
