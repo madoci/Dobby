@@ -55,7 +55,7 @@ void do_reloc(Elf32_Rel reloc, unsigned char* addr, Elf32_Sym symbol,
 
   switch(ELF32_R_TYPE(reloc.r_info)){
     case R_ARM_ABS32:
-      value.v32 = symbol.st_value + addend | type;
+      value.v32 = (symbol.st_value + addend) | type;
       write_32bits(addr, &value.v32);
       break;
     case R_ARM_ABS16:

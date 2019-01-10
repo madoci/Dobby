@@ -2,7 +2,7 @@ BIN_DIR=bin
 INC_DIR=includes
 OBJ_DIR=obj
 
-CC=clang
+CC=gcc
 CSTD=c99
 CFLAGS=-Wall -Werror --std=$(CSTD) -I$(INC_DIR) -g
 
@@ -12,12 +12,13 @@ usage:
 	@echo "make init : créer les répertoires (sans test d'existence) et y envoyer les fichiers"
 	@echo "make clean: supprimer les objets redondants et exécutables"
 	@echo "make bin/dobby-<Tabulation> : exécutables disponibles"
+	@echo "make all : all dobby"
 
 config:
 	@echo "Includes files : $(INC_DIR) Exec files : $(BIN_DIR)"
 	@echo "Current compilation : $(CC) $(CFLAGS)"
 	@echo "Objectif : Dobby"
-
+all: $(BIN_DIR)/dobby-read-header $(BIN_DIR)/dobby-read-section-table $(BIN_DIR)/dobby-read-section-content $(BIN_DIR)/dobby-read-symbol-table $(BIN_DIR)/dobby-load-elf-file
 init:
 	mkdir bin; mkdir includes; mv *. $(INC_DIR)/
 
